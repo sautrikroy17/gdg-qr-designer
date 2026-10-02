@@ -1,28 +1,32 @@
 import React from 'react';
-import { Sun, Moon, ArrowRight, QrCode, Sparkles } from 'lucide-react';
+import { Sun, Moon, ArrowRight } from 'lucide-react';
 
 export default function TopNavbar({
   activeTab,
   onSelectTab,
   theme,
   onToggleTheme,
-  onOpenPricing,
-  onOpenAbout,
   onOpenSignIn,
   onGetStarted
 }) {
   return (
     <header className="top-navbar">
-      {/* Brand Logo */}
+      {/* Brand Logo on Left (Exact matching 4-square grid squircle) */}
       <div
-        className="sidebar-logo"
-        style={{ padding: 0, cursor: 'pointer' }}
+        className="navbar-brand-box"
         onClick={() => onSelectTab('home')}
+        role="button"
+        tabIndex={0}
       >
-        <div className="logo-icon-box" style={{ width: '36px', height: '36px' }}>
-          <QrCode size={20} />
+        <div className="brand-logo-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2.5" y="2.5" width="8" height="8" rx="2.5" fill="white" />
+            <rect x="13.5" y="2.5" width="8" height="8" rx="2.5" fill="white" />
+            <rect x="2.5" y="13.5" width="8" height="8" rx="2.5" fill="white" />
+            <rect x="13.5" y="13.5" width="8" height="8" rx="2.5" fill="white" />
+          </svg>
         </div>
-        <span className="logo-text" style={{ fontSize: '1.25rem' }}>QRCraft</span>
+        <span className="brand-logo-text">QRCraft</span>
       </div>
 
       {/* Center Nav Links */}
@@ -36,8 +40,8 @@ export default function TopNavbar({
         </button>
         <button
           type="button"
-          className={`nav-link-btn ${activeTab === 'generate' ? 'active' : ''}`}
-          onClick={() => onSelectTab('generate')}
+          className={`nav-link-btn ${activeTab === 'features' ? 'active' : ''}`}
+          onClick={() => onSelectTab('features')}
         >
           Features
         </button>
@@ -50,38 +54,42 @@ export default function TopNavbar({
         </button>
         <button
           type="button"
-          className="nav-link-btn"
-          onClick={onOpenPricing}
+          className={`nav-link-btn ${activeTab === 'pricing' ? 'active' : ''}`}
+          onClick={() => onSelectTab('pricing')}
         >
           Pricing
         </button>
         <button
           type="button"
-          className="nav-link-btn"
-          onClick={onOpenAbout}
+          className={`nav-link-btn ${activeTab === 'about' ? 'active' : ''}`}
+          onClick={() => onSelectTab('about')}
         >
           About
         </button>
       </nav>
 
-      {/* Right Actions: Theme, Sign In, Get Started */}
+      {/* Right Actions: Theme Toggle Pill, Sign In, Get Started */}
       <div className="nav-right-actions">
-        {/* Dark/Light Mode Switch */}
+        {/* Dual Sun/Moon Pill (Exact Match to Reference Screenshot) */}
         <button
           type="button"
-          className="icon-btn-circle"
+          className="theme-toggle-pill"
           onClick={onToggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
-          title={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+          aria-label={`Current theme is ${theme}. Click to switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+          title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
         >
-          {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          <span className={`theme-pill-icon ${theme === 'light' ? 'active' : ''}`}>
+            <Sun size={14} />
+          </span>
+          <span className={`theme-pill-icon ${theme === 'dark' ? 'active' : ''}`}>
+            <Moon size={14} />
+          </span>
         </button>
 
         {/* Sign In Button */}
         <button
           type="button"
-          className="btn-hero-ghost"
-          style={{ padding: '0.45rem 1rem', fontSize: '0.85rem' }}
+          className="btn-signin-ghost"
           onClick={onOpenSignIn}
         >
           Sign In
@@ -90,8 +98,7 @@ export default function TopNavbar({
         {/* Get Started -> Button */}
         <button
           type="button"
-          className="btn-create-qr"
-          style={{ padding: '0.5rem 1.15rem', fontSize: '0.85rem', boxShadow: '0 4px 14px var(--accent-blue-glow)' }}
+          className="btn-get-started"
           onClick={onGetStarted}
         >
           <span>Get Started</span>

@@ -61,9 +61,14 @@ export default function GeneratorView({
   onChangeField,
   validationError,
   config,
-  onChangeConfig
+  onChangeConfig,
+  activeSubTab: controlledSubTab,
+  onChangeSubTab
 }) {
-  const [activeSubTab, setActiveSubTab] = useState('colors'); // 'colors' | 'shapes' | 'logo' | 'style'
+  const [internalSubTab, setInternalSubTab] = useState('colors'); // 'colors' | 'shapes' | 'logo' | 'style'
+  const activeSubTab = controlledSubTab !== undefined ? controlledSubTab : internalSubTab;
+  const setActiveSubTab = onChangeSubTab || setInternalSubTab;
+
 
   // Handle Logo Upload
   const handleLogoUpload = (e) => {

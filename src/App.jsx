@@ -4,12 +4,13 @@ import TopNavbar from './components/TopNavbar';
 import HeroLanding from './components/HeroLanding';
 import GeneratorView from './components/GeneratorView';
 import LivePreviewCard from './components/LivePreviewCard';
-import TemplatesGallery from './components/TemplatesGallery';
+import TemplatesView from './components/TemplatesView';
+import PricingView from './components/PricingView';
+import AboutView from './components/AboutView';
+import FeaturesView from './components/FeaturesView';
 import RecentCodesTable from './components/RecentCodesTable';
 import SettingsModal from './components/SettingsModal';
 import InteractiveDemoModal from './components/InteractiveDemoModal';
-import PricingModal from './components/PricingModal';
-import AboutModal from './components/AboutModal';
 import SignInModal from './components/SignInModal';
 
 import {
@@ -76,17 +77,15 @@ const INITIAL_DEMO_HISTORY = [
 ];
 
 export default function App() {
-  // 1. Navigation View: 'home' is the default full-width landing page!
-  const [activeTab, setActiveTab] = useState('home'); // 'home' | 'generate' | 'templates' | 'recent'
+  // Navigation View: 'home' | 'features' | 'templates' | 'pricing' | 'about' | 'generate' | 'recent'
+  const [activeTab, setActiveTab] = useState('home');
 
   // Modals state
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isDemoOpen, setIsDemoOpen] = useState(false);
-  const [isPricingOpen, setIsPricingOpen] = useState(false);
-  const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
 
-  // 2. Theme State
+  // Theme State
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('qrcraft_theme') || 'dark';
   });
@@ -100,14 +99,17 @@ export default function App() {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
-  // 3. Settings state
+  // Settings state
   const [defaultFormat, setDefaultFormat] = useState('png');
   const [autoSave, setAutoSave] = useState(true);
 
-  // 4. Content Type State
+  // Content Type State
   const [currentType, setCurrentType] = useState('url');
 
-  // 5. Form Data State
+  // Generator Subtab State: 'colors' | 'shapes' | 'logo' | 'style'
+  const [activeSubTab, setActiveSubTab] = useState('colors');
+
+  // Form Data State
   const [formData, setFormData] = useState({
     url: 'https://github.com/sautrikroy17',
     text: 'Hello GDG on Campus SRM!',
@@ -129,7 +131,7 @@ export default function App() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // 6. QR Visual Styling Configuration
+  // QR Visual Styling Configuration
   const [config, setConfig] = useState({
     size: 280,
     margin: 8,
@@ -167,7 +169,7 @@ export default function App() {
     }));
   };
 
-  // 7. Input Validation Feedback
+  // Input Validation Feedback
   const validationError = useMemo(() => {
     if (currentType === 'url') {
       if (!formData.url.trim()) return 'Please enter a destination URL.';
@@ -188,7 +190,7 @@ export default function App() {
     return '';
   }, [currentType, formData]);
 
-  // 8. Compute Encoded Payload
+  // Compute Encoded Payload
   const payload = useMemo(() => {
     switch (currentType) {
       case 'url':
@@ -215,7 +217,7 @@ export default function App() {
     }
   }, [currentType, formData]);
 
-  // 9. LocalStorage Recent History
+  // LocalStorage Recent History
   const [history, setHistory] = useState(() => {
     try {
       const saved = localStorage.getItem('qrcraft_history');
@@ -336,13 +338,13 @@ export default function App() {
     }
   };
 
-  // Determine if we are on the Landing Page (full width, NO sidebar!)
-  const isLandingPage = activeTab === 'home';
+  // Full-width views (No Sidebar)
+  const isFullWidthView = ['home', 'features', 'templates', 'pricing', 'about'].includes(activeTab);
 
   return (
-    <div className={`app-root-wrapper ${isLandingPage ? 'mode-landing' : 'mode-studio'}`}>
-      {/* Show Sidebar ONLY in Studio / Templates / Recent mode */}
-      {!isLandingPage && (
+    <div className={`app-root-wrapper ${isFullWidthView ? 'mode-landing' : 'mode-studio'}`}>
+      {/* Show Sidebar ONLY in Studio / Recent workspace */}
+      {!isFullWidthView && (
         <Sidebar
           activeTab={activeTab}
           onSelectTab={handleSelectTab}
@@ -357,8 +359,6 @@ export default function App() {
           onSelectTab={handleSelectTab}
           theme={theme}
           onToggleTheme={toggleTheme}
-          onOpenPricing={() => setIsPricingOpen(true)}
-          onOpenAbout={() => setIsAboutOpen(true)}
           onOpenSignIn={() => setIsSignInOpen(true)}
           onGetStarted={() => {
             setActiveTab('generate');
@@ -367,11 +367,16 @@ export default function App() {
         />
 
         {/* ====================================================================
-            VIEW 1: The Exact Landing Page (Full-Width, Edge-to-Edge)
+            VIEW 1: The Exact Landing Page (Matching Reference Screenshot)
             ==================================================================== */}
-        {isLandingPage ? (
+        {activeTab === 'home' && (
           <HeroLanding
             onOpenStudio={() => {
+              setActiveTab('generate');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenStudioWithTab={(subTab) => {
+              setActiveSubTab(subTab);
               setActiveTab('generate');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
@@ -386,62 +391,101 @@ export default function App() {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           />
-        ) : (
-          /* ==================================================================
-             VIEW 2: Studio / Templates / Recent Workspace
-             ================================================================== */
+        )}
+
+        {/* ====================================================================
+            VIEW 2: Features Showcase Page
+            ==================================================================== */}
+        {activeTab === 'features' && (
+          <FeaturesView
+            onOpenStudio={() => {
+              setActiveTab('generate');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenStudioWithTab={(subTab) => {
+              setActiveSubTab(subTab);
+              setActiveTab('generate');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onSelectTypeAndOpen={(type) => {
+              setCurrentType(type);
+              setActiveTab('generate');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        )}
+
+        {/* ====================================================================
+            VIEW 3: Templates Gallery Page
+            ==================================================================== */}
+        {activeTab === 'templates' && (
+          <TemplatesView
+            activePresetId={activePresetId}
+            onSelectPresetAndEdit={(preset) => {
+              handleApplyPreset(preset);
+              setActiveTab('generate');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        )}
+
+        {/* ====================================================================
+            VIEW 4: Pricing Page
+            ==================================================================== */}
+        {activeTab === 'pricing' && (
+          <PricingView
+            onOpenStudio={() => {
+              setActiveTab('generate');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        )}
+
+        {/* ====================================================================
+            VIEW 5: About Page (Sautrik Roy & GDG SRM Recruitment)
+            ==================================================================== */}
+        {activeTab === 'about' && (
+          <AboutView
+            onOpenStudio={() => {
+              setActiveTab('generate');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        )}
+
+        {/* ====================================================================
+            VIEW 6: Studio Workspace (Generator + Preview + Recent Codes)
+            ==================================================================== */}
+        {(activeTab === 'generate' || activeTab === 'recent') && (
           <div className="page-container">
-            {activeTab === 'generate' && (
-              <div>
-                <div className="studio-workspace-grid">
-                  {/* Left Column: Form Controls */}
-                  <GeneratorView
-                    currentType={currentType}
-                    onSelectType={setCurrentType}
-                    formData={formData}
-                    onChangeField={handleFieldChange}
-                    validationError={validationError}
-                    config={config}
-                    onChangeConfig={handleConfigChange}
-                  />
-
-                  {/* Right Column: Live Sticky Preview */}
-                  <LivePreviewCard
-                    payload={payload}
-                    config={config}
-                    onSaveToHistory={saveToHistory}
-                  />
-                </div>
-
-                {/* Bottom: Recent QR Codes Table */}
-                <RecentCodesTable
-                  historyItems={history}
-                  onRestoreItem={handleRestoreItem}
-                  onDeleteItem={handleDeleteItem}
-                />
-              </div>
-            )}
-
-            {activeTab === 'templates' && (
-              <TemplatesGallery
-                activePresetId={activePresetId}
-                onSelectPresetAndEdit={(preset) => {
-                  handleApplyPreset(preset);
-                  setActiveTab('generate');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
+            <div className="studio-workspace-grid">
+              {/* Left Column: Form Controls */}
+              <GeneratorView
+                currentType={currentType}
+                onSelectType={setCurrentType}
+                formData={formData}
+                onChangeField={handleFieldChange}
+                validationError={validationError}
+                config={config}
+                onChangeConfig={handleConfigChange}
+                activeSubTab={activeSubTab}
+                onChangeSubTab={setActiveSubTab}
               />
-            )}
 
-            {activeTab === 'recent' && (
-              <div>
-                <RecentCodesTable
-                  historyItems={history}
-                  onRestoreItem={handleRestoreItem}
-                  onDeleteItem={handleDeleteItem}
-                />
-              </div>
-            )}
+              {/* Right Column: Live Sticky Preview */}
+              <LivePreviewCard
+                payload={payload}
+                config={config}
+                onSaveToHistory={saveToHistory}
+              />
+            </div>
+
+            {/* Bottom: Recent QR Codes Table */}
+            <RecentCodesTable
+              historyItems={history}
+              onRestoreItem={handleRestoreItem}
+              onDeleteItem={handleDeleteItem}
+            />
           </div>
         )}
       </div>
@@ -465,16 +509,6 @@ export default function App() {
           setActiveTab('generate');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
-      />
-
-      <PricingModal
-        isOpen={isPricingOpen}
-        onClose={() => setIsPricingOpen(false)}
-      />
-
-      <AboutModal
-        isOpen={isAboutOpen}
-        onClose={() => setIsAboutOpen(false)}
       />
 
       <SignInModal
