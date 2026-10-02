@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, RotateCcw, Sun, Moon, Sparkles, UserCheck } from 'lucide-react';
+import { ArrowLeft, RotateCcw, Sun, Moon } from 'lucide-react';
 
 export default function StudioHeader({
   currentType,
@@ -13,11 +13,11 @@ export default function StudioHeader({
   const typeLabels = {
     url: 'Website URL',
     text: 'Plain Text',
-    email: 'Email Message',
-    phone: 'Phone Call',
+    email: 'Email Draft',
+    phone: 'Direct Phone',
     wifi: 'Wi-Fi Network',
     location: 'Geo Location',
-    vcard: 'vCard Contact'
+    vcard: 'Contact Card'
   };
 
   return (
@@ -28,9 +28,9 @@ export default function StudioHeader({
           type="button"
           className="btn-back-home"
           onClick={onBackToHome}
-          title="Return to Landing Page"
+          title="Return to Public Landing Page"
         >
-          <ArrowLeft size={16} />
+          <ArrowLeft size={15} />
           <span>Back to Home</span>
         </button>
 
@@ -38,21 +38,22 @@ export default function StudioHeader({
 
         <div className="studio-title-badge">
           <span className="studio-brand-dot" />
-          <span className="studio-badge-title">QRCraft Studio</span>
+          <span className="studio-badge-title">Studio</span>
+          <span className="studio-breadcrumb-slash">/</span>
           <span className="studio-type-pill">{typeLabels[currentType] || 'Custom QR'}</span>
         </div>
       </div>
 
       {/* Right: Actions, Theme Toggle, Reset, Profile */}
       <div className="studio-header-right">
-        {/* Reset Button */}
+        {/* Reset Defaults Button */}
         <button
           type="button"
           className="studio-btn-subtle"
           onClick={onResetFactory}
-          title="Reset QR styling to default"
+          title="Reset QR styling to clean defaults"
         >
-          <RotateCcw size={14} />
+          <RotateCcw size={13} />
           <span className="btn-text-desktop">Reset Defaults</span>
         </button>
 
@@ -65,10 +66,10 @@ export default function StudioHeader({
           title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
         >
           <span className={`theme-pill-icon ${theme === 'light' ? 'active' : ''}`}>
-            <Sun size={14} />
+            <Sun size={13} />
           </span>
           <span className={`theme-pill-icon ${theme === 'dark' ? 'active' : ''}`}>
-            <Moon size={14} />
+            <Moon size={13} />
           </span>
         </button>
 

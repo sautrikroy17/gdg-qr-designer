@@ -13,7 +13,6 @@ import {
   Phone,
   MapPin,
   MoreHorizontal,
-  TrendingUp,
   Palette,
   Shapes,
   Image as ImageIcon,
@@ -86,12 +85,6 @@ export default function HeroLanding({
       <section className="hero-landing-section">
         {/* Left Column: Headlines, CTAs, 4-Feature Row */}
         <div className="hero-content-left">
-          {/* Pill Badge */}
-          <div className="hero-pill-badge">
-            <span className="sparkle-amber">✦</span>
-            <span>Fast • Free • No Login Required</span>
-          </div>
-
           {/* Main Headline */}
           <h1 className="hero-bold-title">
             Beautiful <br />
@@ -410,21 +403,6 @@ export default function HeroLanding({
                 </button>
               </div>
             </div>
-
-            {/* Floating Metric Badge: "8.2M+ QR Codes Generated" */}
-            <div
-              className="badge-metric-stat"
-              onClick={onOpenStudio}
-              title="Over 8.2 million QR codes generated worldwide"
-            >
-              <div className="metric-pulse-icon">
-                <TrendingUp size={16} />
-              </div>
-              <div className="metric-text-box">
-                <h4>8.2M+</h4>
-                <p>QR Codes Generated</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -446,11 +424,6 @@ export default function HeroLanding({
           ==================================================================== */}
       <section className="purpose-section-container">
         <div className="purpose-section-header">
-          <div className="purpose-badge-pill">
-            <Sparkles size={13} style={{ color: 'var(--accent-blue-vibrant)' }} />
-            <span>Everything You Need</span>
-          </div>
-
           <h2 className="purpose-headline">
             Create QR Codes for <span className="headline-gradient-word">Any Purpose</span>
           </h2>

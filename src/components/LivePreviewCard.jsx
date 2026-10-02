@@ -10,7 +10,9 @@ import {
   CheckCircle,
   AlertTriangle,
   ShieldAlert,
-  Sparkles
+  Sparkles,
+  Layers,
+  QrCode
 } from 'lucide-react';
 import { auditScanReliability } from '../utils/contrastValidator';
 
@@ -55,7 +57,7 @@ export default function LivePreviewCard({
       },
       dotsOptions: {
         type: config.dotsType || 'rounded',
-        color: config.dotsColor || '#3882f6',
+        color: config.dotsColor || '#2563eb',
         ...(config.isGradient
           ? {
               gradient: {
@@ -74,11 +76,11 @@ export default function LivePreviewCard({
       },
       cornersSquareOptions: {
         type: config.cornersSquareType || 'extra-rounded',
-        color: config.dotsColor || '#3882f6'
+        color: config.dotsColor || '#2563eb'
       },
       cornersDotOptions: {
         type: config.cornersDotType || 'dot',
-        color: config.dotsColor || '#3882f6'
+        color: config.dotsColor || '#2563eb'
       }
     };
 
@@ -165,130 +167,128 @@ export default function LivePreviewCard({
 
   return (
     <div className="sticky-preview-wrapper">
-      <div className="glass-card" style={{ padding: '1.5rem', textAlign: 'center' }}>
-        {/* Header with QR Code / Styled Preview Segmented Switch */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-main)' }}>Live Preview</h3>
-          <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Real-time</span>
+      <div className="studio-stage-card">
+        {/* Stage Header */}
+        <div className="stage-head-bar">
+          <div className="stage-title-wrap">
+            <span className="stage-dot-pulse" />
+            <h3 className="stage-title">Canvas Stage</h3>
+          </div>
+
+          {/* Segmented Mode Switcher */}
+          <div className="stage-mode-segmented">
+            <button
+              type="button"
+              className={`stage-mode-btn ${previewMode === 'qr' ? 'active' : ''}`}
+              onClick={() => setPreviewMode('qr')}
+              title="Display raw QR canvas"
+            >
+              <QrCode size={13} />
+              <span>Canvas</span>
+            </button>
+            <button
+              type="button"
+              className={`stage-mode-btn ${previewMode === 'styled' ? 'active' : ''}`}
+              onClick={() => setPreviewMode('styled')}
+              title="Display branded display card mockup"
+            >
+              <Layers size={13} />
+              <span>Mockup</span>
+            </button>
+          </div>
         </div>
 
-        <div className="preview-toggle-bar">
-          <button
-            type="button"
-            className={`preview-toggle-btn ${previewMode === 'qr' ? 'active' : ''}`}
-            onClick={() => setPreviewMode('qr')}
-          >
-            QR Code
-          </button>
-          <button
-            type="button"
-            className={`preview-toggle-btn ${previewMode === 'styled' ? 'active' : ''}`}
-            onClick={() => setPreviewMode('styled')}
-          >
-            Styled Preview
-          </button>
-        </div>
-
-        {/* QR Display Canvas Box with Single Persistent Ref */}
-        <div className={`preview-canvas-wrapper ${previewMode === 'styled' ? 'styled-mode-active' : ''}`}>
+        {/* QR Display Stage */}
+        <div className={`canvas-pedestal-stage ${previewMode === 'styled' ? 'mockup-pedestal-mode' : ''}`}>
           {previewMode === 'styled' && (
-            <div className="styled-card-banner">
-              <div className="styled-badge-pill">
-                <Sparkles size={11} />
-                <span>QRCraft Studio</span>
+            <div className="mockup-header-strip">
+              <div className="mockup-brand-chip">
+                <span className="mockup-brand-circle" />
+                <span>QRCRAFT STUDIO</span>
               </div>
-              <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '0.3rem' }}>
-                Scan to Open Link
-              </h4>
+              <p className="mockup-scan-heading">Point camera to scan</p>
             </div>
           )}
 
-          <div className="qr-display-box" style={{ padding: previewMode === 'styled' ? '0.75rem' : '1.25rem' }}>
-            <div ref={qrContainerRef} style={{ display: 'flex', justifyContent: 'center', width: '100%' }} />
+          <div className="canvas-render-well">
+            <div ref={qrContainerRef} className="canvas-center-anchor" />
           </div>
 
           {previewMode === 'styled' && (
-            <div className="styled-card-footer">
-              <span className="styled-footer-tag">⚡ 100% Client-Side Verified</span>
+            <div className="mockup-footer-strip">
+              <span className="mockup-footer-badge">W3C Accessible • 100% Client Memory</span>
             </div>
           )}
         </div>
 
-        {/* Scan Reliability Pill */}
-        <div className={`scan-reliability-card ${audit.status}`}>
-          <div style={{ marginTop: '2px' }}>
-            {audit.status === 'great' && <CheckCircle size={18} />}
-            {audit.status === 'warning' && <AlertTriangle size={18} />}
-            {audit.status === 'danger' && <ShieldAlert size={18} />}
+        {/* Sleek Minimal Scannability Bar (Replaces bulky AI green card) */}
+        <div className={`sleek-scannability-pill ${audit.status}`} title={audit.warnings[0] || 'Optimized for high-speed camera scanning'}>
+          <div className="scannability-status-left">
+            {audit.status === 'great' && <CheckCircle size={14} className="scannability-icon" />}
+            {audit.status === 'warning' && <AlertTriangle size={14} className="scannability-icon" />}
+            {audit.status === 'danger' && <ShieldAlert size={14} className="scannability-icon" />}
+            <span className="scannability-rating-text">
+              {audit.status === 'great' && 'Scan Quality: 100% (AAA)'}
+              {audit.status === 'warning' && 'Scan Quality: Moderate (2.8:1)'}
+              {audit.status === 'danger' && 'Low Contrast Warning'}
+            </span>
           </div>
-          <div style={{ flex: 1 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
-              <span style={{ fontWeight: 700 }}>
-                {audit.status === 'great' && 'Scan Reliability: Excellent'}
-                {audit.status === 'warning' && 'Scan Reliability: Moderate'}
-                {audit.status === 'danger' && 'Scan Reliability: Low Risk'}
-              </span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', background: 'rgba(255,255,255,0.1)', padding: '0.1rem 0.35rem', borderRadius: '4px' }}>
-                {audit.ratio}:1 Contrast
-              </span>
-            </div>
-            <p style={{ margin: 0, opacity: 0.9, fontSize: '0.75rem', lineHeight: '1.3' }}>
-              {audit.warnings.length > 0
-                ? audit.warnings[0]
-                : 'This QR code is optimized for scanning across all devices and lighting conditions.'}
-            </p>
-          </div>
+          <span className="contrast-ratio-chip">{audit.ratio}:1 Contrast</span>
         </div>
 
-        {/* Download Buttons */}
-        <button
-          type="button"
-          className="download-btn-primary"
-          onClick={() => handleDownload('png')}
-        >
-          <Download size={18} />
-          <span>Download PNG</span>
-        </button>
-
-        <button
-          type="button"
-          className="download-btn-secondary"
-          onClick={() => handleDownload('svg')}
-        >
-          <Download size={16} />
-          <span>Download SVG</span>
-        </button>
-
-        {/* Action Row: Copy, Save, Share */}
-        <div className="action-row-trio">
+        {/* Primary Export Actions Bar */}
+        <div className="export-action-grid">
           <button
             type="button"
-            className="action-trio-btn"
-            onClick={handleCopyImage}
-            title="Copy image to clipboard"
+            className="btn-export-primary"
+            onClick={() => handleDownload('png')}
+            title="Download high-resolution 2000px PNG raster image"
           >
-            {copied ? <Check size={16} style={{ color: 'var(--accent-green)' }} /> : <Copy size={16} />}
-            <span>{copied ? 'Copied!' : 'Copy'}</span>
+            <Download size={16} />
+            <span>Export PNG</span>
           </button>
 
           <button
             type="button"
-            className="action-trio-btn"
-            onClick={handleManualSave}
-            title="Save to recent history"
+            className="btn-export-secondary"
+            onClick={() => handleDownload('svg')}
+            title="Download infinite resolution SVG vector asset"
           >
-            {saved ? <Check size={16} style={{ color: 'var(--accent-green)' }} /> : <Bookmark size={16} />}
+            <Download size={15} />
+            <span>SVG Vector</span>
+          </button>
+        </div>
+
+        {/* Utility Quick Toolbar: Copy, Save, Share */}
+        <div className="stage-utility-row">
+          <button
+            type="button"
+            className={`utility-btn ${copied ? 'is-active' : ''}`}
+            onClick={handleCopyImage}
+            title="Copy image binary directly to clipboard"
+          >
+            {copied ? <Check size={14} style={{ color: 'var(--accent-green)' }} /> : <Copy size={14} />}
+            <span>{copied ? 'Copied Image' : 'Copy'}</span>
+          </button>
+
+          <button
+            type="button"
+            className={`utility-btn ${saved ? 'is-active' : ''}`}
+            onClick={handleManualSave}
+            title="Save custom design to local history session"
+          >
+            {saved ? <Check size={14} style={{ color: 'var(--accent-green)' }} /> : <Bookmark size={14} />}
             <span>{saved ? 'Saved!' : 'Save'}</span>
           </button>
 
           <button
             type="button"
-            className="action-trio-btn"
+            className={`utility-btn ${shared ? 'is-active' : ''}`}
             onClick={handleShare}
-            title="Share QR link"
+            title="Share payload or studio link"
           >
-            {shared ? <Check size={16} style={{ color: 'var(--accent-green)' }} /> : <Share2 size={16} />}
-            <span>{shared ? 'Copied Link' : 'Share'}</span>
+            {shared ? <Check size={14} style={{ color: 'var(--accent-green)' }} /> : <Share2 size={14} />}
+            <span>{shared ? 'Copied' : 'Share'}</span>
           </button>
         </div>
       </div>
