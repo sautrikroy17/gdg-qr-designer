@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Sparkles,
   ArrowRight,
   Play,
   Zap,
@@ -17,7 +16,9 @@ import {
   Shapes,
   Image as ImageIcon,
   Square,
-  Sliders
+  Sliders,
+  ScanLine,
+  Sparkles
 } from 'lucide-react';
 import BrandLogos from './BrandLogos';
 
@@ -29,7 +30,11 @@ export default function HeroLanding({
   onOpenTemplates
 }) {
   const [activeType, setActiveType] = useState('url');
-  const [heroPaletteIndex, setHeroPaletteIndex] = useState(0); // 0: Blue/Cyan, 1: Purple/Magenta, 2: Orange/Coral
+  const [heroPaletteIndex, setHeroPaletteIndex] = useState(0); // 0: Blue, 1: Magenta, 2: Orange, 3: Emerald
+  const [heroShape, setHeroShape] = useState('dots'); // 'dots' | 'square' | 'rounded'
+  const [heroFrame, setHeroFrame] = useState('rounded'); // 'rounded' | 'sharp' | 'circle'
+  const [showLogo, setShowLogo] = useState(true);
+  const [cardTilt, setCardTilt] = useState({ x: 0, y: 0 });
 
   const palettePresets = [
     {
@@ -38,7 +43,7 @@ export default function HeroLanding({
       dot2: '#2563eb',
       dot3: '#6366f1',
       glow: 'rgba(56, 189, 248, 0.45)',
-      sliderPos: '20%'
+      sliderPos: '15%'
     },
     {
       name: 'Cyber Magenta',
@@ -46,7 +51,7 @@ export default function HeroLanding({
       dot2: '#ec4899',
       dot3: '#f43f5e',
       glow: 'rgba(236, 72, 153, 0.45)',
-      sliderPos: '55%'
+      sliderPos: '45%'
     },
     {
       name: 'Sunset Orange',
@@ -54,7 +59,15 @@ export default function HeroLanding({
       dot2: '#f97316',
       dot3: '#ea580c',
       glow: 'rgba(249, 115, 22, 0.45)',
-      sliderPos: '90%'
+      sliderPos: '75%'
+    },
+    {
+      name: 'Emerald Pulse',
+      dot1: '#34d399',
+      dot2: '#10b981',
+      dot3: '#059669',
+      glow: 'rgba(16, 185, 129, 0.45)',
+      sliderPos: '95%'
     }
   ];
 
@@ -67,8 +80,29 @@ export default function HeroLanding({
     { id: 'phone', title: 'Phone', desc: 'Call with one scan', icon: Phone, iconColor: '#34d399', circleBg: 'rgba(52, 211, 153, 0.15)' },
     { id: 'wifi', title: 'Wi-Fi', desc: 'Share Wi-Fi details', icon: Wifi, iconColor: '#38bdf8', circleBg: 'rgba(56, 189, 248, 0.15)' },
     { id: 'location', title: 'Location', desc: 'Share any location', icon: MapPin, iconColor: '#fb7185', circleBg: 'rgba(251, 113, 133, 0.15)' },
-    { id: 'vcard', title: 'More', desc: 'And many more', icon: MoreHorizontal, iconColor: '#c084fc', circleBg: 'rgba(192, 132, 252, 0.15)' },
+    { id: 'vcard', title: 'vCard Contact', desc: 'Share complete contact card', icon: MoreHorizontal, iconColor: '#c084fc', circleBg: 'rgba(192, 132, 252, 0.15)' },
   ];
+
+  // Mouse move 3D tilt calculation
+  const handleCardMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setCardTilt({ x: x * 14, y: -y * 14 });
+  };
+
+  const handleCardMouseLeave = () => {
+    setCardTilt({ x: 0, y: 0 });
+  };
+
+  // Mouse spotlight for purpose cards
+  const handleTileMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+  };
 
   return (
     <div className="landing-wrapper-full">
@@ -121,99 +155,55 @@ export default function HeroLanding({
             </button>
           </div>
 
-          {/* 4 Feature Badges Underneath CTAs */}
-          <div className="hero-quad-badges-row">
-            <div className="quad-badge-item">
-              <Zap size={16} className="quad-icon blue" />
-              <div>
-                <h5>Instant Generation</h5>
-                <p>Real-time preview</p>
-              </div>
+          {/* 4 Feature Tags Row */}
+          <div className="hero-feature-tags-row">
+            <div className="feature-tag-item">
+              <Zap size={14} className="tag-icon" />
+              <span>Lightning Fast</span>
             </div>
-
-            <div className="quad-badge-item">
-              <Lock size={16} className="quad-icon blue" />
-              <div>
-                <h5>100% Client-Side</h5>
-                <p>No login required</p>
-              </div>
+            <div className="feature-tag-item">
+              <Lock size={14} className="tag-icon" />
+              <span>No Backend Required</span>
             </div>
-
-            <div className="quad-badge-item">
-              <span className="quad-infinity">∞</span>
-              <div>
-                <h5>Works Offline</h5>
-                <p>Even without internet</p>
-              </div>
+            <div className="feature-tag-item">
+              <Smartphone size={14} className="tag-icon" />
+              <span>Vector SVGs</span>
             </div>
-
-            <div className="quad-badge-item">
-              <Smartphone size={16} className="quad-icon blue" />
-              <div>
-                <h5>All Devices</h5>
-                <p>Desktop, tablet, mobile</p>
-              </div>
+            <div className="feature-tag-item">
+              <Wifi size={14} className="tag-icon" />
+              <span>W3C Compliant</span>
             </div>
           </div>
         </div>
 
-        {/* Right Column: 3D Visual Centerpiece */}
-        <div className="hero-visual-right">
-          <div className="scene-stage-3d">
-            {/* Ambient Spotlight */}
-            <div className="scene-spotlight" />
-
-            {/* "Customize every detail" Pointer */}
-            <div className="tag-customize-detail">
-              <span>Customize every detail</span>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="arrow-curly">
-                <path
-                  d="M3 14 C9 20, 16 16, 20 4 M20 4 L14 4 M20 4 L20 10"
-                  stroke="#60a5fa"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-
-            {/* Floating Color Palette Widget (Interactive Live Color Switcher) */}
-            <div
-              className="floating-color-palette"
-              title="Click color swatches to customize QR colors"
-            >
-              <div className="palette-dots">
-                <button
-                  type="button"
-                  className={`palette-dot dot-blue ${heroPaletteIndex === 0 ? 'active' : ''}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setHeroPaletteIndex(0);
-                  }}
-                  title="Electric Blue"
-                />
-                <button
-                  type="button"
-                  className={`palette-dot dot-purple ${heroPaletteIndex === 1 ? 'active' : ''}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setHeroPaletteIndex(1);
-                  }}
-                  title="Cyber Magenta"
-                />
-                <button
-                  type="button"
-                  className={`palette-dot dot-orange ${heroPaletteIndex === 2 ? 'active' : ''}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setHeroPaletteIndex(2);
-                  }}
-                  title="Sunset Orange"
-                />
+        {/* Right Column: 3D Floating Interactive QR Showcase Platform */}
+        <div className="hero-content-right">
+          <div className="pedestal-showcase-wrapper">
+            {/* Interactive Color Slider Above Pedestal */}
+            <div className="palette-customizer-hud">
+              <div className="hud-label-row">
+                <span className="hud-title">INTERACTIVE PREVIEW</span>
+                <span className="hud-active-palette">{currentHeroPalette.name}</span>
+              </div>
+              <div className="palette-dots-track">
+                {palettePresets.map((preset, idx) => (
+                  <button
+                    key={preset.name}
+                    type="button"
+                    className={`palette-dot ${idx === heroPaletteIndex ? 'active' : ''}`}
+                    style={{ background: preset.dot2 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setHeroPaletteIndex(idx);
+                    }}
+                    title={preset.name}
+                  />
+                ))}
               </div>
               <div
                 className="palette-slider-rail"
-                onClick={() => onOpenStudioWithTab ? onOpenStudioWithTab('colors') : onOpenStudio()}
+                onClick={() => setHeroPaletteIndex((prev) => (prev + 1) % palettePresets.length)}
+                title="Click to cycle palettes"
               >
                 <div
                   className="palette-slider-knob"
@@ -222,23 +212,34 @@ export default function HeroLanding({
               </div>
             </div>
 
-            {/* 3D Elevated Pedestal Base Platform */}
-            <div className="pedestal-3d-base">
+            {/* 3D Elevated Pedestal Base Platform with Interactive Tilt */}
+            <div
+              className="pedestal-3d-base"
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
+              style={{
+                transform: `perspective(1000px) rotateX(${cardTilt.y}deg) rotateY(${cardTilt.x}deg)`,
+                transition: cardTilt.x === 0 && cardTilt.y === 0 ? 'transform 0.5s ease-out' : 'transform 0.1s ease-out'
+              }}
+            >
               {/* Bottom Glowing Rim and Ambient Shadow */}
-              <div className="pedestal-glow-rim" />
+              <div className="pedestal-glow-rim" style={{ boxShadow: `0 0 50px 10px ${currentHeroPalette.glow}` }} />
               
               {/* Metallic 3D Pedestal Stage */}
               <div className="pedestal-tier-bottom" />
               <div className="pedestal-tier-top" />
 
-              {/* Glossy 3D QR Code Card (Isometric Perspective) */}
+              {/* Glossy 3D QR Code Card */}
               <div
                 className="gloss-qr-3d-card"
                 onClick={onOpenStudio}
-                title="Click to open Generator Studio"
+                title="Double click or click to open Studio Workspace"
               >
                 {/* Specular Glass Sheen Highlight */}
                 <div className="glass-specular-glare" />
+
+                {/* Laser Scan Sweep Beam */}
+                <div className="hero-laser-scanner" />
 
                 {/* Rich Authentic QR Code Matrix */}
                 <div className="card-qr-surface">
@@ -250,144 +251,226 @@ export default function HeroLanding({
                         <stop offset="100%" stopColor={currentHeroPalette.dot3} />
                       </linearGradient>
                       <linearGradient id="finderBorderGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#2563eb" />
-                        <stop offset="100%" stopColor="#38bdf8" />
+                        <stop offset="0%" stopColor={currentHeroPalette.dot2} />
+                        <stop offset="100%" stopColor={currentHeroPalette.dot1} />
                       </linearGradient>
                     </defs>
 
-                    {/* Top-Left Finder Pattern */}
-                    <rect x="6" y="6" width="26" height="26" rx="7.5" stroke="url(#finderBorderGradient)" strokeWidth="4.2" fill="#f0f7ff" />
-                    <rect x="13" y="13" width="12" height="12" rx="4" fill="#2563eb" />
+                    {/* Corner Finders with dynamic frame shape */}
+                    {/* Top-Left */}
+                    <rect
+                      x="6"
+                      y="6"
+                      width="26"
+                      height="26"
+                      rx={heroFrame === 'sharp' ? 1.5 : heroFrame === 'circle' ? 13 : 7.5}
+                      stroke="url(#finderBorderGradient)"
+                      strokeWidth="4.2"
+                      fill="#f0f7ff"
+                    />
+                    <rect
+                      x="13"
+                      y="13"
+                      width="12"
+                      height="12"
+                      rx={heroFrame === 'sharp' ? 1 : heroFrame === 'circle' ? 6 : 4}
+                      fill={currentHeroPalette.dot2}
+                    />
 
-                    {/* Top-Right Finder Pattern */}
-                    <rect x="68" y="6" width="26" height="26" rx="7.5" stroke="url(#finderBorderGradient)" strokeWidth="4.2" fill="#f0f7ff" />
-                    <rect x="75" y="13" width="12" height="12" rx="4" fill="#2563eb" />
+                    {/* Top-Right */}
+                    <rect
+                      x="68"
+                      y="6"
+                      width="26"
+                      height="26"
+                      rx={heroFrame === 'sharp' ? 1.5 : heroFrame === 'circle' ? 13 : 7.5}
+                      stroke="url(#finderBorderGradient)"
+                      strokeWidth="4.2"
+                      fill="#f0f7ff"
+                    />
+                    <rect
+                      x="75"
+                      y="13"
+                      width="12"
+                      height="12"
+                      rx={heroFrame === 'sharp' ? 1 : heroFrame === 'circle' ? 6 : 4}
+                      fill={currentHeroPalette.dot2}
+                    />
 
-                    {/* Bottom-Left Finder Pattern */}
-                    <rect x="6" y="68" width="26" height="26" rx="7.5" stroke="url(#finderBorderGradient)" strokeWidth="4.2" fill="#f0f7ff" />
-                    <rect x="13" y="75" width="12" height="12" rx="4" fill="#2563eb" />
+                    {/* Bottom-Left */}
+                    <rect
+                      x="6"
+                      y="68"
+                      width="26"
+                      height="26"
+                      rx={heroFrame === 'sharp' ? 1.5 : heroFrame === 'circle' ? 13 : 7.5}
+                      stroke="url(#finderBorderGradient)"
+                      strokeWidth="4.2"
+                      fill="#f0f7ff"
+                    />
+                    <rect
+                      x="13"
+                      y="75"
+                      width="12"
+                      height="12"
+                      rx={heroFrame === 'sharp' ? 1 : heroFrame === 'circle' ? 6 : 4}
+                      fill={currentHeroPalette.dot2}
+                    />
 
-                    {/* Timing & Alignment Dot Matrix (High Fidelity Dense Grid) */}
+                    {/* Timing & Alignment Dot Matrix */}
                     <g fill="url(#heroQrGradient)">
-                      {/* Top Horizontal Timing Line */}
-                      <circle cx="38" cy="11" r="2.2" />
-                      <circle cx="45" cy="11" r="2.2" />
-                      <circle cx="52" cy="11" r="2.2" />
-                      <circle cx="59" cy="11" r="2.2" />
-
-                      <circle cx="38" cy="18" r="2.2" />
-                      <circle cx="52" cy="18" r="2.2" />
-
-                      <circle cx="38" cy="25" r="2.2" />
-                      <circle cx="45" cy="25" r="2.2" />
-                      <circle cx="59" cy="25" r="2.2" />
-
-                      {/* Middle Data Block Above Logo */}
-                      <circle cx="11" cy="38" r="2.2" />
-                      <circle cx="18" cy="38" r="2.2" />
-                      <circle cx="25" cy="38" r="2.2" />
-                      <circle cx="32" cy="38" r="2.2" />
-                      <circle cx="39" cy="38" r="2.2" />
-                      <circle cx="61" cy="38" r="2.2" />
-                      <circle cx="68" cy="38" r="2.2" />
-                      <circle cx="75" cy="38" r="2.2" />
-                      <circle cx="82" cy="38" r="2.2" />
-                      <circle cx="89" cy="38" r="2.2" />
-
-                      {/* Left and Right Data Columns */}
-                      <circle cx="11" cy="45" r="2.2" />
-                      <circle cx="25" cy="45" r="2.2" />
-                      <circle cx="32" cy="45" r="2.2" />
-                      <circle cx="68" cy="45" r="2.2" />
-                      <circle cx="82" cy="45" r="2.2" />
-
-                      <circle cx="11" cy="52" r="2.2" />
-                      <circle cx="18" cy="52" r="2.2" />
-                      <circle cx="32" cy="52" r="2.2" />
-                      <circle cx="68" cy="52" r="2.2" />
-                      <circle cx="75" cy="52" r="2.2" />
-                      <circle cx="89" cy="52" r="2.2" />
-
-                      <circle cx="11" cy="59" r="2.2" />
-                      <circle cx="25" cy="59" r="2.2" />
-                      <circle cx="39" cy="59" r="2.2" />
-                      <circle cx="61" cy="59" r="2.2" />
-                      <circle cx="75" cy="59" r="2.2" />
-                      <circle cx="89" cy="59" r="2.2" />
-
-                      {/* Bottom Right Area Alignment & Codewords */}
-                      <circle cx="38" cy="68" r="2.2" />
-                      <circle cx="45" cy="68" r="2.2" />
-                      <circle cx="52" cy="68" r="2.2" />
-                      <circle cx="68" cy="68" r="2.2" />
-                      <circle cx="75" cy="68" r="2.2" />
-                      <circle cx="82" cy="68" r="2.2" />
-                      <circle cx="89" cy="68" r="2.2" />
-
-                      <circle cx="38" cy="75" r="2.2" />
-                      <circle cx="52" cy="75" r="2.2" />
-                      <circle cx="59" cy="75" r="2.2" />
-                      <circle cx="68" cy="75" r="2.2" />
-                      <circle cx="82" cy="75" r="2.2" />
-
-                      <circle cx="38" cy="82" r="2.2" />
-                      <circle cx="45" cy="82" r="2.2" />
-                      <circle cx="61" cy="82" r="2.2" />
-                      <circle cx="75" cy="82" r="2.2" />
-                      <circle cx="82" cy="82" r="2.2" />
-                      <circle cx="89" cy="82" r="2.2" />
-
-                      <circle cx="38" cy="89" r="2.2" />
-                      <circle cx="52" cy="89" r="2.2" />
-                      <circle cx="68" cy="89" r="2.2" />
-                      <circle cx="75" cy="89" r="2.2" />
-                      <circle cx="89" cy="89" r="2.2" />
+                      {heroShape === 'square' ? (
+                        <>
+                          <rect x="36" y="9" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="43" y="9" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="50" y="9" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="57" y="9" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="36" y="16" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="50" y="16" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="36" y="23" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="43" y="23" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="57" y="23" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="36" y="30" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="50" y="30" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="57" y="30" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="9" y="36" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="23" y="36" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="30" y="36" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="66" y="36" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="80" y="36" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="87" y="36" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="9" y="43" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="16" y="43" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="66" y="43" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="80" y="43" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="9" y="50" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="16" y="50" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="30" y="50" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="66" y="50" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="73" y="50" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="87" y="50" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="36" y="66" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="43" y="66" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="66" y="66" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="73" y="66" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="87" y="66" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="36" y="73" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="50" y="73" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="66" y="73" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="80" y="73" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="36" y="80" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="43" y="80" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="73" y="80" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="80" y="80" width="4.2" height="4.2" rx="0.5" />
+                          <rect x="87" y="80" width="4.2" height="4.2" rx="0.5" />
+                        </>
+                      ) : (
+                        <>
+                          <circle cx="38" cy="11" r="2.2" />
+                          <circle cx="45" cy="11" r="2.2" />
+                          <circle cx="52" cy="11" r="2.2" />
+                          <circle cx="59" cy="11" r="2.2" />
+                          <circle cx="38" cy="18" r="2.2" />
+                          <circle cx="52" cy="18" r="2.2" />
+                          <circle cx="38" cy="25" r="2.2" />
+                          <circle cx="45" cy="25" r="2.2" />
+                          <circle cx="59" cy="25" r="2.2" />
+                          <circle cx="38" cy="32" r="2.2" />
+                          <circle cx="52" cy="32" r="2.2" />
+                          <circle cx="59" cy="32" r="2.2" />
+                          <circle cx="11" cy="38" r="2.2" />
+                          <circle cx="25" cy="38" r="2.2" />
+                          <circle cx="32" cy="38" r="2.2" />
+                          <circle cx="68" cy="38" r="2.2" />
+                          <circle cx="82" cy="38" r="2.2" />
+                          <circle cx="89" cy="38" r="2.2" />
+                          <circle cx="11" cy="45" r="2.2" />
+                          <circle cx="18" cy="45" r="2.2" />
+                          <circle cx="32" cy="45" r="2.2" />
+                          <circle cx="68" cy="45" r="2.2" />
+                          <circle cx="82" cy="45" r="2.2" />
+                          <circle cx="11" cy="52" r="2.2" />
+                          <circle cx="18" cy="52" r="2.2" />
+                          <circle cx="32" cy="52" r="2.2" />
+                          <circle cx="68" cy="52" r="2.2" />
+                          <circle cx="75" cy="52" r="2.2" />
+                          <circle cx="89" cy="52" r="2.2" />
+                          <circle cx="11" cy="59" r="2.2" />
+                          <circle cx="25" cy="59" r="2.2" />
+                          <circle cx="39" cy="59" r="2.2" />
+                          <circle cx="61" cy="59" r="2.2" />
+                          <circle cx="75" cy="59" r="2.2" />
+                          <circle cx="89" cy="59" r="2.2" />
+                          <circle cx="38" cy="68" r="2.2" />
+                          <circle cx="45" cy="68" r="2.2" />
+                          <circle cx="52" cy="68" r="2.2" />
+                          <circle cx="68" cy="68" r="2.2" />
+                          <circle cx="75" cy="68" r="2.2" />
+                          <circle cx="82" cy="68" r="2.2" />
+                          <circle cx="89" cy="68" r="2.2" />
+                          <circle cx="38" cy="75" r="2.2" />
+                          <circle cx="52" cy="75" r="2.2" />
+                          <circle cx="59" cy="75" r="2.2" />
+                          <circle cx="68" cy="75" r="2.2" />
+                          <circle cx="82" cy="75" r="2.2" />
+                          <circle cx="38" cy="82" r="2.2" />
+                          <circle cx="45" cy="82" r="2.2" />
+                          <circle cx="61" cy="82" r="2.2" />
+                          <circle cx="75" cy="82" r="2.2" />
+                          <circle cx="82" cy="82" r="2.2" />
+                          <circle cx="89" cy="82" r="2.2" />
+                          <circle cx="38" cy="89" r="2.2" />
+                          <circle cx="52" cy="89" r="2.2" />
+                          <circle cx="68" cy="89" r="2.2" />
+                          <circle cx="75" cy="89" r="2.2" />
+                          <circle cx="89" cy="89" r="2.2" />
+                        </>
+                      )}
                     </g>
 
-                    {/* Center Brand Watermark Logo Badge (QRCraft 4-squares grid) */}
-                    <rect x="39" y="39" width="22" height="22" rx="6" fill="#2563eb" filter="drop-shadow(0 2px 6px rgba(37,99,235,0.4))" />
-                    <rect x="43" y="43" width="5.5" height="5.5" rx="1.5" fill="white" />
-                    <rect x="51.5" y="43" width="5.5" height="5.5" rx="1.5" fill="white" />
-                    <rect x="43" y="51.5" width="5.5" height="5.5" rx="1.5" fill="white" />
-                    <rect x="51.5" y="51.5" width="5.5" height="5.5" rx="1.5" fill="white" />
+                    {/* Center Brand Watermark Logo Badge */}
+                    {showLogo && (
+                      <g>
+                        <rect x="39" y="39" width="22" height="22" rx="6" fill={currentHeroPalette.dot2} filter="drop-shadow(0 2px 8px rgba(0,0,0,0.4))" />
+                        <rect x="43" y="43" width="5.5" height="5.5" rx="1.5" fill="white" />
+                        <rect x="51.5" y="43" width="5.5" height="5.5" rx="1.5" fill="white" />
+                        <rect x="43" y="51.5" width="5.5" height="5.5" rx="1.5" fill="white" />
+                        <rect x="51.5" y="51.5" width="5.5" height="5.5" rx="1.5" fill="white" />
+                      </g>
+                    )}
                   </svg>
                 </div>
               </div>
 
-              {/* Floating Vertical Tool Shelf on Right (Exact Match) */}
-              <div className="floating-tools-dock">
+              {/* Floating Vertical Tool Shelf on Right (Interactive!) */}
+              <div className="floating-tools-dock" onClick={(e) => e.stopPropagation()}>
                 <button
                   type="button"
                   className="dock-tool-btn"
-                  title="Customize Style & Padding"
-                  onClick={() => onOpenStudioWithTab ? onOpenStudioWithTab('style') : onOpenStudio()}
-                >
-                  <Sliders size={16} />
-                  <span>Style</span>
-                </button>
-                <button
-                  type="button"
-                  className="dock-tool-btn"
-                  title="Upload Center Logo"
-                  onClick={() => onOpenStudioWithTab ? onOpenStudioWithTab('logo') : onOpenStudio()}
+                  title="Click to toggle Center Logo"
+                  onClick={() => setShowLogo(!showLogo)}
                 >
                   <ImageIcon size={16} />
                   <span>Logo</span>
                 </button>
                 <button
                   type="button"
-                  className="dock-tool-btn"
-                  title="Change Module Pattern"
-                  onClick={() => onOpenStudioWithTab ? onOpenStudioWithTab('shapes') : onOpenStudio()}
+                  className={`dock-tool-btn ${heroShape === 'square' ? 'active-blue' : ''}`}
+                  title="Click to toggle Dot/Square Pattern"
+                  onClick={() => setHeroShape(heroShape === 'dots' ? 'square' : 'dots')}
                 >
                   <Shapes size={16} />
                   <span>Pattern</span>
                 </button>
                 <button
                   type="button"
-                  className="dock-tool-btn"
-                  title="Customize Frame & Margin"
-                  onClick={() => onOpenStudioWithTab ? onOpenStudioWithTab('style') : onOpenStudio()}
+                  className={`dock-tool-btn ${heroFrame === 'circle' ? 'active-blue' : ''}`}
+                  title="Click to cycle Frame Corner styles"
+                  onClick={() => {
+                    const frames = ['rounded', 'sharp', 'circle'];
+                    const next = frames[(frames.indexOf(heroFrame) + 1) % frames.length];
+                    setHeroFrame(next);
+                  }}
                 >
                   <Square size={16} />
                   <span>Frame</span>
@@ -395,8 +478,8 @@ export default function HeroLanding({
                 <button
                   type="button"
                   className="dock-tool-btn active-blue"
-                  title="Palette & Gradients"
-                  onClick={() => onOpenStudioWithTab ? onOpenStudioWithTab('colors') : onOpenStudio()}
+                  title="Click to cycle Designer Palettes"
+                  onClick={() => setHeroPaletteIndex((prev) => (prev + 1) % palettePresets.length)}
                 >
                   <Palette size={16} />
                   <span>Colors</span>
@@ -420,9 +503,9 @@ export default function HeroLanding({
       </section>
 
       {/* ====================================================================
-          3. "Create QR Codes for Any Purpose" Section (7 Purpose Cards)
+          3. "Create QR Codes for Any Purpose" Section (7 Interactive Purpose Cards)
           ==================================================================== */}
-      <section className="purpose-section-container">
+      <section className="purpose-section-container" id="features">
         <div className="purpose-section-header">
           <h2 className="purpose-headline">
             Create QR Codes for <span className="headline-gradient-word">Any Purpose</span>
@@ -433,7 +516,7 @@ export default function HeroLanding({
           </p>
         </div>
 
-        {/* 7 Content Type Cards */}
+        {/* 7 Content Type Cards with Mouse Spotlight Effect */}
         <div className="purpose-types-grid">
           {contentTypes.map((item) => {
             const Icon = item.icon;
@@ -441,13 +524,15 @@ export default function HeroLanding({
             return (
               <div
                 key={item.id}
-                className={`purpose-type-tile ${isSelected ? 'active-glow' : ''}`}
+                className={`purpose-type-tile spotlight-card ${isSelected ? 'active-glow' : ''}`}
+                onMouseMove={handleTileMouseMove}
                 onClick={() => {
                   setActiveType(item.id);
                   onSelectTypeAndOpen(item.id);
                 }}
                 role="button"
                 tabIndex={0}
+                title={`Create ${item.title} QR Code`}
               >
                 <div
                   className="tile-icon-box"
@@ -456,10 +541,14 @@ export default function HeroLanding({
                     color: item.iconColor
                   }}
                 >
-                  <Icon size={20} />
+                  <Icon size={24} />
                 </div>
-                <h4 className="tile-title">{item.title}</h4>
+                <h3 className="tile-title">{item.title}</h3>
                 <p className="tile-desc">{item.desc}</p>
+                <div className="tile-hover-arrow">
+                  <span>Open Studio</span>
+                  <ArrowRight size={13} />
+                </div>
               </div>
             );
           })}

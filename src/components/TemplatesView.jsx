@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PRESETS, TEMPLATE_CATEGORIES } from '../utils/presets';
 import { Sparkles, ArrowRight, Check, Palette } from 'lucide-react';
+import { playTap, playSuccessChime } from '../utils/soundEffects';
 
 export default function TemplatesView({ activePresetId, onSelectPresetAndEdit }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -9,6 +10,14 @@ export default function TemplatesView({ activePresetId, onSelectPresetAndEdit })
     if (selectedCategory === 'all') return true;
     return item.category === selectedCategory;
   });
+
+  const handleSpotlightMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+  };
 
   return (
     <div className="view-page-container">
@@ -32,7 +41,10 @@ export default function TemplatesView({ activePresetId, onSelectPresetAndEdit })
               key={cat.id}
               type="button"
               className={`filter-pill-btn ${selectedCategory === cat.id ? 'active' : ''}`}
-              onClick={() => setSelectedCategory(cat.id)}
+              onClick={() => {
+                playTap();
+                setSelectedCategory(cat.id);
+              }}
             >
               {cat.label}
             </button>
@@ -48,8 +60,12 @@ export default function TemplatesView({ activePresetId, onSelectPresetAndEdit })
           return (
             <div
               key={preset.id}
-              className={`template-showcase-card ${isActive ? 'active-ring' : ''}`}
-              onClick={() => onSelectPresetAndEdit(preset)}
+              className={`template-showcase-card spotlight-card ${isActive ? 'active-ring' : ''}`}
+              onMouseMove={handleSpotlightMouseMove}
+              onClick={() => {
+                playSuccessChime();
+                onSelectPresetAndEdit(preset);
+              }}
               role="button"
               tabIndex={0}
             >

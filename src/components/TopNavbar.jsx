@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sun, Moon, ArrowRight } from 'lucide-react';
+import { Sun, Moon, ArrowRight, Search, Volume2, VolumeX } from 'lucide-react';
 
 export default function TopNavbar({
   activeTab,
@@ -7,10 +7,20 @@ export default function TopNavbar({
   theme,
   onToggleTheme,
   onOpenSignIn,
-  onGetStarted
+  onGetStarted,
+  onOpenCommandPalette,
+  scrollProgress = 0,
+  soundEnabled = true,
+  onToggleSound
 }) {
   return (
     <header className="top-navbar">
+      {/* Scroll Progress Bar along bottom edge */}
+      <div
+        className="navbar-scroll-progress"
+        style={{ width: `${Math.min(100, Math.max(0, scrollProgress))}%` }}
+      />
+
       {/* Brand Logo on Left (Exact matching 4-square grid squircle) */}
       <div
         className="navbar-brand-box"
@@ -68,9 +78,23 @@ export default function TopNavbar({
         </button>
       </nav>
 
-      {/* Right Actions: Theme Toggle Pill, Sign In, Get Started */}
+      {/* Right Actions: Command Palette Button, Theme Toggle, Sign In, Get Started */}
       <div className="nav-right-actions">
-        {/* Dual Sun/Moon Pill (Exact Match to Reference Screenshot) */}
+        {/* Quick Command Palette Button */}
+        {onOpenCommandPalette && (
+          <button
+            type="button"
+            className="btn-command-palette-pill"
+            onClick={onOpenCommandPalette}
+            title="Open Command Palette (⌘K / Ctrl+K)"
+          >
+            <Search size={13} />
+            <span className="command-text-label">Quick Actions</span>
+            <kbd className="command-kbd-badge">⌘K</kbd>
+          </button>
+        )}
+
+        {/* Dual Sun/Moon Pill */}
         <button
           type="button"
           className="theme-toggle-pill"
@@ -85,6 +109,19 @@ export default function TopNavbar({
             <Moon size={14} />
           </span>
         </button>
+
+        {/* Audio Haptic Feedback Toggle */}
+        {onToggleSound && (
+          <button
+            type="button"
+            className={`btn-sound-toggle-nav ${soundEnabled ? 'sound-active' : ''}`}
+            onClick={onToggleSound}
+            title={soundEnabled ? 'Sound Effects Enabled (Click to mute)' : 'Sound Effects Muted (Click to enable)'}
+            aria-label={soundEnabled ? 'Mute sound effects' : 'Enable sound effects'}
+          >
+            {soundEnabled ? <Volume2 size={14} className="text-blue" /> : <VolumeX size={14} />}
+          </button>
+        )}
 
         {/* Sign In Button */}
         <button

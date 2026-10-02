@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import { Check, Sparkles, HelpCircle, ArrowRight, ShieldCheck } from 'lucide-react';
+import { playTap, playSuccessChime } from '../utils/soundEffects';
 
 export default function PricingView({ onOpenStudio }) {
   const [openFaq, setOpenFaq] = useState(0);
+
+  const handleSpotlightMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+  };
 
   const faqs = [
     {
@@ -42,7 +51,7 @@ export default function PricingView({ onOpenStudio }) {
       {/* Pricing Cards */}
       <div className="pricing-cards-grid">
         {/* Card 1: Community Free */}
-        <div className="pricing-card featured-glow">
+        <div className="pricing-card featured-glow spotlight-card" onMouseMove={handleSpotlightMouseMove}>
           <div className="pricing-badge-top">CURRENT ACTIVE PLAN</div>
           <h3 className="plan-name">Community Plan</h3>
           <p className="plan-desc">Full access to the entire QRCraft suite for everyone.</p>
@@ -55,7 +64,10 @@ export default function PricingView({ onOpenStudio }) {
             type="button"
             className="btn-create-qr-hero"
             style={{ width: '100%', justifyContent: 'center', marginBottom: '1.75rem' }}
-            onClick={onOpenStudio}
+            onClick={() => {
+              playSuccessChime();
+              onOpenStudio();
+            }}
           >
             <span>Start Creating Now</span>
             <ArrowRight size={17} />
@@ -90,7 +102,7 @@ export default function PricingView({ onOpenStudio }) {
         </div>
 
         {/* Card 2: Campus Clubs / Hackathons */}
-        <div className="pricing-card">
+        <div className="pricing-card spotlight-card" onMouseMove={handleSpotlightMouseMove}>
           <h3 className="plan-name">Campus Teams & Clubs</h3>
           <p className="plan-desc">For student organizations, hackathons, and symposiums.</p>
           <div className="plan-price-row">
@@ -102,7 +114,10 @@ export default function PricingView({ onOpenStudio }) {
             type="button"
             className="btn-watch-demo-hero"
             style={{ width: '100%', justifyContent: 'center', marginBottom: '1.75rem' }}
-            onClick={onOpenStudio}
+            onClick={() => {
+              playSuccessChime();
+              onOpenStudio();
+            }}
           >
             <span>Deploy with QRCraft</span>
           </button>
@@ -136,7 +151,10 @@ export default function PricingView({ onOpenStudio }) {
             <div
               key={idx}
               className={`faq-item-card ${openFaq === idx ? 'expanded' : ''}`}
-              onClick={() => setOpenFaq(openFaq === idx ? -1 : idx)}
+              onClick={() => {
+                playTap();
+                setOpenFaq(openFaq === idx ? -1 : idx);
+              }}
             >
               <div className="faq-q-row">
                 <span>{faq.q}</span>

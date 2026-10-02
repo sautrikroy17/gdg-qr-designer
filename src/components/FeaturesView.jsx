@@ -14,6 +14,7 @@ import {
   Copy,
   Check
 } from 'lucide-react';
+import { playTap, playSuccessChime } from '../utils/soundEffects';
 
 export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSelectTypeAndOpen }) {
   const [copiedIndex, setCopiedIndex] = useState(null);
@@ -28,8 +29,17 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
 
   const handleCopyCode = (text, idx) => {
     navigator.clipboard.writeText(text);
+    playSuccessChime();
     setCopiedIndex(idx);
     setTimeout(() => setCopiedIndex(null), 1800);
+  };
+
+  const handleSpotlightMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
   };
 
   return (
@@ -57,7 +67,7 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
       {/* 6 High-Fidelity Interactive Architecture Cards */}
       <div className="architecture-grid" style={{ marginBottom: '4rem', position: 'relative', zIndex: 5 }}>
         {/* Card 1: Automated Wi-Fi Handshake */}
-        <div className="arch-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div className="arch-card spotlight-card" onMouseMove={handleSpotlightMouseMove} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
               <div className="arch-icon-box" style={{ margin: 0 }}>
@@ -111,7 +121,7 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
         </div>
 
         {/* Card 2: W3C Contrast Scannability Guard */}
-        <div className="arch-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div className="arch-card spotlight-card" onMouseMove={handleSpotlightMouseMove} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
               <div className="arch-icon-box" style={{ margin: 0 }}>
@@ -159,7 +169,7 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
         </div>
 
         {/* Card 3: Reed-Solomon Redundancy Polynomial Math */}
-        <div className="arch-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div className="arch-card spotlight-card" onMouseMove={handleSpotlightMouseMove} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
               <div className="arch-icon-box" style={{ margin: 0 }}>
@@ -178,7 +188,10 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
                 <button
                   key={el.level}
                   type="button"
-                  onClick={() => setSelectedErrorLevel(el.level)}
+                  onClick={() => {
+                    playTap();
+                    setSelectedErrorLevel(el.level);
+                  }}
                   style={{
                     padding: '0.5rem 0.2rem',
                     borderRadius: 'var(--radius-xs)',
@@ -214,7 +227,7 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
         </div>
 
         {/* Card 4: Infinite Vector SVG Export */}
-        <div className="arch-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div className="arch-card spotlight-card" onMouseMove={handleSpotlightMouseMove} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
               <div className="arch-icon-box" style={{ margin: 0 }}>
@@ -260,7 +273,7 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
         </div>
 
         {/* Card 5: 100% Client-Side Privacy */}
-        <div className="arch-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div className="arch-card spotlight-card" onMouseMove={handleSpotlightMouseMove} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
               <div className="arch-icon-box" style={{ margin: 0 }}>
@@ -306,7 +319,7 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
         </div>
 
         {/* Card 6: Smart URL Sanitization & Encoding */}
-        <div className="arch-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div className="arch-card spotlight-card" onMouseMove={handleSpotlightMouseMove} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
               <div className="arch-icon-box" style={{ margin: 0 }}>

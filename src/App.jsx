@@ -14,6 +14,9 @@ import RecentCodesTable from './components/RecentCodesTable';
 import SettingsModal from './components/SettingsModal';
 import InteractiveDemoModal from './components/InteractiveDemoModal';
 import SignInModal from './components/SignInModal';
+import Toast from './components/Toast';
+import CommandPalette from './components/CommandPalette';
+import { isSoundEnabled, toggleSound, playThemeSound, playTap } from './utils/soundEffects';
 
 import {
   formatURL,
@@ -122,9 +125,80 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isStudioMode]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  // Toast notifications state
+  const [toasts, setToasts] = useState([]);
+  const showToast = ({ type = 'info', title, message, duration = 3000 }) => {
+    const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
+    const newToast = { id, type, title, message, isExiting: false };
+    setToasts((prev) => [...prev.slice(-3), newToast]);
+    setTimeout(() => {
+      setToasts((prev) =>
+        prev.map((t) => (t.id === id ? { ...t, isExiting: true } : t))
+      );
+      setTimeout(() => {
+        setToasts((prev) => prev.filter((t) => t.id !== id));
+      }, 300);
+    }, duration);
   };
+  const dismissToast = (id) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
+
+  // Audio Haptic Sound State
+  const [soundOn, setSoundOn] = useState(() => isSoundEnabled());
+  const handleToggleSound = () => {
+    const next = toggleSound();
+    setSoundOn(next);
+    showToast({
+      type: 'info',
+      title: next ? 'Sound FX Enabled' : 'Sound FX Muted',
+      message: next ? 'Tactile synthesized audio active.' : 'Interface is now muted.'
+    });
+  };
+
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const next = prev === 'light' ? 'dark' : 'light';
+      playThemeSound(next === 'light');
+      return next;
+    });
+  };
+
+  // Command palette state
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+
+  // Scroll Progress Percentage (0 - 100)
+  const [scrollProgress, setScrollProgress] = useState(0);
+  useEffect(() => {
+    const handleScrollProgress = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        setScrollProgress((window.scrollY / totalScroll) * 100);
+      }
+    };
+    window.addEventListener('scroll', handleScrollProgress, { passive: true });
+    return () => window.removeEventListener('scroll', handleScrollProgress);
+  }, []);
+
+  // Global Keyboard Shortcuts (Cmd+K, Cmd+D, Esc)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen((prev) => !prev);
+      } else if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'd') {
+        e.preventDefault();
+        toggleTheme();
+        showToast({
+          type: 'info',
+          title: 'Theme Toggled',
+          message: `Appearance updated.`
+        });
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [theme]);
 
   // Settings state
   const [defaultFormat, setDefaultFormat] = useState('png');
@@ -402,6 +476,10 @@ export default function App() {
             onToggleTheme={toggleTheme}
             onOpenSignIn={() => setIsSignInOpen(true)}
             onGetStarted={() => handleEnterStudio()}
+            onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+            scrollProgress={scrollProgress}
+            soundEnabled={soundOn}
+            onToggleSound={handleToggleSound}
           />
 
           {/* 1. Hero Section */}
@@ -484,6 +562,9 @@ export default function App() {
               onResetFactory={handleResetFactory}
               onOpenSignIn={() => setIsSignInOpen(true)}
               onOpenSettings={() => setIsSettingsOpen(true)}
+              onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+              soundEnabled={soundOn}
+              onToggleSound={handleToggleSound}
             />
 
             {/* Studio Page Content */}
@@ -508,6 +589,7 @@ export default function App() {
                     payload={payload}
                     config={config}
                     onSaveToHistory={saveToHistory}
+                    onNotify={showToast}
                   />
                 </div>
               )}
@@ -558,6 +640,51 @@ export default function App() {
       <SignInModal
         isOpen={isSignInOpen}
         onClose={() => setIsSignInOpen(false)}
+      />
+
+      {/* Global Physics Toast Notification Stack */}
+      <Toast toasts={toasts} onDismiss={dismissToast} />
+
+      {/* Raycast / Linear Command Palette */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onOpenStudio={() => {
+          handleEnterStudio();
+          showToast({ type: 'info', title: 'Studio Activated', message: 'Ready to customize.' });
+        }}
+        onOpenTemplates={() => {
+          if (!isStudioMode) handleEnterStudio();
+          setActiveTab('templates');
+        }}
+        onOpenFeatures={() => {
+          handleExitStudio();
+          setTimeout(() => {
+            const el = document.getElementById('features');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }}
+        onToggleTheme={() => {
+          toggleTheme();
+          showToast({ type: 'info', title: 'Theme Toggled', message: 'Appearance updated.' });
+        }}
+        theme={theme}
+        onExportPNG={() => {
+          window.dispatchEvent(new CustomEvent('qrcraft:export', { detail: { format: 'png' } }));
+        }}
+        onExportSVG={() => {
+          window.dispatchEvent(new CustomEvent('qrcraft:export', { detail: { format: 'svg' } }));
+        }}
+        onCopyImage={() => {
+          window.dispatchEvent(new CustomEvent('qrcraft:copy'));
+        }}
+        onResetFactory={() => {
+          handleResetFactory();
+          showToast({ type: 'info', title: 'Factory Defaults Restored', message: 'Reset to clean default styling.' });
+        }}
+        onOpenSettings={() => setIsSettingsOpen(true)}
+        soundEnabled={soundOn}
+        onToggleSound={handleToggleSound}
       />
     </div>
   );

@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import { User, ExternalLink, Code2, Award, Cpu, ShieldCheck, ArrowRight, HelpCircle, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { playTap, playSuccessChime } from '../utils/soundEffects';
 
 export default function AboutView({ onOpenStudio }) {
   const [openVivaIndex, setOpenVivaIndex] = useState(0);
+
+  const handleSpotlightMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+  };
 
   const vivaQuestions = [
     {
@@ -46,7 +55,7 @@ export default function AboutView({ onOpenStudio }) {
       </div>
 
       {/* Candidate Profile Showcase Hero Card */}
-      <div className="about-profile-hero-card" style={{ position: 'relative', zIndex: 5 }}>
+      <div className="about-profile-hero-card spotlight-card" onMouseMove={handleSpotlightMouseMove} style={{ position: 'relative', zIndex: 5 }}>
         <div className="profile-badge-avatar">SR</div>
         <div className="profile-info-body">
           <div className="profile-name-row">
@@ -64,6 +73,7 @@ export default function AboutView({ onOpenStudio }) {
               target="_blank"
               rel="noreferrer"
               className="profile-link-btn"
+              onClick={() => playTap()}
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                 <path fillRule="evenodd" clipRule="evenodd" d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
@@ -77,7 +87,7 @@ export default function AboutView({ onOpenStudio }) {
 
       {/* Technical Architecture Cards */}
       <div className="architecture-grid" style={{ marginBottom: '3.5rem', position: 'relative', zIndex: 5 }}>
-        <div className="arch-card">
+        <div className="arch-card spotlight-card" onMouseMove={handleSpotlightMouseMove}>
           <div className="arch-icon-box">
             <Cpu size={20} />
           </div>
@@ -87,7 +97,7 @@ export default function AboutView({ onOpenStudio }) {
           </p>
         </div>
 
-        <div className="arch-card">
+        <div className="arch-card spotlight-card" onMouseMove={handleSpotlightMouseMove}>
           <div className="arch-icon-box">
             <ShieldCheck size={20} />
           </div>
@@ -97,7 +107,7 @@ export default function AboutView({ onOpenStudio }) {
           </p>
         </div>
 
-        <div className="arch-card">
+        <div className="arch-card spotlight-card" onMouseMove={handleSpotlightMouseMove}>
           <div className="arch-icon-box">
             <Award size={20} />
           </div>
@@ -130,7 +140,10 @@ export default function AboutView({ onOpenStudio }) {
               <div
                 key={idx}
                 className={`faq-item-card ${isOpen ? 'expanded' : ''}`}
-                onClick={() => setOpenVivaIndex(isOpen ? -1 : idx)}
+                onClick={() => {
+                  playTap();
+                  setOpenVivaIndex(isOpen ? -1 : idx);
+                }}
                 style={{ cursor: 'pointer' }}
               >
                 <div className="faq-q-row">
@@ -153,7 +166,10 @@ export default function AboutView({ onOpenStudio }) {
         <button
           type="button"
           className="btn-create-qr-hero"
-          onClick={onOpenStudio}
+          onClick={() => {
+            playSuccessChime();
+            onOpenStudio();
+          }}
           style={{ margin: '0 auto' }}
         >
           <span>Launch Generator Studio</span>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, RotateCcw, Sun, Moon } from 'lucide-react';
+import { ArrowLeft, RotateCcw, Sun, Moon, Search, Volume2, VolumeX } from 'lucide-react';
 
 export default function StudioHeader({
   currentType,
@@ -8,7 +8,10 @@ export default function StudioHeader({
   onBackToHome,
   onResetFactory,
   onOpenSignIn,
-  onOpenSettings
+  onOpenSettings,
+  onOpenCommandPalette,
+  soundEnabled,
+  onToggleSound
 }) {
   const typeLabels = {
     url: 'Website URL',
@@ -44,8 +47,22 @@ export default function StudioHeader({
         </div>
       </div>
 
-      {/* Right: Actions, Theme Toggle, Reset, Profile */}
+      {/* Right: Actions, Command Palette, Theme Toggle, Reset, Profile */}
       <div className="studio-header-right">
+        {/* Quick Command Palette Button */}
+        {onOpenCommandPalette && (
+          <button
+            type="button"
+            className="studio-btn-subtle command-pill-btn"
+            onClick={onOpenCommandPalette}
+            title="Command Center (⌘K)"
+          >
+            <Search size={13} />
+            <span className="btn-text-desktop">Commands</span>
+            <kbd className="command-kbd-badge-subtle">⌘K</kbd>
+          </button>
+        )}
+
         {/* Reset Defaults Button */}
         <button
           type="button"
@@ -72,6 +89,19 @@ export default function StudioHeader({
             <Moon size={13} />
           </span>
         </button>
+
+        {/* Audio Haptic Feedback Toggle */}
+        {onToggleSound && (
+          <button
+            type="button"
+            className={`studio-btn-subtle sound-toggle-btn ${soundEnabled ? 'sound-active' : ''}`}
+            onClick={onToggleSound}
+            title={soundEnabled ? 'Sound FX Enabled (Click to mute)' : 'Sound FX Muted (Click to enable)'}
+            aria-label={soundEnabled ? 'Mute sound effects' : 'Enable sound effects'}
+          >
+            {soundEnabled ? <Volume2 size={13} className="text-blue" /> : <VolumeX size={13} />}
+          </button>
+        )}
 
         {/* Candidate Session Pill */}
         <button

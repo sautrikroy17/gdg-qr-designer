@@ -19,6 +19,7 @@ import {
   Navigation,
   Check
 } from 'lucide-react';
+import { playTap, playPop, playSuccessChime } from '../utils/soundEffects';
 
 const CONTENT_TYPES = [
   { id: 'url', label: 'URL', icon: Globe },
@@ -123,6 +124,7 @@ export default function GeneratorView({
     const reader = new FileReader();
     reader.onload = (event) => {
       onChangeConfig('logo', event.target.result);
+      playSuccessChime();
       if (config.errorCorrectionLevel === 'L' || config.errorCorrectionLevel === 'M') {
         onChangeConfig('errorCorrectionLevel', 'H');
       }
@@ -137,6 +139,7 @@ export default function GeneratorView({
         (pos) => {
           onChangeField('latitude', pos.coords.latitude.toFixed(6));
           onChangeField('longitude', pos.coords.longitude.toFixed(6));
+          playSuccessChime();
         },
         () => {
           alert('Could not access current location. Please check browser permissions.');
@@ -169,7 +172,10 @@ export default function GeneratorView({
               key={t.id}
               type="button"
               className={`type-segment-btn ${isActive ? 'active' : ''}`}
-              onClick={() => onSelectType(t.id)}
+              onClick={() => {
+                playTap();
+                onSelectType(t.id);
+              }}
             >
               <Icon size={15} />
               <span>{t.label}</span>
@@ -217,7 +223,10 @@ export default function GeneratorView({
                   key={item.label}
                   type="button"
                   className="quick-chip-btn"
-                  onClick={() => onChangeField('url', item.value)}
+                  onClick={() => {
+                    playPop();
+                    onChangeField('url', item.value);
+                  }}
                 >
                   {item.label}
                 </button>
@@ -477,7 +486,10 @@ export default function GeneratorView({
           <button
             type="button"
             className={`subtab-pill ${activeSubTab === 'colors' ? 'active' : ''}`}
-            onClick={() => setActiveSubTab('colors')}
+            onClick={() => {
+              playTap();
+              setActiveSubTab('colors');
+            }}
           >
             <Palette size={14} />
             <span>Colors</span>
@@ -485,7 +497,10 @@ export default function GeneratorView({
           <button
             type="button"
             className={`subtab-pill ${activeSubTab === 'shapes' ? 'active' : ''}`}
-            onClick={() => setActiveSubTab('shapes')}
+            onClick={() => {
+              playTap();
+              setActiveSubTab('shapes');
+            }}
           >
             <Shapes size={14} />
             <span>Shapes</span>
@@ -493,7 +508,10 @@ export default function GeneratorView({
           <button
             type="button"
             className={`subtab-pill ${activeSubTab === 'logo' ? 'active' : ''}`}
-            onClick={() => setActiveSubTab('logo')}
+            onClick={() => {
+              playTap();
+              setActiveSubTab('logo');
+            }}
           >
             <ImageIcon size={14} />
             <span>Brand Logo</span>
@@ -501,7 +519,10 @@ export default function GeneratorView({
           <button
             type="button"
             className={`subtab-pill ${activeSubTab === 'precision' || activeSubTab === 'style' ? 'active' : ''}`}
-            onClick={() => setActiveSubTab('precision')}
+            onClick={() => {
+              playTap();
+              setActiveSubTab('precision');
+            }}
           >
             <Sliders size={14} />
             <span>Precision</span>
@@ -523,6 +544,7 @@ export default function GeneratorView({
                       type="button"
                       className={`palette-chip ${isCurrent ? 'selected' : ''}`}
                       onClick={() => {
+                        playPop();
                         onChangeConfig('dotsColor', p.dots);
                         onChangeConfig('backgroundColor', p.bg);
                         onChangeConfig('isGradient', p.isGrad);
@@ -643,7 +665,10 @@ export default function GeneratorView({
                       key={d.id}
                       type="button"
                       className={`pattern-tile ${isCurrent ? 'selected' : ''}`}
-                      onClick={() => onChangeConfig('dotsType', d.id)}
+                      onClick={() => {
+                        playPop();
+                        onChangeConfig('dotsType', d.id);
+                      }}
                     >
                       <div className="pattern-visual-preview">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -671,7 +696,10 @@ export default function GeneratorView({
                         key={c.id}
                         type="button"
                         className={`seg-sub-btn ${(config.cornersSquareType || 'extra-rounded') === c.id ? 'active' : ''}`}
-                        onClick={() => onChangeConfig('cornersSquareType', c.id)}
+                        onClick={() => {
+                          playPop();
+                          onChangeConfig('cornersSquareType', c.id);
+                        }}
                       >
                         {c.label}
                       </button>
@@ -687,7 +715,10 @@ export default function GeneratorView({
                         key={c.id}
                         type="button"
                         className={`seg-sub-btn ${(config.cornersDotType || 'dot') === c.id ? 'active' : ''}`}
-                        onClick={() => onChangeConfig('cornersDotType', c.id)}
+                        onClick={() => {
+                          playPop();
+                          onChangeConfig('cornersDotType', c.id);
+                        }}
                       >
                         {c.label}
                       </button>
@@ -732,6 +763,7 @@ export default function GeneratorView({
                     type="button"
                     className="brand-preset-chip"
                     onClick={() => {
+                      playPop();
                       onChangeConfig('logo', b.svg);
                       onChangeConfig('errorCorrectionLevel', 'H');
                     }}
@@ -757,7 +789,10 @@ export default function GeneratorView({
                 <button
                   type="button"
                   className="btn-remove-logo"
-                  onClick={() => onChangeConfig('logo', null)}
+                  onClick={() => {
+                    playTap();
+                    onChangeConfig('logo', null);
+                  }}
                   title="Remove logo from QR code"
                 >
                   <X size={14} />
@@ -783,7 +818,10 @@ export default function GeneratorView({
                     key={err.id}
                     type="button"
                     className={`seg-sub-btn ${(config.errorCorrectionLevel || 'M') === err.id ? 'active' : ''}`}
-                    onClick={() => onChangeConfig('errorCorrectionLevel', err.id)}
+                    onClick={() => {
+                      playTap();
+                      onChangeConfig('errorCorrectionLevel', err.id);
+                    }}
                     title={err.desc}
                   >
                     <span style={{ fontWeight: 800 }}>{err.label}</span>

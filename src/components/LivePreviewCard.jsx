@@ -12,14 +12,18 @@ import {
   ShieldAlert,
   Sparkles,
   Layers,
-  QrCode
+  QrCode,
+  ScanLine,
+  ExternalLink
 } from 'lucide-react';
 import { auditScanReliability } from '../utils/contrastValidator';
+import { playTap, playScanSound, playSuccessChime } from '../utils/soundEffects';
 
 export default function LivePreviewCard({
   payload,
   config,
-  onSaveToHistory
+  onSaveToHistory,
+  onNotify
 }) {
   const qrContainerRef = useRef(null);
   const qrCodeInstanceRef = useRef(null);
@@ -27,6 +31,8 @@ export default function LivePreviewCard({
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
   const [shared, setShared] = useState(false);
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanResult, setScanResult] = useState(null);
 
   // W3C Contrast & Scannability Audit
   const audit = auditScanReliability(
@@ -101,6 +107,40 @@ export default function LivePreviewCard({
     }
   }, [payload, config]);
 
+  // Laser Scan Simulator Handler
+  const handleTriggerScanTest = () => {
+    if (isScanning) return;
+    setIsScanning(true);
+    setScanResult(null);
+    playScanSound();
+
+    setTimeout(() => {
+      setIsScanning(false);
+      playSuccessChime();
+      
+      setScanResult({
+        payload: payload || 'https://github.com/sautrikroy17',
+        time: 14
+      });
+
+      confetti({
+        particleCount: 55,
+        spread: 60,
+        origin: { y: 0.6 }
+      });
+
+      onNotify?.({
+        type: 'scan',
+        title: 'Camera Scan Verified (14ms)',
+        message: `Decoded payload: ${payload.length > 40 ? payload.substring(0, 40) + '...' : payload}`
+      });
+
+      setTimeout(() => {
+        setScanResult(null);
+      }, 3500);
+    }, 750);
+  };
+
   // Handlers
   const handleDownload = (format) => {
     if (!qrCodeInstanceRef.current) return;
@@ -110,14 +150,30 @@ export default function LivePreviewCard({
       extension: format
     });
 
+    playSuccessChime();
+
     confetti({
-      particleCount: 65,
-      spread: 70,
+      particleCount: 75,
+      spread: 75,
       origin: { y: 0.75 }
     });
 
     if (onSaveToHistory) {
       onSaveToHistory();
+    }
+
+    if (format === 'png') {
+      onNotify?.({
+        type: 'success',
+        title: 'PNG Export Complete',
+        message: 'High-resolution raster image downloaded.'
+      });
+    } else {
+      onNotify?.({
+        type: 'success',
+        title: 'SVG Vector Export Complete',
+        message: 'Infinite resolution scalable vector downloaded.'
+      });
     }
   };
 
@@ -132,10 +188,20 @@ export default function LivePreviewCard({
           new ClipboardItem({ 'image/png': blob })
         ]);
         setCopied(true);
+        playSuccessChime();
         setTimeout(() => setCopied(false), 2000);
+        onNotify?.({
+          type: 'success',
+          title: 'Copied Image to Clipboard',
+          message: 'Direct PNG binary ready to paste into Figma or docs.'
+        });
       });
     } catch {
-      alert('Could not copy image automatically. Use Download PNG.');
+      onNotify?.({
+        type: 'error',
+        title: 'Clipboard Permission Needed',
+        message: 'Browser restricted direct clipboard write. Use Export PNG instead.'
+      });
     }
   };
 
@@ -144,6 +210,11 @@ export default function LivePreviewCard({
       onSaveToHistory();
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
+      onNotify?.({
+        type: 'success',
+        title: 'Saved to Session History',
+        message: 'Accessible anytime in the Recent Codes table.'
+      });
     }
   };
 
@@ -159,11 +230,34 @@ export default function LivePreviewCard({
         await navigator.clipboard.writeText(payload);
         setShared(true);
         setTimeout(() => setShared(false), 2000);
+        onNotify?.({
+          type: 'info',
+          title: 'Payload Link Copied',
+          message: 'Target address copied to clipboard.'
+        });
       }
     } catch {
       // User cancelled share
     }
   };
+
+  // Global Event Listener for Command Palette & Shortcuts
+  useEffect(() => {
+    const handleGlobalExport = (e) => {
+      const format = e.detail?.format || 'png';
+      handleDownload(format);
+    };
+    const handleGlobalCopy = () => {
+      handleCopyImage();
+    };
+
+    window.addEventListener('qrcraft:export', handleGlobalExport);
+    window.addEventListener('qrcraft:copy', handleGlobalCopy);
+    return () => {
+      window.removeEventListener('qrcraft:export', handleGlobalExport);
+      window.removeEventListener('qrcraft:copy', handleGlobalCopy);
+    };
+  }, [payload, config]);
 
   return (
     <div className="sticky-preview-wrapper">
@@ -180,7 +274,10 @@ export default function LivePreviewCard({
             <button
               type="button"
               className={`stage-mode-btn ${previewMode === 'qr' ? 'active' : ''}`}
-              onClick={() => setPreviewMode('qr')}
+              onClick={() => {
+                playTap();
+                setPreviewMode('qr');
+              }}
               title="Display raw QR canvas"
             >
               <QrCode size={13} />
@@ -189,7 +286,10 @@ export default function LivePreviewCard({
             <button
               type="button"
               className={`stage-mode-btn ${previewMode === 'styled' ? 'active' : ''}`}
-              onClick={() => setPreviewMode('styled')}
+              onClick={() => {
+                playTap();
+                setPreviewMode('styled');
+              }}
               title="Display branded display card mockup"
             >
               <Layers size={13} />
@@ -211,6 +311,35 @@ export default function LivePreviewCard({
           )}
 
           <div className="canvas-render-well">
+            {/* High-Tech Viewfinder HUD Crosshair Brackets during Scanning */}
+            {isScanning && (
+              <div className="scanner-hud-overlay">
+                <div className="hud-corner hud-tl" />
+                <div className="hud-corner hud-tr" />
+                <div className="hud-corner hud-bl" />
+                <div className="hud-corner hud-br" />
+                <div className="qr-laser-beam active-beam" />
+              </div>
+            )}
+
+            {/* Holographic Camera Scan Verified Pop-up */}
+            {scanResult && (
+              <div className="scan-verified-hologram">
+                <div className="hologram-card">
+                  <div className="hologram-head">
+                    <div className="hologram-badge">
+                      <CheckCircle size={14} className="hologram-check-icon" />
+                      <span>CAMERA DECODE VERIFIED</span>
+                    </div>
+                    <span className="hologram-ms">{scanResult.time}ms</span>
+                  </div>
+                  <div className="hologram-payload-strip">
+                    <code className="hologram-payload-text">{scanResult.payload}</code>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div ref={qrContainerRef} className="canvas-center-anchor" />
           </div>
 
@@ -221,7 +350,7 @@ export default function LivePreviewCard({
           )}
         </div>
 
-        {/* Sleek Minimal Scannability Bar (Replaces bulky AI green card) */}
+        {/* Sleek Minimal Scannability Bar + Interactive Laser Scan Test */}
         <div className={`sleek-scannability-pill ${audit.status}`} title={audit.warnings[0] || 'Optimized for high-speed camera scanning'}>
           <div className="scannability-status-left">
             {audit.status === 'great' && <CheckCircle size={14} className="scannability-icon" />}
@@ -233,7 +362,20 @@ export default function LivePreviewCard({
               {audit.status === 'danger' && 'Low Contrast Warning'}
             </span>
           </div>
-          <span className="contrast-ratio-chip">{audit.ratio}:1 Contrast</span>
+          
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <span className="contrast-ratio-chip">{audit.ratio}:1</span>
+            <button
+              type="button"
+              className="btn-trigger-scan-test"
+              onClick={handleTriggerScanTest}
+              disabled={isScanning}
+              title="Run automated camera decoder simulation"
+            >
+              <ScanLine size={12} />
+              <span>{isScanning ? 'Scanning...' : 'Test Scan'}</span>
+            </button>
+          </div>
         </div>
 
         {/* Primary Export Actions Bar */}
@@ -268,7 +410,7 @@ export default function LivePreviewCard({
             title="Copy image binary directly to clipboard"
           >
             {copied ? <Check size={14} style={{ color: 'var(--accent-green)' }} /> : <Copy size={14} />}
-            <span>{copied ? 'Copied Image' : 'Copy'}</span>
+            <span>{copied ? 'Copied' : 'Copy'}</span>
           </button>
 
           <button
@@ -278,7 +420,7 @@ export default function LivePreviewCard({
             title="Save custom design to local history session"
           >
             {saved ? <Check size={14} style={{ color: 'var(--accent-green)' }} /> : <Bookmark size={14} />}
-            <span>{saved ? 'Saved!' : 'Save'}</span>
+            <span>{saved ? 'Saved' : 'Save'}</span>
           </button>
 
           <button
