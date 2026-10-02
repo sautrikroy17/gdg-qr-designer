@@ -1,25 +1,32 @@
 import React from 'react';
-import { Sun, Moon, Download, QrCode } from 'lucide-react';
+import { Sun, Moon, ArrowRight, QrCode, Sparkles } from 'lucide-react';
 
 export default function TopNavbar({
   activeTab,
   onSelectTab,
   theme,
   onToggleTheme,
-  onQuickDownload
+  onOpenPricing,
+  onOpenAbout,
+  onOpenSignIn,
+  onGetStarted
 }) {
   return (
     <header className="top-navbar">
-      {/* Mobile Brand View */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-        <div className="logo-icon-box" style={{ width: '32px', height: '32px' }}>
-          <QrCode size={18} />
+      {/* Brand Logo */}
+      <div
+        className="sidebar-logo"
+        style={{ padding: 0, cursor: 'pointer' }}
+        onClick={() => onSelectTab('home')}
+      >
+        <div className="logo-icon-box" style={{ width: '36px', height: '36px' }}>
+          <QrCode size={20} />
         </div>
-        <span className="logo-text" style={{ fontSize: '1.1rem' }}>QRCraft</span>
+        <span className="logo-text" style={{ fontSize: '1.25rem' }}>QRCraft</span>
       </div>
 
       {/* Center Nav Links */}
-      <nav className="navbar-links" aria-label="Top Navigation">
+      <nav className="navbar-links" aria-label="Main Navigation">
         <button
           type="button"
           className={`nav-link-btn ${activeTab === 'home' ? 'active' : ''}`}
@@ -32,7 +39,7 @@ export default function TopNavbar({
           className={`nav-link-btn ${activeTab === 'generate' ? 'active' : ''}`}
           onClick={() => onSelectTab('generate')}
         >
-          Studio
+          Features
         </button>
         <button
           type="button"
@@ -43,21 +50,21 @@ export default function TopNavbar({
         </button>
         <button
           type="button"
-          className={`nav-link-btn ${activeTab === 'recent' ? 'active' : ''}`}
-          onClick={() => onSelectTab('recent')}
+          className="nav-link-btn"
+          onClick={onOpenPricing}
         >
-          Recent Codes
+          Pricing
         </button>
         <button
           type="button"
-          className={`nav-link-btn ${activeTab === 'settings' ? 'active' : ''}`}
-          onClick={() => onSelectTab('settings')}
+          className="nav-link-btn"
+          onClick={onOpenAbout}
         >
-          Settings
+          About
         </button>
       </nav>
 
-      {/* Right Actions */}
+      {/* Right Actions: Theme, Sign In, Get Started */}
       <div className="nav-right-actions">
         {/* Dark/Light Mode Switch */}
         <button
@@ -70,14 +77,25 @@ export default function TopNavbar({
           {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
         </button>
 
-        {/* Quick Download Button */}
+        {/* Sign In Button */}
         <button
           type="button"
-          className="btn-download-quick"
-          onClick={onQuickDownload}
+          className="btn-hero-ghost"
+          style={{ padding: '0.45rem 1rem', fontSize: '0.85rem' }}
+          onClick={onOpenSignIn}
         >
-          <Download size={15} />
-          <span>Download</span>
+          Sign In
+        </button>
+
+        {/* Get Started -> Button */}
+        <button
+          type="button"
+          className="btn-create-qr"
+          style={{ padding: '0.5rem 1.15rem', fontSize: '0.85rem', boxShadow: '0 4px 14px var(--accent-blue-glow)' }}
+          onClick={onGetStarted}
+        >
+          <span>Get Started</span>
+          <ArrowRight size={15} />
         </button>
       </div>
     </header>

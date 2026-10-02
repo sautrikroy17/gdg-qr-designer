@@ -1,12 +1,16 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Sidebar from './components/Sidebar';
 import TopNavbar from './components/TopNavbar';
-import HeroSection from './components/HeroSection';
+import HeroLanding from './components/HeroLanding';
 import GeneratorView from './components/GeneratorView';
 import LivePreviewCard from './components/LivePreviewCard';
 import TemplatesGallery from './components/TemplatesGallery';
 import RecentCodesTable from './components/RecentCodesTable';
 import SettingsModal from './components/SettingsModal';
+import InteractiveDemoModal from './components/InteractiveDemoModal';
+import PricingModal from './components/PricingModal';
+import AboutModal from './components/AboutModal';
+import SignInModal from './components/SignInModal';
 
 import {
   formatURL,
@@ -18,7 +22,6 @@ import {
   formatVCard
 } from './utils/qrPayload';
 
-// Initial pre-populated history matching the reference design screenshot
 const INITIAL_DEMO_HISTORY = [
   {
     id: 'demo-1',
@@ -73,11 +76,17 @@ const INITIAL_DEMO_HISTORY = [
 ];
 
 export default function App() {
-  // 1. Navigation Active Tab
-  const [activeTab, setActiveTab] = useState('generate'); // 'generate' | 'templates' | 'recent' | 'settings' | 'home'
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  // 1. Navigation View: 'home' is the default landing page!
+  const [activeTab, setActiveTab] = useState('home'); // 'home' | 'generate' | 'templates' | 'recent'
 
-  // 2. Theme State (Dark default matching reference image)
+  // Modals state
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const [isPricingOpen, setIsPricingOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isSignInOpen, setIsSignInOpen] = useState(false);
+
+  // 2. Theme State (Dark mode default matching reference screenshot)
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('qrcraft_theme') || 'dark';
   });
@@ -268,6 +277,7 @@ export default function App() {
     if (item.savedFormData) setFormData((prev) => ({ ...prev, ...item.savedFormData }));
     if (item.savedConfig) setConfig((prev) => ({ ...prev, ...item.savedConfig }));
     setActiveTab('generate');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleDeleteItem = (id) => {
@@ -317,12 +327,12 @@ export default function App() {
     setCurrentType('url');
   };
 
-  // Nav Tab Selector handler
   const handleSelectTab = (tab) => {
     if (tab === 'settings') {
       setIsSettingsOpen(true);
     } else {
       setActiveTab(tab);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -334,28 +344,39 @@ export default function App() {
         onSelectTab={handleSelectTab}
       />
 
-      {/* 2. Main Content View Area */}
+      {/* 2. Main Page Layout */}
       <div className="app-content">
         <TopNavbar
           activeTab={activeTab}
           onSelectTab={handleSelectTab}
           theme={theme}
           onToggleTheme={toggleTheme}
-          onQuickDownload={() => {
+          onOpenPricing={() => setIsPricingOpen(true)}
+          onOpenAbout={() => setIsAboutOpen(true)}
+          onOpenSignIn={() => setIsSignInOpen(true)}
+          onGetStarted={() => {
             setActiveTab('generate');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         />
 
         <main className="page-container">
-          {/* View A: Home / Hero Landing */}
+          {/* View A: Landing Page (Exact match to reference screenshot) */}
           {activeTab === 'home' && (
-            <HeroSection
-              onStartCustomizing={() => setActiveTab('generate')}
-              onViewTemplates={() => setActiveTab('templates')}
-              onSelectTypeAndStart={(type) => {
+            <HeroLanding
+              onOpenStudio={() => {
+                setActiveTab('generate');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onSelectTypeAndOpen={(type) => {
                 setCurrentType(type);
                 setActiveTab('generate');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onOpenDemo={() => setIsDemoOpen(true)}
+              onOpenTemplates={() => {
+                setActiveTab('templates');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             />
           )}
@@ -364,7 +385,7 @@ export default function App() {
           {activeTab === 'generate' && (
             <div>
               <div className="studio-workspace-grid">
-                {/* Left Column: Generator Form Controls */}
+                {/* Left Column: Form Controls */}
                 <GeneratorView
                   currentType={currentType}
                   onSelectType={setCurrentType}
@@ -375,7 +396,7 @@ export default function App() {
                   onChangeConfig={handleConfigChange}
                 />
 
-                {/* Right Column: Sticky Live Preview Card */}
+                {/* Right Column: Live Sticky Preview */}
                 <LivePreviewCard
                   payload={payload}
                   config={config}
@@ -392,18 +413,19 @@ export default function App() {
             </div>
           )}
 
-          {/* View C: Templates Gallery View */}
+          {/* View C: Templates Gallery */}
           {activeTab === 'templates' && (
             <TemplatesGallery
               activePresetId={activePresetId}
               onSelectPresetAndEdit={(preset) => {
                 handleApplyPreset(preset);
                 setActiveTab('generate');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             />
           )}
 
-          {/* View D: Full Recent Codes Manager */}
+          {/* View D: Recent Codes Full View */}
           {activeTab === 'recent' && (
             <div>
               <RecentCodesTable
@@ -416,7 +438,7 @@ export default function App() {
         </main>
       </div>
 
-      {/* 3. Settings Modal */}
+      {/* 3. Interactive Modals */}
       <SettingsModal
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
@@ -426,6 +448,30 @@ export default function App() {
         onToggleAutoSave={setAutoSave}
         onClearAllHistory={handleClearAllHistory}
         onResetFactory={handleResetFactory}
+      />
+
+      <InteractiveDemoModal
+        isOpen={isDemoOpen}
+        onClose={() => setIsDemoOpen(false)}
+        onOpenStudio={() => {
+          setActiveTab('generate');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
+
+      <PricingModal
+        isOpen={isPricingOpen}
+        onClose={() => setIsPricingOpen(false)}
+      />
+
+      <AboutModal
+        isOpen={isAboutOpen}
+        onClose={() => setIsAboutOpen(false)}
+      />
+
+      <SignInModal
+        isOpen={isSignInOpen}
+        onClose={() => setIsSignInOpen(false)}
       />
     </div>
   );
