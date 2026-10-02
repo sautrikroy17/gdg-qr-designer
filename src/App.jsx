@@ -76,7 +76,7 @@ const INITIAL_DEMO_HISTORY = [
 ];
 
 export default function App() {
-  // 1. Navigation View: 'home' is the default landing page!
+  // 1. Navigation View: 'home' is the default full-width landing page!
   const [activeTab, setActiveTab] = useState('home'); // 'home' | 'generate' | 'templates' | 'recent'
 
   // Modals state
@@ -86,7 +86,7 @@ export default function App() {
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
 
-  // 2. Theme State (Dark mode default matching reference screenshot)
+  // 2. Theme State
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('qrcraft_theme') || 'dark';
   });
@@ -336,16 +336,22 @@ export default function App() {
     }
   };
 
-  return (
-    <div className="app-layout">
-      {/* 1. Left Sidebar */}
-      <Sidebar
-        activeTab={activeTab}
-        onSelectTab={handleSelectTab}
-      />
+  // Determine if we are on the Landing Page (full width, NO sidebar!)
+  const isLandingPage = activeTab === 'home';
 
-      {/* 2. Main Page Layout */}
-      <div className="app-content">
+  return (
+    <div className={`app-root-wrapper ${isLandingPage ? 'mode-landing' : 'mode-studio'}`}>
+      {/* Show Sidebar ONLY in Studio / Templates / Recent mode */}
+      {!isLandingPage && (
+        <Sidebar
+          activeTab={activeTab}
+          onSelectTab={handleSelectTab}
+        />
+      )}
+
+      {/* Main Page Area */}
+      <div className="main-content-flow">
+        {/* Full-width Top Navbar */}
         <TopNavbar
           activeTab={activeTab}
           onSelectTab={handleSelectTab}
@@ -360,85 +366,87 @@ export default function App() {
           }}
         />
 
-        <main className="page-container">
-          {/* View A: Landing Page (Exact match to reference screenshot) */}
-          {activeTab === 'home' && (
-            <HeroLanding
-              onOpenStudio={() => {
-                setActiveTab('generate');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              onSelectTypeAndOpen={(type) => {
-                setCurrentType(type);
-                setActiveTab('generate');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              onOpenDemo={() => setIsDemoOpen(true)}
-              onOpenTemplates={() => {
-                setActiveTab('templates');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            />
-          )}
+        {/* ====================================================================
+            VIEW 1: The Exact Landing Page (Full-Width, Edge-to-Edge)
+            ==================================================================== */}
+        {isLandingPage ? (
+          <HeroLanding
+            onOpenStudio={() => {
+              setActiveTab('generate');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onSelectTypeAndOpen={(type) => {
+              setCurrentType(type);
+              setActiveTab('generate');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenDemo={() => setIsDemoOpen(true)}
+            onOpenTemplates={() => {
+              setActiveTab('templates');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        ) : (
+          /* ==================================================================
+             VIEW 2: Studio / Templates / Recent Workspace
+             ================================================================== */
+          <div className="page-container">
+            {activeTab === 'generate' && (
+              <div>
+                <div className="studio-workspace-grid">
+                  {/* Left Column: Form Controls */}
+                  <GeneratorView
+                    currentType={currentType}
+                    onSelectType={setCurrentType}
+                    formData={formData}
+                    onChangeField={handleFieldChange}
+                    validationError={validationError}
+                    config={config}
+                    onChangeConfig={handleConfigChange}
+                  />
 
-          {/* View B: Generator Studio Workspace */}
-          {activeTab === 'generate' && (
-            <div>
-              <div className="studio-workspace-grid">
-                {/* Left Column: Form Controls */}
-                <GeneratorView
-                  currentType={currentType}
-                  onSelectType={setCurrentType}
-                  formData={formData}
-                  onChangeField={handleFieldChange}
-                  validationError={validationError}
-                  config={config}
-                  onChangeConfig={handleConfigChange}
-                />
+                  {/* Right Column: Live Sticky Preview */}
+                  <LivePreviewCard
+                    payload={payload}
+                    config={config}
+                    onSaveToHistory={saveToHistory}
+                  />
+                </div>
 
-                {/* Right Column: Live Sticky Preview */}
-                <LivePreviewCard
-                  payload={payload}
-                  config={config}
-                  onSaveToHistory={saveToHistory}
+                {/* Bottom: Recent QR Codes Table */}
+                <RecentCodesTable
+                  historyItems={history}
+                  onRestoreItem={handleRestoreItem}
+                  onDeleteItem={handleDeleteItem}
                 />
               </div>
+            )}
 
-              {/* Bottom: Recent QR Codes Table */}
-              <RecentCodesTable
-                historyItems={history}
-                onRestoreItem={handleRestoreItem}
-                onDeleteItem={handleDeleteItem}
+            {activeTab === 'templates' && (
+              <TemplatesGallery
+                activePresetId={activePresetId}
+                onSelectPresetAndEdit={(preset) => {
+                  handleApplyPreset(preset);
+                  setActiveTab('generate');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
               />
-            </div>
-          )}
+            )}
 
-          {/* View C: Templates Gallery */}
-          {activeTab === 'templates' && (
-            <TemplatesGallery
-              activePresetId={activePresetId}
-              onSelectPresetAndEdit={(preset) => {
-                handleApplyPreset(preset);
-                setActiveTab('generate');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            />
-          )}
-
-          {/* View D: Recent Codes Full View */}
-          {activeTab === 'recent' && (
-            <div>
-              <RecentCodesTable
-                historyItems={history}
-                onRestoreItem={handleRestoreItem}
-                onDeleteItem={handleDeleteItem}
-              />
-            </div>
-          )}
-        </main>
+            {activeTab === 'recent' && (
+              <div>
+                <RecentCodesTable
+                  historyItems={history}
+                  onRestoreItem={handleRestoreItem}
+                  onDeleteItem={handleDeleteItem}
+                />
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* 3. Interactive Modals */}
+      {/* Interactive Modals */}
       <SettingsModal
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
