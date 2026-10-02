@@ -189,25 +189,30 @@ export default function LivePreviewCard({
           </button>
         </div>
 
-        {/* QR Display Canvas Box */}
-        {previewMode === 'qr' ? (
-          <div className="qr-display-box">
-            <div ref={qrContainerRef} style={{ display: 'flex', justifyContent: 'center' }} />
+        {/* QR Display Canvas Box with Single Persistent Ref */}
+        <div className={`preview-canvas-wrapper ${previewMode === 'styled' ? 'styled-mode-active' : ''}`}>
+          {previewMode === 'styled' && (
+            <div className="styled-card-banner">
+              <div className="styled-badge-pill">
+                <Sparkles size={11} />
+                <span>QRCraft Studio</span>
+              </div>
+              <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '0.3rem' }}>
+                Scan to Open Link
+              </h4>
+            </div>
+          )}
+
+          <div className="qr-display-box" style={{ padding: previewMode === 'styled' ? '0.75rem' : '1.25rem' }}>
+            <div ref={qrContainerRef} style={{ display: 'flex', justifyContent: 'center', width: '100%' }} />
           </div>
-        ) : (
-          <div className="styled-frame-view">
-            <div className="styled-frame-header">
-              <h4>QRCraft Studio</h4>
-              <p>Point your camera to scan</p>
+
+          {previewMode === 'styled' && (
+            <div className="styled-card-footer">
+              <span className="styled-footer-tag">⚡ 100% Client-Side Verified</span>
             </div>
-            <div style={{ background: '#ffffff', padding: '1rem', borderRadius: 'var(--radius-md)', margin: '0.5rem 0' }}>
-              <div ref={qrContainerRef} style={{ display: 'flex', justifyContent: 'center' }} />
-            </div>
-            <div style={{ marginTop: '0.75rem', fontSize: '0.72rem', color: 'var(--accent-blue)', fontWeight: 700 }}>
-              ⚡ High Precision Scannability
-            </div>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Scan Reliability Pill */}
         <div className={`scan-reliability-card ${audit.status}`}>
