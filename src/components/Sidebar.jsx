@@ -1,5 +1,6 @@
 import React from 'react';
-import { Wand2, LayoutGrid, Clock, Settings, Crown, ArrowLeft } from 'lucide-react';
+import { Wand2, LayoutGrid, Clock, Settings, Crown } from 'lucide-react';
+import BrandLogo from './BrandLogo';
 
 /**
  * Sidebar Component
@@ -24,14 +25,7 @@ export default function Sidebar({ activeTab, onSelectTab, onBackToHome }) {
           role="button"
           tabIndex={0}
         >
-          <div className="brand-logo-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <rect x="2.5" y="2.5" width="8" height="8" rx="2.5" fill="white" />
-              <rect x="13.5" y="2.5" width="8" height="8" rx="2.5" fill="white" />
-              <rect x="2.5" y="13.5" width="8" height="8" rx="2.5" fill="white" />
-              <rect x="13.5" y="13.5" width="8" height="8" rx="2.5" fill="white" />
-            </svg>
-          </div>
+          <BrandLogo size={28} />
           <div className="sidebar-logo-text-group">
             <span className="logo-text">QRCraft</span>
             <span className="studio-subtag">PRO</span>
@@ -56,17 +50,6 @@ export default function Sidebar({ activeTab, onSelectTab, onBackToHome }) {
               </button>
             );
           })}
-
-          <div className="sidebar-section-label" style={{ marginTop: '1.25rem' }}>NAVIGATION</div>
-          <button
-            type="button"
-            className="sidebar-item sidebar-exit-link"
-            onClick={onBackToHome}
-            title="Return to Landing Page"
-          >
-            <ArrowLeft size={16} />
-            <span>Landing Page</span>
-          </button>
         </nav>
       </div>
 

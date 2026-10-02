@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUp, Heart, Code2 } from 'lucide-react';
+import BrandLogo from './BrandLogo';
 
 export default function Footer({ onSelectTab, onOpenStudio }) {
   const scrollToTop = () => {
@@ -13,16 +14,8 @@ export default function Footer({ onSelectTab, onOpenStudio }) {
         <div className="footer-top-grid">
           {/* Brand Info */}
           <div className="footer-brand-col">
-            <div className="navbar-brand-box" onClick={scrollToTop} style={{ marginBottom: '1rem' }}>
-              <div className="brand-logo-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <rect x="2.5" y="2.5" width="8" height="8" rx="2.5" fill="white" />
-                  <rect x="13.5" y="2.5" width="8" height="8" rx="2.5" fill="white" />
-                  <rect x="2.5" y="13.5" width="8" height="8" rx="2.5" fill="white" />
-                  <rect x="13.5" y="13.5" width="8" height="8" rx="2.5" fill="white" />
-                </svg>
-              </div>
-              <span className="brand-logo-text">QRCraft</span>
+            <div className="navbar-brand-box" onClick={scrollToTop} style={{ marginBottom: '1rem', cursor: 'pointer' }}>
+              <BrandLogo size={28} showText={true} />
             </div>
             <p className="footer-tagline">
               Ultra-modern, 100% client-side QR code generator and designer engineered for creators, developers, and businesses.
@@ -41,7 +34,6 @@ export default function Footer({ onSelectTab, onOpenStudio }) {
               <li><button type="button" onClick={() => onSelectTab('home')}>Home</button></li>
               <li><button type="button" onClick={() => onSelectTab('features')}>Features</button></li>
               <li><button type="button" onClick={() => onSelectTab('templates')}>Templates</button></li>
-              <li><button type="button" onClick={() => onSelectTab('pricing')}>Pricing</button></li>
               <li><button type="button" onClick={() => onSelectTab('about')}>About Candidate</button></li>
             </ul>
           </div>

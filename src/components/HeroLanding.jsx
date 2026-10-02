@@ -158,19 +158,19 @@ export default function HeroLanding({
           {/* 4 Feature Tags Row */}
           <div className="hero-feature-tags-row">
             <div className="feature-tag-item">
-              <Zap size={14} className="tag-icon" />
+              <Zap size={14} className="tag-icon tag-icon-zap" />
               <span>Lightning Fast</span>
             </div>
             <div className="feature-tag-item">
-              <Lock size={14} className="tag-icon" />
+              <Lock size={14} className="tag-icon tag-icon-lock" />
               <span>No Backend Required</span>
             </div>
             <div className="feature-tag-item">
-              <Smartphone size={14} className="tag-icon" />
+              <Smartphone size={14} className="tag-icon tag-icon-phone" />
               <span>Vector SVGs</span>
             </div>
             <div className="feature-tag-item">
-              <Wifi size={14} className="tag-icon" />
+              <Wifi size={14} className="tag-icon tag-icon-wifi" />
               <span>W3C Compliant</span>
             </div>
           </div>
@@ -182,33 +182,38 @@ export default function HeroLanding({
             {/* Interactive Color Slider Above Pedestal */}
             <div className="palette-customizer-hud">
               <div className="hud-label-row">
-                <span className="hud-title">INTERACTIVE PREVIEW</span>
+                <div className="hud-title-badge">
+                  <span className="hud-live-indicator" />
+                  <span className="hud-title">INTERACTIVE PREVIEW</span>
+                </div>
                 <span className="hud-active-palette">{currentHeroPalette.name}</span>
               </div>
-              <div className="palette-dots-track">
-                {palettePresets.map((preset, idx) => (
-                  <button
-                    key={preset.name}
-                    type="button"
-                    className={`palette-dot ${idx === heroPaletteIndex ? 'active' : ''}`}
-                    style={{ background: preset.dot2 }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setHeroPaletteIndex(idx);
-                    }}
-                    title={preset.name}
-                  />
-                ))}
-              </div>
-              <div
-                className="palette-slider-rail"
-                onClick={() => setHeroPaletteIndex((prev) => (prev + 1) % palettePresets.length)}
-                title="Click to cycle palettes"
-              >
-                <div
-                  className="palette-slider-knob"
-                  style={{ left: currentHeroPalette.sliderPos }}
-                />
+              <div className="palette-controls-row">
+                <div className="palette-dots-track" role="tablist" aria-label="Palette Presets">
+                  {palettePresets.map((preset, idx) => (
+                    <button
+                      key={preset.name}
+                      type="button"
+                      className={`palette-dot-pill ${idx === heroPaletteIndex ? 'active' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setHeroPaletteIndex(idx);
+                      }}
+                      title={preset.name}
+                    >
+                      <span className="dot-color-core" style={{ background: preset.dot2 }} />
+                    </button>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  className="palette-cycle-pill-btn"
+                  onClick={() => setHeroPaletteIndex((prev) => (prev + 1) % palettePresets.length)}
+                  title="Click to cycle next designer palette"
+                >
+                  <span>Cycle</span>
+                  <span className="palette-counter">{heroPaletteIndex + 1}/{palettePresets.length}</span>
+                </button>
               </div>
             </div>
 

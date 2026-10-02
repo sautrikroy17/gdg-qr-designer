@@ -6,7 +6,6 @@ import HeroLanding from './components/HeroLanding';
 import GeneratorView from './components/GeneratorView';
 import LivePreviewCard from './components/LivePreviewCard';
 import TemplatesView from './components/TemplatesView';
-import PricingView from './components/PricingView';
 import AboutView from './components/AboutView';
 import FeaturesView from './components/FeaturesView';
 import Footer from './components/Footer';
@@ -86,7 +85,7 @@ export default function App() {
   const [isStudioMode, setIsStudioMode] = useState(false);
 
   // Active Tab:
-  // When in Landing: 'home' | 'features' | 'templates' | 'pricing' | 'about'
+  // When in Landing: 'home' | 'features' | 'templates' | 'about'
   // When in Studio: 'generate' | 'templates' | 'recent'
   const [activeTab, setActiveTab] = useState('home');
 
@@ -109,7 +108,7 @@ export default function App() {
   useEffect(() => {
     if (isStudioMode) return;
 
-    const sections = ['home', 'features', 'templates', 'pricing', 'about'];
+    const sections = ['home', 'features', 'templates', 'about'];
     const handleScroll = () => {
       const scrollPos = window.scrollY + 180;
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -513,14 +512,7 @@ export default function App() {
             />
           </section>
 
-          {/* 4. Pricing & Plans Section */}
-          <section id="pricing">
-            <PricingView
-              onOpenStudio={() => handleEnterStudio()}
-            />
-          </section>
-
-          {/* 5. About Sautrik Roy & Viva Defense Section */}
+          {/* 4. About Sautrik Roy & Viva Defense Section */}
           <section id="about">
             <AboutView
               onOpenStudio={() => handleEnterStudio()}

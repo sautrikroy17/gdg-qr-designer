@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sun, Moon, ArrowRight, Search, Volume2, VolumeX } from 'lucide-react';
+import BrandLogo from './BrandLogo';
 
 export default function TopNavbar({
   activeTab,
@@ -21,22 +22,14 @@ export default function TopNavbar({
         style={{ width: `${Math.min(100, Math.max(0, scrollProgress))}%` }}
       />
 
-      {/* Brand Logo on Left (Exact matching 4-square grid squircle) */}
+      {/* Brand Logo on Left */}
       <div
         className="navbar-brand-box"
         onClick={() => onSelectTab('home')}
         role="button"
         tabIndex={0}
       >
-        <div className="brand-logo-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2.5" y="2.5" width="8" height="8" rx="2.5" fill="white" />
-            <rect x="13.5" y="2.5" width="8" height="8" rx="2.5" fill="white" />
-            <rect x="2.5" y="13.5" width="8" height="8" rx="2.5" fill="white" />
-            <rect x="13.5" y="13.5" width="8" height="8" rx="2.5" fill="white" />
-          </svg>
-        </div>
-        <span className="brand-logo-text">QRCraft</span>
+        <BrandLogo size={30} showText={true} />
       </div>
 
       {/* Center Nav Links */}
@@ -61,13 +54,6 @@ export default function TopNavbar({
           onClick={() => onSelectTab('templates')}
         >
           Templates
-        </button>
-        <button
-          type="button"
-          className={`nav-link-btn ${activeTab === 'pricing' ? 'active' : ''}`}
-          onClick={() => onSelectTab('pricing')}
-        >
-          Pricing
         </button>
         <button
           type="button"
