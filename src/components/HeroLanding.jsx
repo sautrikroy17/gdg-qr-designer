@@ -20,7 +20,7 @@ import {
   ScanLine,
   Sparkles
 } from 'lucide-react';
-import BrandLogos from './BrandLogos';
+
 
 export default function HeroLanding({
   onOpenStudio,
@@ -496,19 +496,7 @@ export default function HeroLanding({
       </section>
 
       {/* ====================================================================
-          2. Trusted by Brand Logos Bar (Crisp Monochrome Vector SVGs)
-          ==================================================================== */}
-      <section className="trusted-brands-strip">
-        <div className="trusted-container">
-          <div className="trusted-caption">
-            TRUSTED BY CREATORS, <br />DEVELOPERS AND BUSINESSES
-          </div>
-          <BrandLogos />
-        </div>
-      </section>
-
-      {/* ====================================================================
-          3. "Create QR Codes for Any Purpose" Section (7 Interactive Purpose Cards)
+          2. "Create QR Codes for Any Purpose" Section (7 Interactive Purpose Cards)
           ==================================================================== */}
       <section className="purpose-section-container" id="features">
         <div className="purpose-section-header">
