@@ -129,15 +129,6 @@ export default function HeroLanding({
       <section className="hero-landing-section">
         {/* Left Column: Headlines, CTAs, 4-Feature Row */}
         <div className="hero-content-left">
-          {/* High-Tech Product Announcement Badge (No personal selfies) */}
-          <div className="hero-announcement-pill" onClick={onOpenStudio} role="button" tabIndex={0}>
-            <span className="announcement-pulse-dot" />
-            <span className="announcement-tag">GDG SRM Recruitment 2026–27</span>
-            <span className="announcement-separator">•</span>
-            <span className="announcement-text">Interactive QR Designer Studio</span>
-            <Sparkles size={12} className="announcement-sparkle" />
-          </div>
-
           {/* Main Headline */}
           <h1 className="hero-bold-title">
             Beautiful <br />

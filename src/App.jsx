@@ -579,7 +579,7 @@ export default function App() {
           {/* Left Sidebar for Studio Workspace */}
           <Sidebar
             activeTab={activeTab}
-            recentCount={historyList.length}
+            recentCount={history.length}
             activeColor={config.dotsColor}
             onQuickColorSelect={(color) => handleConfigChange('dotsColor', color)}
             onSelectTab={(tab) => {
