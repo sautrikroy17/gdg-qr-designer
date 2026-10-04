@@ -5,41 +5,28 @@ import {
   Clock,
   Settings,
   Crown,
-  Cpu,
-  ShieldCheck,
   ArrowLeft,
   ExternalLink,
-  Sparkles,
-  Palette
+  Sparkles
 } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import { playTap } from '../utils/soundEffects';
 
 /**
  * Creative, High-Tech Studio Sidebar
- * Inspired by Linear & Figma with live engine status, quick color mood presets,
- * and candidate profile integration.
+ * Featuring navigation, visual 3D QR engine showcase card, and candidate profile.
  */
 export default function Sidebar({
   activeTab,
   onSelectTab,
   onBackToHome,
-  recentCount = 5,
-  activeColor = '#0f172a',
-  onQuickColorSelect
+  recentCount = 5
 }) {
   const menuItems = [
     { id: 'generate', label: 'Studio Generator', icon: Wand2, badge: null },
     { id: 'templates', label: 'Design Presets', icon: LayoutGrid, badge: '9' },
     { id: 'recent', label: 'Recent History', icon: Clock, badge: recentCount },
     { id: 'settings', label: 'Preferences', icon: Settings, badge: null },
-  ];
-
-  const quickPaletteDots = [
-    { name: 'Electric Blue', color: '#2563eb' },
-    { name: 'Emerald Mint', color: '#059669' },
-    { name: 'Cyber Violet', color: '#7c3aed' },
-    { name: 'Minimal Slate', color: '#0f172a' },
   ];
 
   return (
@@ -105,57 +92,24 @@ export default function Sidebar({
         </nav>
       </div>
 
-      {/* 2. Creative Middle Section: Engine Diagnostic Card & Quick Mood Bar */}
+      {/* 2. Middle Section: Visual Website Showcase Art Card */}
       <div className="sidebar-middle-creative">
-        {/* Quick Color Mood Bar */}
-        {onQuickColorSelect && (
-          <div className="sidebar-quick-colors-box">
-            <div className="sidebar-sub-label">
-              <Palette size={11} />
-              <span>QUICK ACCENT</span>
+        <div className="sidebar-showcase-art-card">
+          <div className="sidebar-art-img-wrapper">
+            <img
+              src="/sidebar-qr-art.jpg"
+              alt="QRCraft Holographic Generator"
+              className="sidebar-art-img"
+            />
+            <div className="sidebar-art-badge">
+              <Sparkles size={11} className="badge-sparkle-icon" />
+              <span>4K Vector Studio</span>
             </div>
-            <div className="sidebar-palette-pills">
-              {quickPaletteDots.map((dot) => (
-                <button
-                  key={dot.name}
-                  type="button"
-                  className={`sidebar-color-dot ${activeColor === dot.color ? 'active' : ''}`}
-                  style={{ backgroundColor: dot.color }}
-                  title={`Apply ${dot.name} accent`}
-                  onClick={() => {
-                    playTap();
-                    onQuickColorSelect(dot.color);
-                  }}
-                />
-              ))}
-            </div>
+            <div className="sidebar-art-overlay" />
           </div>
-        )}
-
-        {/* Live Engine Diagnostic HUD Card */}
-        <div className="sidebar-engine-hud-card">
-          <div className="engine-hud-header">
-            <div className="engine-status-pulse">
-              <span className="engine-pulse-dot" />
-              <span className="engine-status-text">LOCAL WASM ENGINE</span>
-            </div>
-            <span className="engine-speed-badge">0ms</span>
-          </div>
-
-          <div className="engine-spec-rows">
-            <div className="engine-spec-item">
-              <span className="spec-label">Security</span>
-              <span className="spec-val">100% In-Memory</span>
-            </div>
-            <div className="engine-spec-item">
-              <span className="spec-label">Scannability</span>
-              <span className="spec-val text-cyan">W3C AAA Grade</span>
-            </div>
-          </div>
-
-          {/* Mini Scannability Progress Bar */}
-          <div className="engine-progress-track">
-            <div className="engine-progress-bar" style={{ width: '98%' }} />
+          <div className="sidebar-art-caption">
+            <div className="sidebar-art-title">QRCraft Studio</div>
+            <div className="sidebar-art-desc">Real-time vector engine with sub-millisecond client-side precision.</div>
           </div>
         </div>
       </div>

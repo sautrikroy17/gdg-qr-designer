@@ -580,8 +580,6 @@ export default function App() {
           <Sidebar
             activeTab={activeTab}
             recentCount={history.length}
-            activeColor={config.dotsColor}
-            onQuickColorSelect={(color) => handleConfigChange('dotsColor', color)}
             onSelectTab={(tab) => {
               if (tab === 'settings') {
                 setIsSettingsOpen(true);
