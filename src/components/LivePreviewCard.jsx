@@ -71,7 +71,7 @@ export default function LivePreviewCard({
                 type: config.gradientType || 'linear',
                 rotation: 0,
                 colorStops: [
-                  { offset: 0, color: config.dotsColor },
+                  { offset: 0, color: config.dotsColor || '#0f172a' },
                   { offset: 1, color: config.gradientColor2 || '#334155' }
                 ]
               }
@@ -97,14 +97,10 @@ export default function LivePreviewCard({
       qrOptions.image = '';
     }
 
-    if (!qrCodeInstanceRef.current) {
+    if (qrContainerRef.current) {
+      qrContainerRef.current.innerHTML = '';
       qrCodeInstanceRef.current = new QRCodeStyling(qrOptions);
-      if (qrContainerRef.current) {
-        qrContainerRef.current.innerHTML = '';
-        qrCodeInstanceRef.current.append(qrContainerRef.current);
-      }
-    } else {
-      qrCodeInstanceRef.current.update(qrOptions);
+      qrCodeInstanceRef.current.append(qrContainerRef.current);
     }
   }, [payload, config]);
 
@@ -382,7 +378,13 @@ export default function LivePreviewCard({
             </div>
           )}
 
-          <div className="canvas-render-well">
+          <div
+            className="canvas-render-well"
+            style={{
+              backgroundColor: config.backgroundColor || '#ffffff',
+              borderColor: config.backgroundColor === '#ffffff' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.18)'
+            }}
+          >
             {/* High-Tech Viewfinder HUD Crosshair Brackets during Scanning */}
             {isScanning && (
               <div className="scanner-hud-overlay">

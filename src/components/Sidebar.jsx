@@ -5,7 +5,6 @@ import {
   Clock,
   Settings,
   Crown,
-  ArrowLeft,
   ExternalLink,
   Sparkles
 } from 'lucide-react';
@@ -45,19 +44,8 @@ export default function Sidebar({
             <BrandLogo size={28} />
             <div className="sidebar-logo-text-group">
               <span className="logo-text">QRCraft</span>
-              <span className="studio-subtag">PRO</span>
             </div>
           </div>
-
-          <button
-            type="button"
-            className="sidebar-exit-btn"
-            onClick={onBackToHome}
-            title="Exit Studio back to Home"
-          >
-            <ArrowLeft size={13} />
-            <span>Home</span>
-          </button>
         </div>
 
         {/* Studio Navigation Menu */}

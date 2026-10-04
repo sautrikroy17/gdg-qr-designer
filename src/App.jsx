@@ -10,6 +10,8 @@ import AboutView from './components/AboutView';
 import FeaturesView from './components/FeaturesView';
 import Footer from './components/Footer';
 import RecentCodesTable from './components/RecentCodesTable';
+import StudioPreferencesView from './components/StudioPreferencesView';
+import StudioRecentView from './components/StudioRecentView';
 import SettingsModal from './components/SettingsModal';
 import InteractiveDemoModal from './components/InteractiveDemoModal';
 import SignInModal from './components/SignInModal';
@@ -259,8 +261,12 @@ export default function App() {
 
   const [activePresetId, setActivePresetId] = useState('classic-mono');
 
-  const handleConfigChange = (key, value) => {
-    setConfig((prev) => ({ ...prev, [key]: value }));
+  const handleConfigChange = (keyOrObj, value) => {
+    if (typeof keyOrObj === 'object' && keyOrObj !== null) {
+      setConfig((prev) => ({ ...prev, ...keyOrObj }));
+    } else {
+      setConfig((prev) => ({ ...prev, [keyOrObj]: value }));
+    }
     setActivePresetId('');
   };
 
@@ -581,17 +587,8 @@ export default function App() {
             activeTab={activeTab}
             recentCount={history.length}
             onSelectTab={(tab) => {
-              if (tab === 'settings') {
-                setIsSettingsOpen(true);
-              } else if (tab === 'recent') {
-                setActiveTab('generate');
-                setTimeout(() => {
-                  document.querySelector('.recent-table-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 50);
-              } else {
-                setActiveTab(tab);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }
+              setActiveTab(tab);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onBackToHome={handleExitStudio}
           />
@@ -615,7 +612,10 @@ export default function App() {
               onBackToHome={handleExitStudio}
               onResetFactory={handleResetFactory}
               onOpenSignIn={() => setIsSignInOpen(true)}
-              onOpenSettings={() => setIsSettingsOpen(true)}
+              onOpenSettings={() => {
+                setActiveTab('settings');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
               soundEnabled={soundOn}
               onToggleSound={handleToggleSound}
@@ -623,32 +623,42 @@ export default function App() {
 
             {/* Studio Page Content */}
             <div className="page-container">
+              {/* 1. STUDIO GENERATOR TAB */}
               {activeTab === 'generate' && (
-                <div className="studio-workspace-grid">
-                  {/* Left Column: Form Controls */}
-                  <GeneratorView
-                    currentType={currentType}
-                    onSelectType={setCurrentType}
-                    formData={formData}
-                    onChangeField={handleFieldChange}
-                    validationError={validationError}
-                    config={config}
-                    onChangeConfig={handleConfigChange}
-                    activeSubTab={activeSubTab}
-                    onChangeSubTab={setActiveSubTab}
-                  />
+                <>
+                  <div className="studio-workspace-grid">
+                    {/* Left Column: Form Controls */}
+                    <GeneratorView
+                      currentType={currentType}
+                      onSelectType={setCurrentType}
+                      formData={formData}
+                      onChangeField={handleFieldChange}
+                      validationError={validationError}
+                      config={config}
+                      onChangeConfig={handleConfigChange}
+                      activeSubTab={activeSubTab}
+                      onChangeSubTab={setActiveSubTab}
+                    />
 
-                  {/* Right Column: Live Sticky Preview */}
-                  <LivePreviewCard
-                    payload={payload}
-                    config={config}
-                    onSaveToHistory={() => saveToHistory(true)}
-                    onNotify={showToast}
+                    {/* Right Column: Live Sticky Preview */}
+                    <LivePreviewCard
+                      payload={payload}
+                      config={config}
+                      onSaveToHistory={() => saveToHistory(true)}
+                      onNotify={showToast}
+                    />
+                  </div>
+
+                  {/* Bottom: Recent QR Codes Table Snippet */}
+                  <RecentCodesTable
+                    historyItems={history}
+                    onRestoreItem={handleRestoreItem}
+                    onDeleteItem={handleDeleteItem}
                   />
-                </div>
+                </>
               )}
 
-              {/* Templates View Inside Studio */}
+              {/* 2. DESIGN PRESETS TAB */}
               {activeTab === 'templates' && (
                 <div style={{ marginBottom: '2rem' }}>
                   <TemplatesView
@@ -662,12 +672,42 @@ export default function App() {
                 </div>
               )}
 
-              {/* Bottom: Recent QR Codes Table */}
-              <RecentCodesTable
-                historyItems={history}
-                onRestoreItem={handleRestoreItem}
-                onDeleteItem={handleDeleteItem}
-              />
+              {/* 3. RECENT HISTORY DEDICATED TAB */}
+              {activeTab === 'recent' && (
+                <StudioRecentView
+                  historyItems={history}
+                  onRestoreItem={handleRestoreItem}
+                  onDeleteItem={handleDeleteItem}
+                  onClearAllHistory={handleClearAllHistory}
+                  onNewCode={() => {
+                    setActiveTab('generate');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  onNotify={showToast}
+                />
+              )}
+
+              {/* 4. PREFERENCES DEDICATED TAB */}
+              {activeTab === 'settings' && (
+                <StudioPreferencesView
+                  defaultFormat={defaultFormat}
+                  onChangeDefaultFormat={setDefaultFormat}
+                  autoSave={autoSave}
+                  onToggleAutoSave={setAutoSave}
+                  onClearAllHistory={handleClearAllHistory}
+                  onResetFactory={handleResetFactory}
+                  historyCount={history.length}
+                  theme={theme}
+                  onToggleTheme={toggleTheme}
+                  soundEnabled={soundOn}
+                  onToggleSound={handleToggleSound}
+                  onBackToGenerator={() => {
+                    setActiveTab('generate');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  onNotify={showToast}
+                />
+              )}
             </div>
           </div>
         </>
@@ -736,7 +776,11 @@ export default function App() {
           handleResetFactory();
           showToast({ type: 'info', title: 'Factory Defaults Restored', message: 'Reset to clean default styling.' });
         }}
-        onOpenSettings={() => setIsSettingsOpen(true)}
+        onOpenSettings={() => {
+          setIsStudioMode(true);
+          setActiveTab('settings');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
         soundEnabled={soundOn}
         onToggleSound={handleToggleSound}
       />

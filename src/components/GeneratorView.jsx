@@ -59,15 +59,50 @@ const CANDIDATE_VCARD = {
   vUrl: 'https://sautrikroy.me'
 };
 
+const ensureValidHex = (color, fallback = '#000000') => {
+  if (!color || typeof color !== 'string') return fallback;
+  let hex = color.trim().toLowerCase();
+  if (!hex.startsWith('#')) hex = '#' + hex;
+  if (/^#[0-9a-f]{6}$/.test(hex)) return hex;
+  if (/^#[0-9a-f]{3}$/.test(hex)) {
+    return '#' + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
+  }
+  return fallback;
+};
+
+const QUICK_FG_SWATCHES = [
+  { label: 'Black', hex: '#000000' },
+  { label: 'Electric Blue', hex: '#2563eb' },
+  { label: 'Royal Indigo', hex: '#4338ca' },
+  { label: 'Cyber Violet', hex: '#7c3aed' },
+  { label: 'Emerald Mint', hex: '#059669' },
+  { label: 'Crimson Red', hex: '#dc2626' },
+  { label: 'Amber Gold', hex: '#d97706' },
+  { label: 'Slate Gray', hex: '#475569' }
+];
+
+const QUICK_BG_SWATCHES = [
+  { label: 'Pure White', hex: '#ffffff' },
+  { label: 'Light Slate', hex: '#f8fafc' },
+  { label: 'Dark Obsidian', hex: '#080c14' },
+  { label: 'Midnight Slate', hex: '#0f172a' },
+  { label: 'Warm Cream', hex: '#fef3c7' },
+  { label: 'Ice Blue', hex: '#f0f9ff' }
+];
+
 const CURATED_PALETTES = [
-  { name: 'Pure Minimal', dots: '#000000', bg: '#ffffff', grad: '#000000', isGrad: false },
-  { name: 'Modern Slate', dots: '#1e293b', bg: '#ffffff', grad: '#1e293b', isGrad: false },
+  { name: 'Electric Blue', dots: '#2563eb', bg: '#ffffff', grad: '#1d4ed8', isGrad: false },
+  { name: 'Emerald Mint', dots: '#059669', bg: '#ffffff', grad: '#047857', isGrad: false },
+  { name: 'Cyber Violet', dots: '#7c3aed', bg: '#ffffff', grad: '#6d28d9', isGrad: false },
+  { name: 'Sunset Crimson', dots: '#dc2626', bg: '#ffffff', grad: '#b91c1c', isGrad: false },
+  { name: 'Royal Indigo', dots: '#4338ca', bg: '#ffffff', grad: '#3730a3', isGrad: false },
+  { name: 'Amber Gold', dots: '#d97706', bg: '#ffffff', grad: '#b45309', isGrad: false },
+  { name: 'Midnight Cyber', dots: '#60a5fa', bg: '#080c14', grad: '#38bdf8', isGrad: true },
+  { name: 'Neon Emerald', dots: '#34d399', bg: '#080c14', grad: '#10b981', isGrad: true },
+  { name: 'Classic Noir', dots: '#000000', bg: '#ffffff', grad: '#000000', isGrad: false },
+  { name: 'Modern Slate', dots: '#1e293b', bg: '#f8fafc', grad: '#0f172a', isGrad: false },
   { name: 'Dark Obsidian', dots: '#f8fafc', bg: '#090d16', grad: '#cbd5e1', isGrad: true },
-  { name: 'Subtle Silver', dots: '#334155', bg: '#f8fafc', grad: '#334155', isGrad: false },
-  { name: 'Charcoal Minimal', dots: '#27272a', bg: '#ffffff', grad: '#09090b', isGrad: false },
-  { name: 'Matte Titanium', dots: '#475569', bg: '#ffffff', grad: '#1e293b', isGrad: true },
-  { name: 'Pure Monolith', dots: '#0f172a', bg: '#f8fafc', grad: '#1e293b', isGrad: false },
-  { name: 'Pure Graphite', dots: '#18181b', bg: '#ffffff', grad: '#18181b', isGrad: false },
+  { name: 'Subtle Silver', dots: '#475569', bg: '#ffffff', grad: '#334155', isGrad: false },
 ];
 
 const DOT_PATTERNS = [
@@ -666,12 +701,12 @@ export default function GeneratorView({
                       className={`palette-chip ${isCurrent ? 'selected' : ''}`}
                       onClick={() => {
                         playPop();
-                        onChangeConfig('dotsColor', p.dots);
-                        onChangeConfig('backgroundColor', p.bg);
-                        onChangeConfig('isGradient', p.isGrad);
-                        if (p.isGrad) {
-                          onChangeConfig('gradientColor2', p.grad);
-                        }
+                        onChangeConfig({
+                          dotsColor: p.dots,
+                          backgroundColor: p.bg,
+                          isGradient: !!p.isGrad,
+                          gradientColor2: p.grad || p.dots
+                        });
                       }}
                       title={`${p.name} (${p.dots} on ${p.bg})`}
                     >
@@ -701,16 +736,37 @@ export default function GeneratorView({
                     <input
                       type="color"
                       className="swatch-native-picker"
-                      value={config.dotsColor}
+                      value={ensureValidHex(config.dotsColor, '#000000')}
                       onChange={(e) => onChangeConfig('dotsColor', e.target.value)}
                     />
                     <input
                       type="text"
                       className="sleek-hex-input"
                       value={config.dotsColor}
-                      onChange={(e) => onChangeConfig('dotsColor', e.target.value)}
+                      onChange={(e) => {
+                        let val = e.target.value.trim();
+                        if (!val.startsWith('#') && val.length > 0) val = '#' + val;
+                        onChangeConfig('dotsColor', val);
+                      }}
+                      placeholder="#000000"
                       maxLength={7}
                     />
+                  </div>
+                  {/* Quick Color Swatches */}
+                  <div className="quick-color-dots-row">
+                    {QUICK_FG_SWATCHES.map((swatch) => (
+                      <button
+                        key={swatch.hex}
+                        type="button"
+                        className={`quick-color-dot ${config.dotsColor?.toLowerCase() === swatch.hex.toLowerCase() ? 'active' : ''}`}
+                        style={{ backgroundColor: swatch.hex }}
+                        onClick={() => {
+                          playTap();
+                          onChangeConfig('dotsColor', swatch.hex);
+                        }}
+                        title={`${swatch.label} (${swatch.hex})`}
+                      />
+                    ))}
                   </div>
                 </div>
 
@@ -720,16 +776,40 @@ export default function GeneratorView({
                     <input
                       type="color"
                       className="swatch-native-picker"
-                      value={config.backgroundColor}
+                      value={ensureValidHex(config.backgroundColor, '#ffffff')}
                       onChange={(e) => onChangeConfig('backgroundColor', e.target.value)}
                     />
                     <input
                       type="text"
                       className="sleek-hex-input"
                       value={config.backgroundColor}
-                      onChange={(e) => onChangeConfig('backgroundColor', e.target.value)}
+                      onChange={(e) => {
+                        let val = e.target.value.trim();
+                        if (!val.startsWith('#') && val.length > 0) val = '#' + val;
+                        onChangeConfig('backgroundColor', val);
+                      }}
+                      placeholder="#ffffff"
                       maxLength={7}
                     />
+                  </div>
+                  {/* Quick Background Swatches */}
+                  <div className="quick-color-dots-row">
+                    {QUICK_BG_SWATCHES.map((swatch) => (
+                      <button
+                        key={swatch.hex}
+                        type="button"
+                        className={`quick-color-dot ${config.backgroundColor?.toLowerCase() === swatch.hex.toLowerCase() ? 'active' : ''}`}
+                        style={{
+                          backgroundColor: swatch.hex,
+                          border: swatch.hex === '#ffffff' ? '1px solid rgba(255,255,255,0.4)' : '1px solid rgba(255,255,255,0.1)'
+                        }}
+                        onClick={() => {
+                          playTap();
+                          onChangeConfig('backgroundColor', swatch.hex);
+                        }}
+                        title={`${swatch.label} (${swatch.hex})`}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
@@ -782,14 +862,19 @@ export default function GeneratorView({
                         <input
                           type="color"
                           className="swatch-native-picker"
-                          value={config.gradientColor2 || '#1d4ed8'}
+                          value={ensureValidHex(config.gradientColor2, '#1d4ed8')}
                           onChange={(e) => onChangeConfig('gradientColor2', e.target.value)}
                         />
                         <input
                           type="text"
                           className="sleek-hex-input"
                           value={config.gradientColor2 || '#1d4ed8'}
-                          onChange={(e) => onChangeConfig('gradientColor2', e.target.value)}
+                          onChange={(e) => {
+                            let val = e.target.value.trim();
+                            if (!val.startsWith('#') && val.length > 0) val = '#' + val;
+                            onChangeConfig('gradientColor2', val);
+                          }}
+                          placeholder="#1d4ed8"
                           maxLength={7}
                         />
                       </div>
