@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, Heart, Code2 } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 
 export default function Footer({ onSelectTab, onOpenStudio }) {

@@ -10,7 +10,6 @@ import {
   CheckCircle,
   AlertTriangle,
   ShieldAlert,
-  Sparkles,
   Layers,
   QrCode,
   ScanLine,
@@ -238,14 +237,22 @@ export default function LivePreviewCard({
     }
   };
 
+  const downloadRef = useRef(handleDownload);
+  const copyRef = useRef(handleCopyImage);
+
+  useEffect(() => {
+    downloadRef.current = handleDownload;
+    copyRef.current = handleCopyImage;
+  });
+
   // Global Event Listener for Command Palette & Shortcuts
   useEffect(() => {
     const handleGlobalExport = (e) => {
       const format = e.detail?.format || 'png';
-      handleDownload(format);
+      downloadRef.current?.(format);
     };
     const handleGlobalCopy = () => {
-      handleCopyImage();
+      copyRef.current?.();
     };
 
     window.addEventListener('qrcraft:export', handleGlobalExport);
@@ -254,7 +261,7 @@ export default function LivePreviewCard({
       window.removeEventListener('qrcraft:export', handleGlobalExport);
       window.removeEventListener('qrcraft:copy', handleGlobalCopy);
     };
-  }, [payload, config]);
+  }, []);
 
   return (
     <div className="sticky-preview-wrapper">

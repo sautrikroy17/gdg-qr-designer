@@ -17,7 +17,7 @@ import InteractiveDemoModal from './components/InteractiveDemoModal';
 import SignInModal from './components/SignInModal';
 import Toast from './components/Toast';
 import CommandPalette from './components/CommandPalette';
-import { isSoundEnabled, toggleSound, playThemeSound, playTap } from './utils/soundEffects';
+import { isSoundEnabled, toggleSound, playThemeSound } from './utils/soundEffects';
 
 import {
   formatURL,

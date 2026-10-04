@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { X, Check, Lock, Sparkles, UserCheck } from 'lucide-react';
+import { X, Check, UserCheck } from 'lucide-react';
 
 export default function SignInModal({ isOpen, onClose }) {
-  if (!isOpen) return null;
-
   const [loggedIn, setLoggedIn] = useState(false);
+
+  if (!isOpen) return null;
 
   const handleSimulateLogin = (e) => {
     e.preventDefault();

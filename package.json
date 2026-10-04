@@ -1,7 +1,10 @@
 {
-  "name": "gdg-qr-designer",
+  "name": "qrcraft",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "High-Precision Vector QR Generator & Visual Studio",
+  "author": "Sautrik Roy <sr9973@srmist.edu.in>",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",

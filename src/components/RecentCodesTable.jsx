@@ -14,8 +14,7 @@ import {
 export default function RecentCodesTable({
   historyItems,
   onRestoreItem,
-  onDeleteItem,
-  onDownloadItem
+  onDeleteItem
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedId, setCopiedId] = useState('');

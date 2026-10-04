@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Clock,
-  ArrowLeft,
   Plus,
   Download,
   Search,
@@ -9,11 +8,9 @@ import {
   Copy,
   Trash2,
   Check,
-  Sparkles,
   Zap,
   Lock,
-  Wifi,
-  ExternalLink
+  Wifi
 } from 'lucide-react';
 import { playTap, playPop } from '../utils/soundEffects';
 

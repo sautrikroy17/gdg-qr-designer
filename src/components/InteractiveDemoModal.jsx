@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { X, Play, ArrowRight, CheckCircle2, QrCode, Wand2, ShieldCheck, Download } from 'lucide-react';
+import { X, Play, ArrowRight, QrCode, Wand2, ShieldCheck, Download } from 'lucide-react';
 
 export default function InteractiveDemoModal({ isOpen, onClose, onOpenStudio }) {
-  if (!isOpen) return null;
-
   const [activeStep, setActiveStep] = useState(0);
+
+  if (!isOpen) return null;
 
   const demoSteps = [
     {

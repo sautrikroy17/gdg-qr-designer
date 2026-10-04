@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PRESETS, TEMPLATE_CATEGORIES } from '../utils/presets';
-import { Sparkles, ArrowRight, Check, Palette } from 'lucide-react';
+import { ArrowRight, Check, Palette } from 'lucide-react';
 import { playTap, playSuccessChime } from '../utils/soundEffects';
 
 export default function TemplatesView({ activePresetId, onSelectPresetAndEdit }) {

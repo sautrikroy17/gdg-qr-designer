@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import {
   Zap,
   ShieldCheck,
-  Cpu,
   Layers,
-  Sparkles,
   ArrowRight,
   Globe,
   Wifi,

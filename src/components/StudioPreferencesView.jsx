@@ -4,16 +4,13 @@ import {
   Check,
   RotateCcw,
   Trash2,
-  Volume2,
-  VolumeX,
   Sun,
   Moon,
   ShieldCheck,
   Database,
   ArrowLeft,
   Sparkles,
-  ExternalLink,
-  Laptop
+  ExternalLink
 } from 'lucide-react';
 import { playTap, playSuccessChime } from '../utils/soundEffects';
 

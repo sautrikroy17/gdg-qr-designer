@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, Moon, ArrowRight, Search, Volume2, VolumeX, Menu, X, Sparkles } from 'lucide-react';
+import { Sun, Moon, ArrowRight, Search, Volume2, VolumeX, Menu, X } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 
 export default function TopNavbar({
@@ -7,7 +7,6 @@ export default function TopNavbar({
   onSelectTab,
   theme,
   onToggleTheme,
-  onOpenSignIn,
   onGetStarted,
   onOpenCommandPalette,
   scrollProgress = 0,

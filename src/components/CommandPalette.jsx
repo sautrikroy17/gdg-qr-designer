@@ -154,15 +154,9 @@ export default function CommandPalette({
 
   useEffect(() => {
     if (isOpen) {
-      setQuery('');
-      setSelectedIndex(0);
       setTimeout(() => inputRef.current?.focus(), 50);
     }
   }, [isOpen]);
-
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, [query]);
 
   // Handle keyboard navigation inside palette
   const handleKeyDown = (e) => {
@@ -202,13 +196,19 @@ export default function CommandPalette({
             className="palette-search-input"
             placeholder="Type a command or search action... (Press ↵ to run, Esc to exit)"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setSelectedIndex(0);
+            }}
           />
           {query && (
             <button
               type="button"
               className="palette-clear-btn"
-              onClick={() => setQuery('')}
+              onClick={() => {
+                setQuery('');
+                setSelectedIndex(0);
+              }}
             >
               <X size={14} />
             </button>

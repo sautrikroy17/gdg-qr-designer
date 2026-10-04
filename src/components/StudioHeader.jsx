@@ -8,7 +8,6 @@ export default function StudioHeader({
   onBackToHome,
   onResetFactory,
   onOpenSignIn,
-  onOpenSettings,
   onOpenCommandPalette,
   soundEnabled,
   onToggleSound

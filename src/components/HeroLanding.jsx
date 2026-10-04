@@ -16,18 +16,13 @@ import {
   Shapes,
   Image as ImageIcon,
   Square,
-  Sliders,
-  ScanLine,
   Sparkles
 } from 'lucide-react';
 
-
 export default function HeroLanding({
   onOpenStudio,
-  onOpenStudioWithTab,
   onSelectTypeAndOpen,
-  onOpenDemo,
-  onOpenTemplates
+  onOpenDemo
 }) {
   const [activeType, setActiveType] = useState('url');
   const [heroPaletteIndex, setHeroPaletteIndex] = useState(0); // 0: Blue, 1: Magenta, 2: Orange, 3: Emerald
