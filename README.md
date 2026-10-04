@@ -70,6 +70,12 @@ Strictly adheres to international RFC standards for seamless scanning across iOS
 - **Studio Preferences**: Integrated workspace control for sound toggles, theme switching, default export formats, and storage maintenance.
 - **Global Command Palette (`⌘K` / `Ctrl+K`)**: Keyboard-first navigation to switch modes, apply presets, and export without lifting hands from the keyboard.
 
+### 📱 10. Responsive Multi-Device Architecture (Desktop, Tablet & Mobile)
+- **Native-Style Mobile Bottom App Dock**: On screen widths $\le 900px$, the studio sidebar transforms into a fixed, native-style bottom app navigation dock with haptic feedback, granting 100% of the screen width to the generator and live preview.
+- **Mobile-First Workspace Layout**: Prioritizes the live QR canvas stage at the top of the mobile screen (`order: -1`), allowing users to observe design mutations in real-time and export instantly without scrolling past all form controls.
+- **Momentum Touch Scrolling**: Horizontal momentum scrolling (`-webkit-overflow-scrolling: touch`) across content-type selectors, styling subtabs, and session history tables.
+- **Viewport-Safe 3D Pedestal Scaling**: Dynamically scaled perspective geometry eliminating horizontal overflow on iOS Safari and Android Chrome.
+
 ---
 
 ## 📁 Repository Structure

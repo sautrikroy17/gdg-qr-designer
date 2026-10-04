@@ -21,10 +21,10 @@ export default function Sidebar({
   recentCount = 5
 }) {
   const menuItems = [
-    { id: 'generate', label: 'Studio Generator', icon: Wand2, badge: null },
-    { id: 'templates', label: 'Design Presets', icon: LayoutGrid, badge: '9' },
-    { id: 'recent', label: 'Recent History', icon: Clock, badge: recentCount },
-    { id: 'settings', label: 'Preferences', icon: Settings, badge: null },
+    { id: 'generate', label: 'Studio Generator', shortLabel: 'Generator', icon: Wand2, badge: null },
+    { id: 'templates', label: 'Design Presets', shortLabel: 'Presets', icon: LayoutGrid, badge: '9' },
+    { id: 'recent', label: 'Recent History', shortLabel: 'History', icon: Clock, badge: recentCount },
+    { id: 'settings', label: 'Preferences', shortLabel: 'Settings', icon: Settings, badge: null },
   ];
 
   return (
@@ -65,7 +65,8 @@ export default function Sidebar({
               >
                 <div className="sidebar-item-content">
                   <Icon size={16} className="sidebar-item-icon" />
-                  <span>{item.label}</span>
+                  <span className="sidebar-label-desktop">{item.label}</span>
+                  <span className="sidebar-label-mobile">{item.shortLabel}</span>
                 </div>
                 {item.badge && (
                   <span className={`sidebar-badge-count ${isActive ? 'active-badge' : ''}`}>
