@@ -120,9 +120,9 @@ qrcraft/
 │   │   └── soundEffects.js     # Synthesized Web Audio API sound engine
 │   ├── App.jsx                 # Top-level state coordinator & routing controller
 │   ├── index.css               # Complete Vanilla CSS design system
+│   ├── mobile.css              # Dedicated mobile & tablet responsive stylesheet
 │   └── main.jsx                # React 19 entry point
 ├── .gitignore                  # Clean exclusion rules
-├── .oxlintrc.json              # Oxlint linting configuration
 ├── index.html                  # HTML5 skeleton with preconnected Google Fonts
 ├── LICENSE                     # MIT License
 ├── package.json                # Project manifest and scripts
@@ -154,14 +154,14 @@ npm run dev
 
 The application will be live at `http://localhost:5173`.
 
-### Production Build & Linting
+### Production Build
 
 ```bash
 # Build optimized production bundle
 npm run build
 
-# Run ultra-fast linter (0 errors, 0 warnings)
-npm run lint
+# Preview production build locally
+npm run preview
 ```
 
 The optimized production bundle is compiled into `dist/` in under 200ms.
