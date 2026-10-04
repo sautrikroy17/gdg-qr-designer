@@ -572,6 +572,9 @@ export default function App() {
           {/* Left Sidebar for Studio Workspace */}
           <Sidebar
             activeTab={activeTab}
+            recentCount={historyList.length}
+            activeColor={config.dotsColor}
+            onQuickColorSelect={(color) => handleConfigChange('dotsColor', color)}
             onSelectTab={(tab) => {
               if (tab === 'settings') {
                 setIsSettingsOpen(true);

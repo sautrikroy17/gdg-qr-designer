@@ -74,13 +74,13 @@ export default function HeroLanding({
   const currentHeroPalette = palettePresets[heroPaletteIndex];
 
   const contentTypes = [
-    { id: 'url', title: 'Website URL', desc: 'Link to any website', icon: Globe, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
-    { id: 'text', title: 'Plain Text', desc: 'Share text instantly', icon: FileText, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
-    { id: 'email', title: 'Email', desc: 'Open email client', icon: Mail, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
-    { id: 'phone', title: 'Phone', desc: 'Call with one scan', icon: Phone, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
-    { id: 'wifi', title: 'Wi-Fi', desc: 'Share Wi-Fi details', icon: Wifi, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
-    { id: 'location', title: 'Location', desc: 'Share any location', icon: MapPin, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
-    { id: 'vcard', title: 'vCard Contact', desc: 'Share complete contact card', icon: MoreHorizontal, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
+    { id: 'url', title: 'Website URL', desc: 'Link to any website', icon: Globe, iconColor: '#60a5fa', circleBg: 'rgba(37, 99, 235, 0.12)' },
+    { id: 'text', title: 'Plain Text', desc: 'Share text instantly', icon: FileText, iconColor: '#60a5fa', circleBg: 'rgba(37, 99, 235, 0.12)' },
+    { id: 'email', title: 'Email', desc: 'Open email client', icon: Mail, iconColor: '#60a5fa', circleBg: 'rgba(37, 99, 235, 0.12)' },
+    { id: 'phone', title: 'Phone', desc: 'Call with one scan', icon: Phone, iconColor: '#60a5fa', circleBg: 'rgba(37, 99, 235, 0.12)' },
+    { id: 'wifi', title: 'Wi-Fi', desc: 'Share Wi-Fi details', icon: Wifi, iconColor: '#60a5fa', circleBg: 'rgba(37, 99, 235, 0.12)' },
+    { id: 'location', title: 'Location', desc: 'Share any location', icon: MapPin, iconColor: '#60a5fa', circleBg: 'rgba(37, 99, 235, 0.12)' },
+    { id: 'vcard', title: 'vCard Contact', desc: 'Share complete contact card', icon: MoreHorizontal, iconColor: '#60a5fa', circleBg: 'rgba(37, 99, 235, 0.12)' },
   ];
 
   // Mouse move 3D tilt calculation
