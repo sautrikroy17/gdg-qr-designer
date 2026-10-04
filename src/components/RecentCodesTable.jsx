@@ -35,6 +35,16 @@ export default function RecentCodesTable({
     setTimeout(() => setCopiedId(''), 2000);
   };
 
+  const handleExportHistoryJSON = () => {
+    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(historyItems, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute('href', dataStr);
+    downloadAnchor.setAttribute('download', `qrcraft-history-${new Date().toISOString().split('T')[0]}.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  };
+
   return (
     <section className="recent-table-section">
       <div className="table-header-row">
@@ -47,15 +57,30 @@ export default function RecentCodesTable({
           </p>
         </div>
 
-        {/* Search Bar */}
-        <div className="table-search-bar">
-          <Search size={15} style={{ color: 'var(--text-muted)' }} />
-          <input
-            type="text"
-            placeholder="Search recent codes..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+          {historyItems.length > 0 && (
+            <button
+              type="button"
+              className="quick-chip-btn"
+              onClick={handleExportHistoryJSON}
+              title="Download all saved QR history as a JSON backup file"
+              style={{ padding: '0.45rem 0.85rem', fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
+            >
+              <Download size={13} />
+              <span>Backup JSON</span>
+            </button>
+          )}
+
+          {/* Search Bar */}
+          <div className="table-search-bar">
+            <Search size={15} style={{ color: 'var(--text-muted)' }} />
+            <input
+              type="text"
+              placeholder="Search recent codes..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
         </div>
       </div>
 

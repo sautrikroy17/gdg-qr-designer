@@ -38,6 +38,27 @@ const QUICK_URLS = [
   { label: 'SRM Portal', value: 'https://sp.srmist.edu.in' }
 ];
 
+const QUICK_WIFI = [
+  { label: 'SRM Campus 5G', ssid: 'SRM_Campus_5G', pass: 'SRM@Student2026', enc: 'WPA' },
+  { label: 'Hostel Mesh', ssid: 'SRM_Hostel_HighSpeed', pass: 'CampusNet#2026', enc: 'WPA' },
+  { label: 'Free Guest', ssid: 'SRM_Guest_Free', pass: '', enc: 'none' }
+];
+
+const QUICK_LOCATIONS = [
+  { label: 'SRM KTR Campus', lat: '12.8231', lng: '80.0442', query: 'SRM Institute of Science and Technology Chennai' },
+  { label: 'Chennai Central', lat: '13.0827', lng: '80.2707', query: 'Puratchi Thalaivar Dr. M.G.R. Central Railway Station' },
+  { label: 'Bengaluru Tech Hub', lat: '12.9716', lng: '77.5946', query: 'Bengaluru Tech Park India' }
+];
+
+const CANDIDATE_VCARD = {
+  vFirst: 'Sautrik',
+  vLast: 'Roy',
+  vOrg: 'SRM Institute of Science and Technology',
+  vPhone: '+919876543210',
+  vEmail: 'sautrik@srmist.edu.in',
+  vUrl: 'https://sautrikroy.me'
+};
+
 const CURATED_PALETTES = [
   { name: 'Tech Blue', dots: '#2563eb', bg: '#ffffff', grad: '#1d4ed8', isGrad: false },
   { name: 'Cyber Cyan', dots: '#00f2fe', bg: '#070a14', grad: '#4facfe', isGrad: true },
@@ -367,6 +388,39 @@ export default function GeneratorView({
                 </div>
               </div>
             )}
+
+            {/* Hidden Network Toggle */}
+            <div style={{ marginTop: '0.65rem', marginBottom: '0.65rem' }}>
+              <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
+                <input
+                  type="checkbox"
+                  checked={!!formData.wifiHidden}
+                  onChange={(e) => onChangeField('wifiHidden', e.target.checked)}
+                  style={{ width: '15px', height: '15px', accentColor: 'var(--accent-blue)', cursor: 'pointer' }}
+                />
+                <span>Hidden Network (SSID is not broadcasted)</span>
+              </label>
+            </div>
+
+            {/* Quick Wi-Fi Presets */}
+            <div className="quick-presets-row">
+              <span className="quick-preset-tag">Quick fill:</span>
+              {QUICK_WIFI.map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  className="quick-chip-btn"
+                  onClick={() => {
+                    playPop();
+                    onChangeField('wifiSsid', item.ssid);
+                    onChangeField('wifiPassword', item.pass);
+                    onChangeField('wifiEncryption', item.enc);
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
           </div>
         )}
 
@@ -419,6 +473,26 @@ export default function GeneratorView({
                   onChange={(e) => onChangeField('locationQuery', e.target.value)}
                 />
               </div>
+            </div>
+
+            {/* Quick Location Presets */}
+            <div className="quick-presets-row" style={{ marginTop: '0.85rem' }}>
+              <span className="quick-preset-tag">Quick fill:</span>
+              {QUICK_LOCATIONS.map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  className="quick-chip-btn"
+                  onClick={() => {
+                    playPop();
+                    onChangeField('latitude', item.lat);
+                    onChangeField('longitude', item.lng);
+                    onChangeField('locationQuery', item.query);
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
             </div>
           </div>
         )}
@@ -492,6 +566,27 @@ export default function GeneratorView({
                   onChange={(e) => onChangeField('vUrl', e.target.value)}
                 />
               </div>
+            </div>
+
+            {/* Candidate Quick Fill */}
+            <div className="quick-presets-row" style={{ marginTop: '0.85rem' }}>
+              <span className="quick-preset-tag">Quick fill:</span>
+              <button
+                type="button"
+                className="quick-chip-btn"
+                style={{ borderColor: 'rgba(56, 130, 246, 0.4)', background: 'rgba(56, 130, 246, 0.1)' }}
+                onClick={() => {
+                  playPop();
+                  onChangeField('vFirst', CANDIDATE_VCARD.vFirst);
+                  onChangeField('vLast', CANDIDATE_VCARD.vLast);
+                  onChangeField('vOrg', CANDIDATE_VCARD.vOrg);
+                  onChangeField('vPhone', CANDIDATE_VCARD.vPhone);
+                  onChangeField('vEmail', CANDIDATE_VCARD.vEmail);
+                  onChangeField('vUrl', CANDIDATE_VCARD.vUrl);
+                }}
+              >
+                Fill Candidate Profile (Sautrik Roy)
+              </button>
             </div>
           </div>
         )}
@@ -655,21 +750,50 @@ export default function GeneratorView({
 
               {config.isGradient && (
                 <div style={{ marginTop: '0.85rem' }}>
-                  <label className="section-micro-label">GRADIENT STOP (SECONDARY COLOR)</label>
-                  <div className="color-field-row">
-                    <input
-                      type="color"
-                      className="swatch-native-picker"
-                      value={config.gradientColor2 || '#1d4ed8'}
-                      onChange={(e) => onChangeConfig('gradientColor2', e.target.value)}
-                    />
-                    <input
-                      type="text"
-                      className="sleek-hex-input"
-                      value={config.gradientColor2 || '#1d4ed8'}
-                      onChange={(e) => onChangeConfig('gradientColor2', e.target.value)}
-                      maxLength={7}
-                    />
+                  <div className="inspector-grid-2" style={{ marginBottom: '0.65rem' }}>
+                    <div>
+                      <label className="section-micro-label">GRADIENT STYLE</label>
+                      <div className="segmented-sub-control">
+                        <button
+                          type="button"
+                          className={`seg-sub-btn ${(config.gradientType || 'linear') === 'linear' ? 'active' : ''}`}
+                          onClick={() => {
+                            playTap();
+                            onChangeConfig('gradientType', 'linear');
+                          }}
+                        >
+                          Linear
+                        </button>
+                        <button
+                          type="button"
+                          className={`seg-sub-btn ${config.gradientType === 'radial' ? 'active' : ''}`}
+                          onClick={() => {
+                            playTap();
+                            onChangeConfig('gradientType', 'radial');
+                          }}
+                        >
+                          Radial
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="section-micro-label">SECONDARY COLOR</label>
+                      <div className="color-field-row">
+                        <input
+                          type="color"
+                          className="swatch-native-picker"
+                          value={config.gradientColor2 || '#1d4ed8'}
+                          onChange={(e) => onChangeConfig('gradientColor2', e.target.value)}
+                        />
+                        <input
+                          type="text"
+                          className="sleek-hex-input"
+                          value={config.gradientColor2 || '#1d4ed8'}
+                          onChange={(e) => onChangeConfig('gradientColor2', e.target.value)}
+                          maxLength={7}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}

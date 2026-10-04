@@ -345,31 +345,33 @@ export default function App() {
     }
   });
 
-  const saveToHistory = () => {
-    if (!autoSave) return;
+  const saveToHistory = (isManual = false) => {
+    if (!autoSave && !isManual) return;
 
     let previewText = '';
     let name = '';
     if (currentType === 'url') {
-      previewText = formData.url;
+      previewText = formData.url || 'https://github.com/sautrikroy17';
       name = 'Website Link';
     } else if (currentType === 'text') {
-      previewText = formData.text;
+      previewText = formData.text || 'Plain Text';
       name = 'Plain Text';
     } else if (currentType === 'email') {
-      previewText = formData.emailTo;
+      previewText = formData.emailTo || 'Email Contact';
       name = 'Email Contact';
     } else if (currentType === 'phone') {
-      previewText = formData.phone;
+      previewText = formData.phone || 'Phone Number';
       name = 'Phone Number';
     } else if (currentType === 'wifi') {
-      previewText = `SSID: ${formData.wifiSsid}`;
+      previewText = `SSID: ${formData.wifiSsid || 'Network'}`;
       name = 'Wi-Fi Network';
     } else if (currentType === 'location') {
-      previewText = `Geo: ${formData.lat}, ${formData.lng}`;
+      const coords = (formData.latitude || formData.lat) ? `${formData.latitude || formData.lat}, ${formData.longitude || formData.lng}` : '';
+      previewText = coords ? `Geo: ${coords}` : (formData.locationQuery || 'Custom Location');
       name = 'Location';
     } else if (currentType === 'vcard') {
-      previewText = formData.vName;
+      const fullName = [formData.vFirst, formData.vLast].filter(Boolean).join(' ') || formData.vName || 'Contact Card';
+      previewText = fullName;
       name = 'vCard Contact';
     }
 
@@ -394,11 +396,30 @@ export default function App() {
 
   const handleRestoreItem = (item) => {
     if (item.savedType) setCurrentType(item.savedType);
-    if (item.savedFormData) setFormData((prev) => ({ ...prev, ...item.savedFormData }));
+    if (item.savedFormData) {
+      setFormData((prev) => ({
+        ...prev,
+        ...item.savedFormData,
+        latitude: item.savedFormData.latitude || item.savedFormData.lat || prev.latitude,
+        longitude: item.savedFormData.longitude || item.savedFormData.lng || prev.longitude,
+        locationQuery: item.savedFormData.locationQuery || prev.locationQuery || '',
+        vFirst: item.savedFormData.vFirst || (item.savedFormData.vName ? item.savedFormData.vName.split(' ')[0] : prev.vFirst),
+        vLast: item.savedFormData.vLast || (item.savedFormData.vName ? item.savedFormData.vName.split(' ').slice(1).join(' ') : prev.vLast),
+        vPhone: item.savedFormData.vPhone || prev.vPhone,
+        vEmail: item.savedFormData.vEmail || prev.vEmail,
+        vOrg: item.savedFormData.vOrg || prev.vOrg,
+        vUrl: item.savedFormData.vUrl || prev.vUrl || ''
+      }));
+    }
     if (item.savedConfig) setConfig((prev) => ({ ...prev, ...item.savedConfig }));
     setIsStudioMode(true);
     setActiveTab('generate');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    showToast({
+      type: 'info',
+      title: 'Configuration Restored',
+      message: `Loaded ${item.name} (${item.type}) into studio editor.`
+    });
   };
 
   const handleDeleteItem = (id) => {
@@ -554,6 +575,11 @@ export default function App() {
             onSelectTab={(tab) => {
               if (tab === 'settings') {
                 setIsSettingsOpen(true);
+              } else if (tab === 'recent') {
+                setActiveTab('generate');
+                setTimeout(() => {
+                  document.querySelector('.recent-table-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 50);
               } else {
                 setActiveTab(tab);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -598,7 +624,7 @@ export default function App() {
                   <LivePreviewCard
                     payload={payload}
                     config={config}
-                    onSaveToHistory={saveToHistory}
+                    onSaveToHistory={() => saveToHistory(true)}
                     onNotify={showToast}
                   />
                 </div>
