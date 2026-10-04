@@ -36,7 +36,7 @@ const INITIAL_DEMO_HISTORY = [
     timestamp: Date.now() - 120000,
     savedType: 'url',
     savedFormData: { url: 'https://github.com/sautrikroy17' },
-    savedConfig: { dotsColor: '#2563eb', backgroundColor: '#ffffff', dotsType: 'rounded' }
+    savedConfig: { dotsColor: '#0f172a', backgroundColor: '#ffffff', dotsType: 'rounded' }
   },
   {
     id: 'demo-2',
@@ -46,7 +46,7 @@ const INITIAL_DEMO_HISTORY = [
     timestamp: Date.now() - 3600000,
     savedType: 'url',
     savedFormData: { url: 'https://sautrikroy.me' },
-    savedConfig: { dotsColor: '#00f2fe', backgroundColor: '#070a14', dotsType: 'dots' }
+    savedConfig: { dotsColor: '#1e293b', backgroundColor: '#ffffff', dotsType: 'dots' }
   },
   {
     id: 'demo-3',
@@ -56,7 +56,7 @@ const INITIAL_DEMO_HISTORY = [
     timestamp: Date.now() - 10800000,
     savedType: 'email',
     savedFormData: { emailTo: 'sautrikroy@example.com', emailSubject: 'Inquiry', emailBody: 'Hello!' },
-    savedConfig: { dotsColor: '#ff416c', backgroundColor: '#ffffff', dotsType: 'classy-rounded' }
+    savedConfig: { dotsColor: '#334155', backgroundColor: '#ffffff', dotsType: 'classy-rounded' }
   },
   {
     id: 'demo-4',
@@ -66,7 +66,7 @@ const INITIAL_DEMO_HISTORY = [
     timestamp: Date.now() - 86400000,
     savedType: 'wifi',
     savedFormData: { wifiSsid: 'SRM_Hostel_5G', wifiPassword: 'DeveloperCommunity2026', wifiEncryption: 'WPA' },
-    savedConfig: { dotsColor: '#10b981', backgroundColor: '#041e17', dotsType: 'classy' }
+    savedConfig: { dotsColor: '#166534', backgroundColor: '#f8fafc', dotsType: 'classy' }
   },
   {
     id: 'demo-5',
@@ -76,7 +76,7 @@ const INITIAL_DEMO_HISTORY = [
     timestamp: Date.now() - 172800000,
     savedType: 'url',
     savedFormData: { url: 'https://linkedin.com/in/sautrikroy' },
-    savedConfig: { dotsColor: '#8b5cf6', backgroundColor: '#0e091b', dotsType: 'rounded' }
+    savedConfig: { dotsColor: '#475569', backgroundColor: '#ffffff', dotsType: 'rounded' }
   }
 ];
 
@@ -234,23 +234,23 @@ export default function App() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // QR Visual Styling Configuration (Default dotsColor #2563eb has 5.2:1 AAA Contrast on #ffffff)
+  // QR Visual Styling Configuration (Default dotsColor #0f172a has 18.5:1 AAA Contrast on #ffffff)
   const [config, setConfig] = useState({
     size: 280,
     margin: 8,
     errorCorrectionLevel: 'M',
-    dotsColor: '#2563eb',
+    dotsColor: '#0f172a',
     backgroundColor: '#ffffff',
     dotsType: 'rounded',
     cornersSquareType: 'extra-rounded',
     cornersDotType: 'dot',
     isGradient: false,
     gradientType: 'linear',
-    gradientColor2: '#1d4ed8',
+    gradientColor2: '#1e293b',
     logo: ''
   });
 
-  const [activePresetId, setActivePresetId] = useState('modern-blue');
+  const [activePresetId, setActivePresetId] = useState('classic-mono');
 
   const handleConfigChange = (key, value) => {
     setConfig((prev) => ({ ...prev, [key]: value }));
@@ -440,14 +440,14 @@ export default function App() {
       size: 280,
       margin: 8,
       errorCorrectionLevel: 'M',
-      dotsColor: '#2563eb',
+      dotsColor: '#0f172a',
       backgroundColor: '#ffffff',
       dotsType: 'rounded',
       cornersSquareType: 'extra-rounded',
       cornersDotType: 'dot',
       isGradient: false,
       gradientType: 'linear',
-      gradientColor2: '#1d4ed8',
+      gradientColor2: '#1e293b',
       logo: ''
     });
     setFormData({

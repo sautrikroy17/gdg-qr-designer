@@ -60,14 +60,14 @@ const CANDIDATE_VCARD = {
 };
 
 const CURATED_PALETTES = [
-  { name: 'Tech Blue', dots: '#2563eb', bg: '#ffffff', grad: '#1d4ed8', isGrad: false },
-  { name: 'Cyber Cyan', dots: '#00f2fe', bg: '#070a14', grad: '#4facfe', isGrad: true },
-  { name: 'Emerald', dots: '#10b981', bg: '#041e17', grad: '#059669', isGrad: false },
-  { name: 'Sunset Ruby', dots: '#ff416c', bg: '#ffffff', grad: '#ff4b2b', isGrad: true },
-  { name: 'Neon Violet', dots: '#8b5cf6', bg: '#0f0728', grad: '#c084fc', isGrad: true },
-  { name: 'Amber Gold', dots: '#f59e0b', bg: '#181204', grad: '#d97706', isGrad: false },
-  { name: 'Dark Obsidian', dots: '#0f172a', bg: '#f8fafc', grad: '#1e293b', isGrad: false },
-  { name: 'Classic Mono', dots: '#000000', bg: '#ffffff', grad: '#000000', isGrad: false },
+  { name: 'Pure Minimal', dots: '#000000', bg: '#ffffff', grad: '#000000', isGrad: false },
+  { name: 'Modern Slate', dots: '#1e293b', bg: '#ffffff', grad: '#1e293b', isGrad: false },
+  { name: 'Dark Obsidian', dots: '#f8fafc', bg: '#090d16', grad: '#cbd5e1', isGrad: true },
+  { name: 'Subtle Silver', dots: '#334155', bg: '#f8fafc', grad: '#334155', isGrad: false },
+  { name: 'Charcoal Minimal', dots: '#27272a', bg: '#ffffff', grad: '#09090b', isGrad: false },
+  { name: 'Matte Titanium', dots: '#475569', bg: '#ffffff', grad: '#1e293b', isGrad: true },
+  { name: 'Pure Monolith', dots: '#0f172a', bg: '#f8fafc', grad: '#1e293b', isGrad: false },
+  { name: 'Pure Graphite', dots: '#18181b', bg: '#ffffff', grad: '#18181b', isGrad: false },
 ];
 
 const DOT_PATTERNS = [
@@ -117,7 +117,7 @@ const PRESET_LOGOS = [
   {
     id: 'wifi-badge',
     name: 'Wi-Fi',
-    svg: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64"><rect width="24" height="24" rx="12" fill="%232563eb"/><path fill="%23ffffff" d="M12 18a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm-4.95-4.95a7 7 0 0 1 9.9 0l-1.41 1.41a5 5 0 0 0-7.07 0l-1.42-1.41zm-2.83-2.83a11 11 0 0 1 15.56 0l-1.42 1.41a9 9 0 0 0-12.72 0l-1.42-1.41z"/></svg>`
+    svg: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64"><rect width="24" height="24" rx="12" fill="%230f172a"/><path fill="%23ffffff" d="M12 18a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm-4.95-4.95a7 7 0 0 1 9.9 0l-1.41 1.41a5 5 0 0 0-7.07 0l-1.42-1.41zm-2.83-2.83a11 11 0 0 1 15.56 0l-1.42 1.41a9 9 0 0 0-12.72 0l-1.42-1.41z"/></svg>`
   }
 ];
 

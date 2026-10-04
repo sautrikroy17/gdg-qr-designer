@@ -38,35 +38,35 @@ export default function HeroLanding({
 
   const palettePresets = [
     {
-      name: 'Electric Blue',
-      dot1: '#38bdf8',
-      dot2: '#2563eb',
-      dot3: '#6366f1',
-      glow: 'rgba(56, 189, 248, 0.45)',
+      name: 'Minimal Slate',
+      dot1: '#334155',
+      dot2: '#0f172a',
+      dot3: '#1e293b',
+      glow: 'rgba(255, 255, 255, 0.08)',
       sliderPos: '15%'
     },
     {
-      name: 'Cyber Magenta',
-      dot1: '#c084fc',
-      dot2: '#ec4899',
-      dot3: '#f43f5e',
-      glow: 'rgba(236, 72, 153, 0.45)',
+      name: 'Refined Charcoal',
+      dot1: '#27272a',
+      dot2: '#18181b',
+      dot3: '#09090b',
+      glow: 'rgba(255, 255, 255, 0.08)',
       sliderPos: '45%'
     },
     {
-      name: 'Sunset Orange',
-      dot1: '#fb923c',
-      dot2: '#f97316',
-      dot3: '#ea580c',
-      glow: 'rgba(249, 115, 22, 0.45)',
+      name: 'Subtle Silver',
+      dot1: '#64748b',
+      dot2: '#334155',
+      dot3: '#475569',
+      glow: 'rgba(255, 255, 255, 0.08)',
       sliderPos: '75%'
     },
     {
-      name: 'Emerald Pulse',
-      dot1: '#34d399',
-      dot2: '#10b981',
-      dot3: '#059669',
-      glow: 'rgba(16, 185, 129, 0.45)',
+      name: 'Matte Titanium',
+      dot1: '#52525b',
+      dot2: '#27272a',
+      dot3: '#3f3f46',
+      glow: 'rgba(255, 255, 255, 0.08)',
       sliderPos: '95%'
     }
   ];
@@ -74,13 +74,13 @@ export default function HeroLanding({
   const currentHeroPalette = palettePresets[heroPaletteIndex];
 
   const contentTypes = [
-    { id: 'url', title: 'Website URL', desc: 'Link to any website', icon: Globe, iconColor: '#38bdf8', circleBg: 'rgba(56, 189, 248, 0.15)' },
-    { id: 'text', title: 'Plain Text', desc: 'Share text instantly', icon: FileText, iconColor: '#a78bfa', circleBg: 'rgba(167, 139, 250, 0.15)' },
-    { id: 'email', title: 'Email', desc: 'Open email client', icon: Mail, iconColor: '#f472b6', circleBg: 'rgba(244, 114, 182, 0.15)' },
-    { id: 'phone', title: 'Phone', desc: 'Call with one scan', icon: Phone, iconColor: '#34d399', circleBg: 'rgba(52, 211, 153, 0.15)' },
-    { id: 'wifi', title: 'Wi-Fi', desc: 'Share Wi-Fi details', icon: Wifi, iconColor: '#38bdf8', circleBg: 'rgba(56, 189, 248, 0.15)' },
-    { id: 'location', title: 'Location', desc: 'Share any location', icon: MapPin, iconColor: '#fb7185', circleBg: 'rgba(251, 113, 133, 0.15)' },
-    { id: 'vcard', title: 'vCard Contact', desc: 'Share complete contact card', icon: MoreHorizontal, iconColor: '#c084fc', circleBg: 'rgba(192, 132, 252, 0.15)' },
+    { id: 'url', title: 'Website URL', desc: 'Link to any website', icon: Globe, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
+    { id: 'text', title: 'Plain Text', desc: 'Share text instantly', icon: FileText, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
+    { id: 'email', title: 'Email', desc: 'Open email client', icon: Mail, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
+    { id: 'phone', title: 'Phone', desc: 'Call with one scan', icon: Phone, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
+    { id: 'wifi', title: 'Wi-Fi', desc: 'Share Wi-Fi details', icon: Wifi, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
+    { id: 'location', title: 'Location', desc: 'Share any location', icon: MapPin, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
+    { id: 'vcard', title: 'vCard Contact', desc: 'Share complete contact card', icon: MoreHorizontal, iconColor: '#ffffff', circleBg: 'rgba(255, 255, 255, 0.06)' },
   ];
 
   // Mouse move 3D tilt calculation
@@ -290,7 +290,7 @@ export default function HeroLanding({
                       rx={heroFrame === 'sharp' ? 1.5 : heroFrame === 'circle' ? 13 : 7.5}
                       stroke="url(#finderBorderGradient)"
                       strokeWidth="4.2"
-                      fill="#f0f7ff"
+                      fill="#ffffff"
                     />
                     <rect
                       x="13"
@@ -310,7 +310,7 @@ export default function HeroLanding({
                       rx={heroFrame === 'sharp' ? 1.5 : heroFrame === 'circle' ? 13 : 7.5}
                       stroke="url(#finderBorderGradient)"
                       strokeWidth="4.2"
-                      fill="#f0f7ff"
+                      fill="#ffffff"
                     />
                     <rect
                       x="75"
@@ -330,7 +330,7 @@ export default function HeroLanding({
                       rx={heroFrame === 'sharp' ? 1.5 : heroFrame === 'circle' ? 13 : 7.5}
                       stroke="url(#finderBorderGradient)"
                       strokeWidth="4.2"
-                      fill="#f0f7ff"
+                      fill="#ffffff"
                     />
                     <rect
                       x="13"

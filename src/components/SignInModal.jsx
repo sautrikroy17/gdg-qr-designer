@@ -24,7 +24,8 @@ export default function SignInModal({ isOpen, onClose }) {
         alignItems: 'center',
         justifyContent: 'center',
         background: 'rgba(0, 0, 0, 0.75)',
-        backdropFilter: 'blur(10px)',
+        backdropFilter: 'blur(28px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(28px) saturate(180%)',
         padding: '1rem'
       }}
       onClick={onClose}
@@ -34,10 +35,12 @@ export default function SignInModal({ isOpen, onClose }) {
         style={{
           width: '100%',
           maxWidth: '440px',
-          background: 'var(--bg-card)',
+          background: 'rgba(12, 17, 28, 0.94)',
+          backdropFilter: 'blur(28px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(28px) saturate(180%)',
           borderRadius: 'var(--radius-xl)',
-          boxShadow: '0 25px 60px rgba(0,0,0,0.8)',
-          border: '1px solid var(--border-color)',
+          boxShadow: '0 25px 60px rgba(0,0,0,0.85)',
+          border: '1px solid rgba(255, 255, 255, 0.12)',
           padding: '2rem',
           position: 'relative'
         }}
@@ -55,7 +58,7 @@ export default function SignInModal({ isOpen, onClose }) {
 
         {loggedIn ? (
           <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--status-good-bg)', color: 'var(--accent-green)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+            <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.12)', color: 'var(--accent-green)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem', border: '1px solid rgba(16, 185, 129, 0.25)' }}>
               <Check size={24} />
             </div>
             <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-main)' }}>Signed in as Sautrik Roy</h4>
@@ -84,7 +87,7 @@ export default function SignInModal({ isOpen, onClose }) {
 
             <button
               type="submit"
-              className="btn-create-qr"
+              className="btn-create-qr-hero"
               style={{ width: '100%', justifyContent: 'center' }}
             >
               <UserCheck size={18} />

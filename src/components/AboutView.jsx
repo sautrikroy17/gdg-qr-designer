@@ -43,7 +43,7 @@ export default function AboutView({ onOpenStudio }) {
       {/* Header */}
       <div className="view-header-centered" style={{ position: 'relative', zIndex: 5 }}>
         <div className="purpose-badge-pill">
-          <Code2 size={13} style={{ color: 'var(--accent-blue-vibrant)' }} />
+          <Code2 size={13} style={{ color: '#ffffff' }} />
           <span>Technical Domain Recruitment 2026–27</span>
         </div>
         <h1 className="view-main-heading">
@@ -79,9 +79,9 @@ export default function AboutView({ onOpenStudio }) {
               rel="noreferrer"
               className="profile-link-btn"
               onClick={() => playTap()}
-              style={{ background: 'rgba(56, 189, 248, 0.12)', borderColor: 'rgba(56, 189, 248, 0.4)' }}
+              style={{ background: 'rgba(255, 255, 255, 0.08)', borderColor: 'rgba(255, 255, 255, 0.2)' }}
             >
-              <Globe size={14} style={{ color: 'var(--accent-blue-vibrant)' }} />
+              <Globe size={14} style={{ color: '#ffffff' }} />
               <span>Portfolio: sautrikroy.me</span>
               <ExternalLink size={12} />
             </a>
@@ -120,7 +120,7 @@ export default function AboutView({ onOpenStudio }) {
 
         <div className="studio-card-content">
           <div className="purpose-badge-pill" style={{ width: 'fit-content', marginBottom: '0.75rem' }}>
-            <Cpu size={13} style={{ color: 'var(--accent-blue-vibrant)' }} />
+            <Cpu size={13} style={{ color: '#ffffff' }} />
             <span>Developer Studio & Workstation Architecture</span>
           </div>
 
@@ -178,7 +178,7 @@ export default function AboutView({ onOpenStudio }) {
       <div className="faq-section-wrapper" style={{ position: 'relative', zIndex: 5, marginBottom: '3.5rem' }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <div className="purpose-badge-pill">
-            <HelpCircle size={13} style={{ color: 'var(--accent-blue-vibrant)' }} />
+            <HelpCircle size={13} style={{ color: '#ffffff' }} />
             <span>Recruitment Defense & Viva Ready</span>
           </div>
           <h3 className="faq-heading" style={{ fontSize: '1.75rem' }}>

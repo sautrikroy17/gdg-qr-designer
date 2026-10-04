@@ -32,7 +32,7 @@ export default function TemplatesView({ activePresetId, onSelectPresetAndEdit })
       {/* Page Header */}
       <div className="view-header-centered">
         <div className="purpose-badge-pill">
-          <Palette size={13} style={{ color: 'var(--accent-blue-vibrant)' }} />
+          <Palette size={13} style={{ color: '#ffffff' }} />
           <span>Curated Design Collection</span>
         </div>
         <h1 className="view-main-heading">

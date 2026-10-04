@@ -1,13 +1,14 @@
 /**
  * QRCraft Design Templates & Presets
  * Pre-configured styles categorized by design aesthetic.
+ * Minimalist, elegant, and ultra-scannable design system.
  */
 
 export const TEMPLATE_CATEGORIES = [
   { id: 'all', label: 'All' },
+  { id: 'minimal', label: 'Minimal' },
   { id: 'modern', label: 'Modern' },
   { id: 'gradient', label: 'Gradient' },
-  { id: 'minimal', label: 'Minimal' },
   { id: 'tech', label: 'Tech' },
   { id: 'nature', label: 'Nature' },
   { id: 'premium', label: 'Premium' },
@@ -16,9 +17,9 @@ export const TEMPLATE_CATEGORIES = [
 export const PRESETS = [
   {
     id: 'classic-mono',
-    name: 'Classic',
+    name: 'Classic Mono',
     category: 'minimal',
-    description: 'Universal, ultra-scannable black on white',
+    description: 'Universal, ultra-scannable black on pure white',
     dotsColor: '#000000',
     backgroundColor: '#ffffff',
     dotsType: 'square',
@@ -29,123 +30,123 @@ export const PRESETS = [
     gradientColor2: '#000000'
   },
   {
-    id: 'modern-blue',
-    name: 'Modern',
+    id: 'modern-slate',
+    name: 'Modern Slate',
     category: 'modern',
-    description: 'Clean Google Tech Blue with rounded modules',
-    dotsColor: '#3882f6',
+    description: 'Refined deep slate with rounded geometric modules',
+    dotsColor: '#1e293b',
     backgroundColor: '#ffffff',
     dotsType: 'rounded',
     cornersSquareType: 'extra-rounded',
     cornersDotType: 'dot',
     isGradient: false,
     gradientType: 'linear',
-    gradientColor2: '#3882f6'
+    gradientColor2: '#1e293b'
   },
   {
-    id: 'midnight-neon',
-    name: 'Midnight Neon',
+    id: 'dark-obsidian',
+    name: 'Dark Obsidian',
     category: 'tech',
-    description: 'Electric cyan gradient on dark obsidian',
-    dotsColor: '#00f2fe',
-    backgroundColor: '#070a14',
+    description: 'Crisp silver modules on deep obsidian substrate',
+    dotsColor: '#f8fafc',
+    backgroundColor: '#090d16',
     dotsType: 'dots',
     cornersSquareType: 'extra-rounded',
     cornersDotType: 'dot',
     isGradient: true,
     gradientType: 'linear',
-    gradientColor2: '#4facfe'
+    gradientColor2: '#cbd5e1'
   },
   {
-    id: 'sunset-glow',
-    name: 'Sunset Glow',
-    category: 'gradient',
-    description: 'Warm coral to golden gradient',
-    dotsColor: '#ff416c',
-    backgroundColor: '#ffffff',
+    id: 'subtle-silver',
+    name: 'Subtle Silver',
+    category: 'minimal',
+    description: 'Charcoal modules on sleek off-white canvas',
+    dotsColor: '#334155',
+    backgroundColor: '#f8fafc',
     dotsType: 'classy-rounded',
     cornersSquareType: 'extra-rounded',
     cornersDotType: 'dot',
-    isGradient: true,
+    isGradient: false,
     gradientType: 'linear',
-    gradientColor2: '#ff4b2b'
+    gradientColor2: '#334155'
   },
   {
-    id: 'emerald-tech',
-    name: 'Emerald Tech',
-    category: 'tech',
-    description: 'Lush cyber emerald on deep matrix card',
-    dotsColor: '#10b981',
-    backgroundColor: '#041e17',
+    id: 'refined-cobalt',
+    name: 'Refined Cobalt',
+    category: 'modern',
+    description: 'Professional understated cobalt on crisp white',
+    dotsColor: '#1d4ed8',
+    backgroundColor: '#ffffff',
     dotsType: 'classy',
     cornersSquareType: 'extra-rounded',
     cornersDotType: 'dot',
     isGradient: false,
     gradientType: 'linear',
-    gradientColor2: '#10b981'
+    gradientColor2: '#1d4ed8'
   },
   {
-    id: 'royal-violet',
-    name: 'Royal Violet',
+    id: 'matte-titanium',
+    name: 'Matte Titanium',
     category: 'premium',
-    description: 'Deep royal amethyst purple with sleek styling',
-    dotsColor: '#8b5cf6',
-    backgroundColor: '#0e091b',
+    description: 'Metallic slate linear gradient with architectural finish',
+    dotsColor: '#475569',
+    backgroundColor: '#ffffff',
     dotsType: 'rounded',
     cornersSquareType: 'extra-rounded',
     cornersDotType: 'dot',
     isGradient: true,
     gradientType: 'linear',
-    gradientColor2: '#c084fc'
+    gradientColor2: '#1e293b'
   },
   {
     id: 'glassmorphism',
-    name: 'Glassmorphism',
+    name: 'Frosted Glass',
     category: 'modern',
-    description: 'Frosted crystal aesthetic with electric indigo',
-    dotsColor: '#6366f1',
+    description: 'Soft charcoal radial gradient on crystal white',
+    dotsColor: '#334155',
     backgroundColor: '#ffffff',
     dotsType: 'dots',
     cornersSquareType: 'extra-rounded',
     cornersDotType: 'dot',
     isGradient: true,
     gradientType: 'radial',
-    gradientColor2: '#8b5cf6'
+    gradientColor2: '#0f172a'
   },
   {
-    id: 'gradient-wave',
-    name: 'Gradient Wave',
-    category: 'gradient',
-    description: 'Fluid magenta into cosmic cyan',
-    dotsColor: '#ec4899',
+    id: 'pure-graphite',
+    name: 'Pure Graphite',
+    category: 'minimal',
+    description: 'Sleek dark graphite with smooth rounded corners',
+    dotsColor: '#18181b',
     backgroundColor: '#ffffff',
     dotsType: 'classy-rounded',
     cornersSquareType: 'extra-rounded',
     cornersDotType: 'dot',
-    isGradient: true,
+    isGradient: false,
     gradientType: 'linear',
-    gradientColor2: '#06b6d4'
+    gradientColor2: '#18181b'
   },
   {
-    id: 'nature-leaf',
-    name: 'Nature Leaf',
+    id: 'nature-sage',
+    name: 'Nature Sage',
     category: 'nature',
-    description: 'Botanical leaf green with organic rounded dots',
-    dotsColor: '#22c55e',
-    backgroundColor: '#f0fdf4',
+    description: 'Botanical muted forest green on clean off-white',
+    dotsColor: '#166534',
+    backgroundColor: '#f8fafc',
     dotsType: 'extra-rounded',
     cornersSquareType: 'extra-rounded',
     cornersDotType: 'dot',
     isGradient: false,
     gradientType: 'linear',
-    gradientColor2: '#15803d'
+    gradientColor2: '#14532d'
   }
 ];
 
 export const GRADIENT_PRESETS = [
-  { id: 'grad-blue', label: 'Ocean Blue', color1: '#3882f6', color2: '#1d4ed8' },
-  { id: 'grad-sunset', label: 'Sunset Fire', color1: '#ff416c', color2: '#ff4b2b' },
-  { id: 'grad-amber', label: 'Amber Glow', color1: '#f59e0b', color2: '#ef4444' },
-  { id: 'grad-cyan', label: 'Cyber Cyan', color1: '#00f2fe', color2: '#4facfe' },
-  { id: 'grad-purple', label: 'Neon Purple', color1: '#8b5cf6', color2: '#ec4899' },
+  { id: 'grad-slate', label: 'Slate Mist', color1: '#475569', color2: '#0f172a' },
+  { id: 'grad-silver', label: 'Silver Sheen', color1: '#94a3b8', color2: '#334155' },
+  { id: 'grad-obsidian', label: 'Dark Obsidian', color1: '#27272a', color2: '#09090b' },
+  { id: 'grad-graphite', label: 'Matte Graphite', color1: '#52525b', color2: '#18181b' },
+  { id: 'grad-titanium', label: 'Titanium Shadow', color1: '#64748b', color2: '#1e293b' },
 ];

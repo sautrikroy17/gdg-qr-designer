@@ -55,7 +55,7 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
       {/* Page Header */}
       <div className="view-header-centered" style={{ position: 'relative', zIndex: 5 }}>
         <div className="purpose-badge-pill">
-          <Zap size={13} style={{ color: 'var(--accent-blue-vibrant)' }} />
+          <Zap size={13} style={{ color: '#ffffff' }} />
           <span>Core Engineering Architecture</span>
         </div>
         <h1 className="view-main-heading">
@@ -197,9 +197,9 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
                   style={{
                     padding: '0.5rem 0.2rem',
                     borderRadius: 'var(--radius-xs)',
-                    background: selectedErrorLevel === el.level ? 'var(--accent-blue)' : 'var(--bg-input)',
-                    border: `1px solid ${selectedErrorLevel === el.level ? 'var(--accent-blue-vibrant)' : 'var(--border-color)'}`,
-                    color: selectedErrorLevel === el.level ? '#ffffff' : 'var(--text-secondary)',
+                    background: selectedErrorLevel === el.level ? '#ffffff' : 'var(--bg-input)',
+                    border: `1px solid ${selectedErrorLevel === el.level ? '#ffffff' : 'var(--border-color)'}`,
+                    color: selectedErrorLevel === el.level ? '#090d16' : 'var(--text-secondary)',
                     textAlign: 'center',
                     cursor: 'pointer',
                     transition: 'var(--transition)'
@@ -253,10 +253,10 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '0.35rem' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Resolution Comparison:</span>
-                <span style={{ color: '#38bdf8', fontWeight: 700 }}>∞ DPI (Vector) vs 300 DPI</span>
+                <span style={{ color: '#ffffff', fontWeight: 700 }}>∞ DPI (Vector) vs 300 DPI</span>
               </div>
               <div style={{ height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
-                <div style={{ width: '100%', height: '100%', background: 'linear-gradient(90deg, #38bdf8, #818cf8)' }} />
+                <div style={{ width: '100%', height: '100%', background: 'linear-gradient(90deg, #94a3b8, #ffffff)' }} />
               </div>
             </div>
           </div>
@@ -291,8 +291,8 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
             <div
               style={{
                 marginTop: '1.2rem',
-                background: 'rgba(56, 189, 248, 0.08)',
-                border: '1px solid rgba(56, 189, 248, 0.25)',
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.14)',
                 borderRadius: 'var(--radius-sm)',
                 padding: '0.75rem 0.95rem',
                 display: 'flex',
@@ -300,8 +300,8 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
                 gap: '0.65rem'
               }}
             >
-              <CheckCircle2 size={16} color="#38bdf8" />
-              <span style={{ fontSize: '0.76rem', color: '#93c5fd', fontWeight: 600 }}>
+              <CheckCircle2 size={16} color="#ffffff" />
+              <span style={{ fontSize: '0.76rem', color: '#e2e8f0', fontWeight: 600 }}>
                 0 Network Packets Sent • Full Offline Operation
               </span>
             </div>

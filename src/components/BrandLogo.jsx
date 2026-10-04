@@ -18,16 +18,16 @@ export default function BrandLogo({ size = 28, showText = false, textClass = 'br
       >
         <defs>
           <linearGradient id="qrcraftLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#38bdf8" />
-            <stop offset="45%" stopColor="#2563eb" />
-            <stop offset="100%" stopColor="#1d4ed8" />
+            <stop offset="0%" stopColor="#334155" />
+            <stop offset="50%" stopColor="#1e293b" />
+            <stop offset="100%" stopColor="#0f172a" />
           </linearGradient>
           <linearGradient id="qrcraftSparkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="100%" stopColor="#bae6fd" />
+            <stop offset="100%" stopColor="#cbd5e1" />
           </linearGradient>
           <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#2563eb" floodOpacity="0.45" />
+            <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000000" floodOpacity="0.5" />
           </filter>
         </defs>
 
@@ -41,7 +41,7 @@ export default function BrandLogo({ size = 28, showText = false, textClass = 'br
           width="26.5"
           height="26.5"
           rx="6.75"
-          stroke="rgba(255, 255, 255, 0.3)"
+          stroke="rgba(255, 255, 255, 0.2)"
           strokeWidth="1.5"
           fill="none"
         />
@@ -66,7 +66,7 @@ export default function BrandLogo({ size = 28, showText = false, textClass = 'br
           d="M 19.5 14.5 Q 19.5 19.5 24.5 19.5 Q 19.5 19.5 19.5 24.5 Q 19.5 19.5 14.5 19.5 Q 19.5 19.5 19.5 14.5 Z"
           fill="url(#qrcraftSparkGrad)"
         />
-        <circle cx="19.5" cy="19.5" r="1.1" fill="#0284c7" />
+        <circle cx="19.5" cy="19.5" r="1.1" fill="#0f172a" />
       </svg>
 
       {showText && <span className={textClass}>QRCraft</span>}

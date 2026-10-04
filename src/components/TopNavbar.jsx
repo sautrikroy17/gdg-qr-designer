@@ -116,7 +116,7 @@ export default function TopNavbar({
               title={soundEnabled ? 'Sound FX Enabled (Click to mute)' : 'Sound FX Muted (Click to enable)'}
               aria-label={soundEnabled ? 'Mute sound effects' : 'Enable sound effects'}
             >
-              {soundEnabled ? <Volume2 size={13} className="text-blue" /> : <VolumeX size={13} />}
+              {soundEnabled ? <Volume2 size={13} style={{ color: '#ffffff' }} /> : <VolumeX size={13} />}
             </button>
           )}
 

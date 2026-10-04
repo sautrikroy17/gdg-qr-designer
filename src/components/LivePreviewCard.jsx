@@ -64,7 +64,7 @@ export default function LivePreviewCard({
       },
       dotsOptions: {
         type: config.dotsType || 'rounded',
-        color: config.dotsColor || '#2563eb',
+        color: config.dotsColor || '#0f172a',
         ...(config.isGradient
           ? {
               gradient: {
@@ -72,7 +72,7 @@ export default function LivePreviewCard({
                 rotation: 0,
                 colorStops: [
                   { offset: 0, color: config.dotsColor },
-                  { offset: 1, color: config.gradientColor2 || '#1d4ed8' }
+                  { offset: 1, color: config.gradientColor2 || '#334155' }
                 ]
               }
             }
@@ -83,11 +83,11 @@ export default function LivePreviewCard({
       },
       cornersSquareOptions: {
         type: config.cornersSquareType || 'extra-rounded',
-        color: config.dotsColor || '#2563eb'
+        color: config.dotsColor || '#0f172a'
       },
       cornersDotOptions: {
         type: config.cornersDotType || 'dot',
-        color: config.dotsColor || '#2563eb'
+        color: config.dotsColor || '#0f172a'
       }
     };
 
@@ -361,7 +361,7 @@ export default function LivePreviewCard({
                 <span className="phone-battery">100%</span>
               </div>
               <div className="phone-floating-pill">
-                <ExternalLink size={11} className="text-cyan" />
+                <ExternalLink size={11} style={{ color: '#ffffff' }} />
                 <span className="phone-pill-url">{payload.length > 32 ? payload.substring(0, 32) + '...' : payload}</span>
               </div>
             </div>
