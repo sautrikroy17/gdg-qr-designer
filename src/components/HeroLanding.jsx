@@ -38,35 +38,35 @@ export default function HeroLanding({
 
   const palettePresets = [
     {
-      name: 'Minimal Slate',
-      dot1: '#334155',
-      dot2: '#0f172a',
-      dot3: '#1e293b',
-      glow: 'rgba(255, 255, 255, 0.08)',
+      name: 'Electric Blue',
+      dot1: '#3b82f6',
+      dot2: '#2563eb',
+      dot3: '#1d4ed8',
+      glow: 'rgba(37, 99, 235, 0.45)',
       sliderPos: '15%'
     },
     {
-      name: 'Refined Charcoal',
-      dot1: '#27272a',
-      dot2: '#18181b',
-      dot3: '#09090b',
-      glow: 'rgba(255, 255, 255, 0.08)',
+      name: 'Minimal Slate',
+      dot1: '#475569',
+      dot2: '#0f172a',
+      dot3: '#1e293b',
+      glow: 'rgba(255, 255, 255, 0.15)',
       sliderPos: '45%'
     },
     {
-      name: 'Subtle Silver',
-      dot1: '#64748b',
-      dot2: '#334155',
-      dot3: '#475569',
-      glow: 'rgba(255, 255, 255, 0.08)',
+      name: 'Emerald Mint',
+      dot1: '#10b981',
+      dot2: '#059669',
+      dot3: '#047857',
+      glow: 'rgba(16, 185, 129, 0.35)',
       sliderPos: '75%'
     },
     {
-      name: 'Matte Titanium',
-      dot1: '#52525b',
-      dot2: '#27272a',
-      dot3: '#3f3f46',
-      glow: 'rgba(255, 255, 255, 0.08)',
+      name: 'Dark Obsidian',
+      dot1: '#27272a',
+      dot2: '#18181b',
+      dot3: '#09090b',
+      glow: 'rgba(255, 255, 255, 0.12)',
       sliderPos: '95%'
     }
   ];
@@ -174,23 +174,54 @@ export default function HeroLanding({
             </button>
           </div>
 
-          {/* 4 Feature Tags Row */}
-          <div className="hero-feature-tags-row">
-            <div className="feature-tag-item">
-              <Zap size={14} className="tag-icon tag-icon-zap" />
-              <span>Lightning Fast</span>
+          {/* 4 Bento Glass Tiles (Matched to sautrikroy.me Bento Architecture) */}
+          <div className="hero-bento-grid">
+            <div className="bento-tile-card" onClick={onOpenStudio} role="button" tabIndex={0}>
+              <div className="bento-tile-head">
+                <div className="bento-icon-box">
+                  <Zap size={15} />
+                </div>
+                <span className="bento-index-num">01</span>
+              </div>
+              <h3 className="bento-tile-title">Instant Speed</h3>
+              <p className="bento-tile-desc">0ms local generation with zero server latency.</p>
+              <div className="bento-bottom-glow" />
             </div>
-            <div className="feature-tag-item">
-              <Lock size={14} className="tag-icon tag-icon-lock" />
-              <span>No Backend Required</span>
+
+            <div className="bento-tile-card" onClick={onOpenStudio} role="button" tabIndex={0}>
+              <div className="bento-tile-head">
+                <div className="bento-icon-box">
+                  <Lock size={15} />
+                </div>
+                <span className="bento-index-num">02</span>
+              </div>
+              <h3 className="bento-tile-title">Pure Client-Side</h3>
+              <p className="bento-tile-desc">100% in-browser memory. Zero cloud telemetry.</p>
+              <div className="bento-bottom-glow" />
             </div>
-            <div className="feature-tag-item">
-              <Smartphone size={14} className="tag-icon tag-icon-phone" />
-              <span>Vector SVGs</span>
+
+            <div className="bento-tile-card" onClick={onOpenStudio} role="button" tabIndex={0}>
+              <div className="bento-tile-head">
+                <div className="bento-icon-box">
+                  <Smartphone size={15} />
+                </div>
+                <span className="bento-index-num">03</span>
+              </div>
+              <h3 className="bento-tile-title">Vector SVGs</h3>
+              <p className="bento-tile-desc">Infinite scaling, print-ready crisp resolution.</p>
+              <div className="bento-bottom-glow" />
             </div>
-            <div className="feature-tag-item">
-              <Wifi size={14} className="tag-icon tag-icon-wifi" />
-              <span>W3C Compliant</span>
+
+            <div className="bento-tile-card" onClick={onOpenStudio} role="button" tabIndex={0}>
+              <div className="bento-tile-head">
+                <div className="bento-icon-box">
+                  <Sparkles size={15} />
+                </div>
+                <span className="bento-index-num">04</span>
+              </div>
+              <h3 className="bento-tile-title">W3C Audited</h3>
+              <p className="bento-tile-desc">Real-time contrast ratio & camera scannability.</p>
+              <div className="bento-bottom-glow" />
             </div>
           </div>
         </div>
