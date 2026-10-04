@@ -33,7 +33,10 @@
   .customizer-subtabs-bar,
   .table-wrapper,
   .mockup-scene-bar,
+  .filter-chips-cluster,
   .filter-pills-bar,
+  .quick-color-dots-row,
+  .brand-badges-row,
   .palette-dots-track {
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
@@ -43,7 +46,10 @@
   .customizer-subtabs-bar::-webkit-scrollbar,
   .table-wrapper::-webkit-scrollbar,
   .mockup-scene-bar::-webkit-scrollbar,
+  .filter-chips-cluster::-webkit-scrollbar,
   .filter-pills-bar::-webkit-scrollbar,
+  .quick-color-dots-row::-webkit-scrollbar,
+  .brand-badges-row::-webkit-scrollbar,
   .palette-dots-track::-webkit-scrollbar {
     display: none !important;
   }
@@ -62,20 +68,20 @@
   .main-content-flow {
     width: 100% !important;
     min-width: 0 !important;
-    padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
   .page-container {
     width: 100% !important;
     max-width: 100% !important;
-    padding: 1rem 0.85rem 2.5rem !important;
+    padding: 0.85rem 0.75rem 3rem !important;
   }
 
   /* Re-order Studio Workspace Grid: Place Live Canvas Stage at TOP */
   .studio-workspace-grid {
     display: flex !important;
     flex-direction: column !important;
-    gap: 1.25rem !important;
+    gap: 1.15rem !important;
     width: 100% !important;
   }
 
@@ -88,7 +94,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     3. Native-Style Floating Island Studio Bottom App Dock (Sidebar Transformation)
+     3. Native Floating Capsule Bottom Dock (Studio App Navigation)
      -------------------------------------------------------------------------- */
   .app-sidebar {
     position: fixed !important;
@@ -99,25 +105,25 @@
     width: auto !important;
     max-width: 440px !important;
     margin: 0 auto !important;
-    height: 60px !important;
-    max-height: 60px !important;
+    height: 62px !important;
+    max-height: 62px !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: space-around !important;
-    padding: 0.35rem 0.6rem calc(0.35rem + env(safe-area-inset-bottom, 0px)) !important;
-    border-radius: 30px !important;
+    padding: 0.35rem 0.5rem calc(0.35rem + env(safe-area-inset-bottom, 0px)) !important;
+    border-radius: 32px !important;
     border: 1px solid rgba(255, 255, 255, 0.16) !important;
-    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
-    background: rgba(9, 13, 25, 0.90) !important;
-    backdrop-filter: blur(32px) saturate(200%) !important;
-    -webkit-backdrop-filter: blur(32px) saturate(200%) !important;
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+    background: rgba(9, 13, 26, 0.92) !important;
+    backdrop-filter: blur(36px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(36px) saturate(200%) !important;
     z-index: 1000 !important;
   }
 
   [data-theme='light'] .app-sidebar {
-    background: rgba(255, 255, 255, 0.94) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
     border: 1px solid rgba(0, 0, 0, 0.12) !important;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.14) !important;
+    box-shadow: 0 12px 38px rgba(0, 0, 0, 0.16) !important;
   }
 
   /* Hide Desktop-Only Sidebar Rows */
@@ -146,7 +152,7 @@
     width: 100% !important;
     justify-content: space-around !important;
     align-items: center !important;
-    gap: 0.3rem !important;
+    gap: 0.25rem !important;
   }
 
   .sidebar-item {
@@ -154,7 +160,7 @@
     flex-direction: column !important;
     justify-content: center !important;
     align-items: center !important;
-    padding: 0.35rem 0.5rem !important;
+    padding: 0.35rem 0.4rem !important;
     gap: 0.18rem !important;
     border-radius: 16px !important;
     flex: 1 !important;
@@ -168,7 +174,7 @@
   }
 
   .sidebar-item:active {
-    transform: scale(0.95) !important;
+    transform: scale(0.94) !important;
   }
 
   .sidebar-item.active {
@@ -189,8 +195,8 @@
   }
 
   .sidebar-item-icon {
-    width: 16px !important;
-    height: 16px !important;
+    width: 17px !important;
+    height: 17px !important;
   }
 
   .sidebar-item.active .sidebar-item-icon {
@@ -202,7 +208,7 @@
   }
 
   .sidebar-item-content span {
-    font-size: 0.64rem !important;
+    font-size: 0.65rem !important;
     font-weight: 700 !important;
     letter-spacing: -0.01em !important;
     line-height: 1 !important;
@@ -223,12 +229,12 @@
   }
 
   /* --------------------------------------------------------------------------
-     4. Mobile Studio Header & Quick Action Cluster
+     4. Mobile Studio Header & Actions Bar
      -------------------------------------------------------------------------- */
   .studio-top-header {
-    height: 54px !important;
-    min-height: 54px !important;
-    padding: 0.45rem 0.85rem !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    padding: 0.45rem 0.75rem !important;
     border-bottom: 1px solid var(--border-color) !important;
     background: var(--bg-navbar) !important;
     backdrop-filter: blur(24px) saturate(180%) !important;
@@ -241,11 +247,11 @@
   .studio-header-left {
     display: flex !important;
     align-items: center !important;
-    gap: 0.6rem !important;
+    gap: 0.5rem !important;
   }
 
   .btn-back-home {
-    padding: 0.35rem 0.75rem !important;
+    padding: 0.35rem 0.7rem !important;
     border-radius: 9999px !important;
     font-size: 0.76rem !important;
     font-weight: 700 !important;
@@ -254,12 +260,13 @@
     display: inline-flex !important;
     align-items: center !important;
     gap: 0.35rem !important;
+    min-height: 32px !important;
   }
 
   .studio-title-badge {
     display: inline-flex !important;
     align-items: center !important;
-    gap: 0.45rem !important;
+    gap: 0.4rem !important;
   }
 
   .studio-brand-dot {
@@ -270,7 +277,7 @@
   }
 
   .studio-badge-title {
-    font-size: 0.9rem !important;
+    font-size: 0.88rem !important;
     font-weight: 800 !important;
     letter-spacing: -0.015em !important;
   }
@@ -287,12 +294,12 @@
   .studio-header-right {
     display: flex !important;
     align-items: center !important;
-    gap: 0.4rem !important;
+    gap: 0.35rem !important;
   }
 
   .studio-btn-subtle {
-    width: 34px !important;
-    height: 34px !important;
+    width: 32px !important;
+    height: 32px !important;
     padding: 0 !important;
     border-radius: 50% !important;
     display: flex !important;
@@ -316,17 +323,17 @@
      -------------------------------------------------------------------------- */
   .studio-stage-card {
     border-radius: 20px !important;
-    padding: 1.15rem !important;
+    padding: 1rem !important;
     box-shadow: var(--shadow-card) !important;
     width: 100% !important;
   }
 
   .stage-head-bar {
-    margin-bottom: 0.85rem !important;
+    margin-bottom: 0.75rem !important;
   }
 
   .stage-title {
-    font-size: 0.96rem !important;
+    font-size: 0.94rem !important;
   }
 
   .stage-mode-segmented {
@@ -336,8 +343,8 @@
   }
 
   .stage-mode-btn {
-    padding: 0.35rem 0.65rem !important;
-    font-size: 0.76rem !important;
+    padding: 0.32rem 0.6rem !important;
+    font-size: 0.74rem !important;
     border-radius: 9px !important;
   }
 
@@ -345,27 +352,28 @@
     display: flex !important;
     gap: 0.4rem !important;
     overflow-x: auto !important;
-    padding: 0.2rem 0 0.6rem !important;
+    padding: 0.2rem 0 0.5rem !important;
     margin-bottom: 0.5rem !important;
   }
 
   .mockup-scene-btn {
-    padding: 0.35rem 0.7rem !important;
-    font-size: 0.74rem !important;
+    padding: 0.32rem 0.65rem !important;
+    font-size: 0.72rem !important;
     white-space: nowrap !important;
     flex-shrink: 0 !important;
+    border-radius: 9999px !important;
   }
 
   .canvas-pedestal-stage {
-    padding: 1.25rem 0.75rem !important;
+    padding: 1.15rem 0.65rem !important;
     border-radius: 18px !important;
-    margin-bottom: 0.85rem !important;
+    margin-bottom: 0.75rem !important;
   }
 
   .canvas-render-well {
-    max-width: 250px !important;
+    max-width: 240px !important;
     margin: 0 auto !important;
-    padding: 0.85rem !important;
+    padding: 0.75rem !important;
     border-radius: 14px !important;
   }
 
@@ -374,41 +382,78 @@
     height: auto !important;
   }
 
+  /* Sleek Scannability Bar + Test Scan Button */
   .sleek-scannability-pill {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
     padding: 0.5rem 0.75rem !important;
-    margin-bottom: 0.85rem !important;
+    margin-bottom: 0.75rem !important;
+    border-radius: 14px !important;
+    gap: 0.5rem !important;
+  }
+
+  .scannability-status-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    min-width: 0 !important;
+    flex: 1 !important;
   }
 
   .scannability-rating-text {
-    font-size: 0.76rem !important;
+    font-size: 0.74rem !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
-  /* Big Thumb-Friendly Primary Export Action */
+  .btn-trigger-scan-test {
+    padding: 0.35rem 0.65rem !important;
+    font-size: 0.74rem !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.3rem !important;
+    min-height: 32px !important;
+  }
+
+  /* Big Thumb-Friendly Primary Export Actions */
   .export-action-grid {
     display: grid !important;
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr 1fr !important;
     gap: 0.55rem !important;
-    margin-bottom: 0.65rem !important;
+    margin-bottom: 0.55rem !important;
   }
 
   .btn-export-primary {
     width: 100% !important;
-    height: 48px !important;
-    padding: 0.85rem 1rem !important;
-    font-size: 0.95rem !important;
+    height: 46px !important;
+    padding: 0.65rem 0.85rem !important;
+    font-size: 0.88rem !important;
     font-weight: 800 !important;
     border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
     justify-content: center !important;
+    gap: 0.4rem !important;
   }
 
   .btn-export-secondary {
     width: 100% !important;
-    height: 42px !important;
-    padding: 0.7rem 1rem !important;
-    font-size: 0.85rem !important;
+    height: 46px !important;
+    padding: 0.65rem 0.85rem !important;
+    font-size: 0.84rem !important;
     font-weight: 700 !important;
     border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
     justify-content: center !important;
+    gap: 0.4rem !important;
   }
 
   .stage-utility-row {
@@ -419,33 +464,36 @@
 
   .utility-btn {
     height: 38px !important;
-    padding: 0.4rem !important;
+    padding: 0.4rem 0.5rem !important;
     font-size: 0.74rem !important;
     border-radius: 10px !important;
+    display: flex !important;
+    align-items: center !important;
     justify-content: center !important;
+    gap: 0.35rem !important;
   }
 
   /* --------------------------------------------------------------------------
-     6. Mobile Form Controls (GeneratorView)
+     6. Mobile Form Controls & Customizer (GeneratorView)
      -------------------------------------------------------------------------- */
   .studio-unified-inspector {
     border-radius: 20px !important;
-    padding: 1.15rem !important;
+    padding: 1rem !important;
     width: 100% !important;
   }
 
   .inspector-head-bar {
-    margin-bottom: 1rem !important;
+    margin-bottom: 0.85rem !important;
   }
 
   .inspector-title {
-    font-size: 1.1rem !important;
+    font-size: 1.05rem !important;
     font-weight: 800 !important;
   }
 
   .inspector-subtitle {
-    font-size: 0.78rem !important;
-    line-height: 1.45 !important;
+    font-size: 0.76rem !important;
+    line-height: 1.4 !important;
   }
 
   /* Horizontal Snap-Swipe Content Type Bar */
@@ -456,7 +504,7 @@
     gap: 4px !important;
     padding: 4px !important;
     border-radius: 14px !important;
-    margin-bottom: 1rem !important;
+    margin-bottom: 0.85rem !important;
   }
 
   .type-segment-btn {
@@ -471,9 +519,9 @@
   }
 
   .inspector-payload-card {
-    padding: 1rem !important;
+    padding: 0.85rem !important;
     border-radius: 16px !important;
-    margin-bottom: 1rem !important;
+    margin-bottom: 0.85rem !important;
   }
 
   .sleek-text-input {
@@ -487,9 +535,49 @@
     left: 0.85rem !important;
   }
 
+  .inspector-grid-2,
+  .inspector-grid-3 {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Quick Chip Buttons Fix: No more 28px squashing! */
+  .quick-presets-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    margin-top: 0.65rem !important;
+  }
+
+  .quick-chip-btn {
+    width: auto !important;
+    height: auto !important;
+    min-height: 32px !important;
+    padding: 0.35rem 0.7rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.35rem !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    text-align: left !important;
+    line-height: 1.25 !important;
+  }
+
+  .input-clear-btn {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50% !important;
+  }
+
   /* 4-Tab Customizer Bar (Colors, Shapes, Logo, Precision) */
   .inspector-customizer-card {
-    padding: 1rem !important;
+    padding: 0.85rem !important;
     border-radius: 16px !important;
   }
 
@@ -497,53 +585,282 @@
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
     gap: 3px !important;
-    padding: 4px !important;
+    padding: 3px !important;
     border-radius: 12px !important;
-    margin-bottom: 1.1rem !important;
+    margin-bottom: 0.95rem !important;
   }
 
   .subtab-pill {
-    padding: 0.45rem 0.2rem !important;
+    padding: 0.45rem 0.15rem !important;
     font-size: 0.72rem !important;
     font-weight: 700 !important;
     flex-direction: column !important;
     gap: 0.2rem !important;
     border-radius: 8px !important;
-    min-height: 46px !important;
+    min-height: 44px !important;
     justify-content: center !important;
   }
 
   .subtab-pill span {
-    font-size: 0.66rem !important;
+    font-size: 0.64rem !important;
     white-space: nowrap !important;
   }
 
-  /* Responsive Grid for Color Palettes */
-  .palettes-grid {
+  /* Curated Palettes Grid & Chips */
+  .palettes-swatch-grid {
+    display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 0.5rem !important;
   }
 
   .palette-chip {
-    padding: 0.6rem !important;
+    padding: 0.5rem 0.65rem !important;
+    border-radius: 12px !important;
+    min-height: 42px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.45rem !important;
+  }
+
+  .palette-swatch-circle {
+    width: 18px !important;
+    height: 18px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .palette-chip-name {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Color Input Pickers & Swatches */
+  .color-field-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+  }
+
+  .swatch-native-picker {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 10px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .sleek-hex-input {
+    flex: 1 !important;
+    height: 44px !important;
+    font-size: 16px !important;
+    border-radius: 10px !important;
+  }
+
+  .quick-color-dots-row {
+    display: flex !important;
+    gap: 0.45rem !important;
+    margin-top: 0.5rem !important;
+    overflow-x: auto !important;
+    padding-bottom: 2px !important;
+  }
+
+  .quick-color-dot {
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 50% !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Shapes & Pattern Tiles Grid */
+  .pattern-cards-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.45rem !important;
+  }
+
+  .pattern-tile {
+    padding: 0.6rem 0.35rem !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.3rem !important;
+    min-height: 60px !important;
+  }
+
+  .pattern-name {
+    font-size: 0.66rem !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+  }
+
+  /* Segmented Sub Controls (Corners, Gradient, Error Correction) */
+  .segmented-sub-control {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    padding: 4px !important;
     border-radius: 12px !important;
   }
 
-  .quick-chips-row {
-    gap: 0.4rem !important;
-    flex-wrap: wrap !important;
+  .seg-sub-btn {
+    flex: 1 1 auto !important;
+    min-width: 58px !important;
+    padding: 0.45rem 0.5rem !important;
+    font-size: 0.74rem !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    text-align: center !important;
+    justify-content: center !important;
   }
 
-  .quick-chip-btn {
-    width: 28px !important;
-    height: 28px !important;
+  /* Brand Logo Tab on Mobile */
+  .dropzone-label-card {
+    padding: 1.15rem 0.85rem !important;
+    border-radius: 14px !important;
+    text-align: center !important;
+  }
+
+  .brand-badges-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.45rem !important;
+  }
+
+  .brand-preset-chip {
+    padding: 0.4rem 0.65rem !important;
+    border-radius: 10px !important;
+    font-size: 0.74rem !important;
+  }
+
+  .active-logo-banner {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+    align-items: stretch !important;
+    padding: 0.85rem !important;
+  }
+
+  .btn-remove-logo {
+    width: 100% !important;
+    justify-content: center !important;
   }
 
   /* --------------------------------------------------------------------------
-     7. Public Landing Page Mobile Experience (Hero, Bento, Templates, About)
+     7. Studio Subviews: Recent History Vault & Preferences
+     -------------------------------------------------------------------------- */
+  .subview-header-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.85rem !important;
+    margin-bottom: 1.25rem !important;
+    padding-bottom: 1.15rem !important;
+  }
+
+  .subview-main-title {
+    font-size: 1.35rem !important;
+  }
+
+  .subview-sub-title {
+    font-size: 0.82rem !important;
+  }
+
+  .btn-create-qr {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 0.88rem !important;
+    border-radius: 12px !important;
+  }
+
+  /* Recent Codes Table on Mobile */
+  .table-header-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+  }
+
+  .table-search-bar {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .table-search-bar input {
+    font-size: 16px !important;
+  }
+
+  .table-wrapper {
+    border-radius: 14px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .recent-table th,
+  .recent-table td {
+    padding: 0.65rem 0.6rem !important;
+    font-size: 0.78rem !important;
+  }
+
+  .icon-btn {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 8px !important;
+  }
+
+  .bottom-features-row {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Studio Preferences Cards on Mobile */
+  .preferences-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .preference-card {
+    padding: 1.15rem !important;
+    border-radius: 16px !important;
+  }
+
+  .settings-format-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.6rem !important;
+  }
+
+  .settings-format-btn {
+    padding: 0.75rem 0.85rem !important;
+  }
+
+  .pref-stat-row {
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+  }
+
+  .btn-settings-danger,
+  .btn-settings-reset {
+    width: 100% !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 0.82rem !important;
+    justify-content: center !important;
+  }
+
+  .pref-author-badge {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+  }
+
+  .pref-author-badge .profile-link-btn {
+    width: 100% !important;
+    margin-left: 0 !important;
+    justify-content: center !important;
+  }
+
+  /* --------------------------------------------------------------------------
+     8. Public Landing Page Experience (Hero, Bento, Templates, About)
      -------------------------------------------------------------------------- */
   .floating-navbar-wrapper {
-    padding: 0.6rem 0.75rem !important;
+    padding: 0.5rem 0.65rem !important;
   }
 
   .floating-navbar-capsule {
@@ -552,12 +869,12 @@
   }
 
   .hero-landing-section {
-    padding: 5rem 1rem 2.5rem !important;
+    padding: 4.5rem 0.85rem 2.5rem !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
-    gap: 2.25rem !important;
+    gap: 2rem !important;
   }
 
   .hero-content-left {
@@ -568,25 +885,25 @@
   }
 
   .hero-bold-title {
-    font-size: clamp(2.2rem, 7.8vw, 3rem) !important;
+    font-size: clamp(2.1rem, 7.5vw, 2.9rem) !important;
     line-height: 1.1 !important;
     letter-spacing: -0.035em !important;
-    margin-bottom: 1.1rem !important;
+    margin-bottom: 1rem !important;
   }
 
   .hero-lead-subtitle {
-    font-size: 0.96rem !important;
+    font-size: 0.94rem !important;
     line-height: 1.55 !important;
-    margin-bottom: 1.85rem !important;
-    max-width: 90% !important;
+    margin-bottom: 1.65rem !important;
+    max-width: 95% !important;
   }
 
   .hero-cta-buttons-row {
     flex-direction: column !important;
     width: 100% !important;
     max-width: 320px !important;
-    gap: 0.7rem !important;
-    margin-bottom: 2rem !important;
+    gap: 0.65rem !important;
+    margin-bottom: 1.75rem !important;
   }
 
   .btn-create-qr-hero,
@@ -595,29 +912,30 @@
     justify-content: center !important;
     padding: 0.85rem 1.4rem !important;
     font-size: 0.92rem !important;
+    border-radius: 9999px !important;
   }
 
   /* 4 Bento Architecture Cards in Hero */
   .hero-bento-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.65rem !important;
+    gap: 0.55rem !important;
     max-width: 100% !important;
-    margin-top: 1rem !important;
-    padding-top: 1rem !important;
+    margin-top: 0.85rem !important;
+    padding-top: 0.85rem !important;
   }
 
   .bento-tile-card {
-    padding: 0.85rem !important;
+    padding: 0.8rem !important;
     border-radius: 14px !important;
   }
 
   .bento-tile-title {
-    font-size: 0.84rem !important;
+    font-size: 0.82rem !important;
   }
 
   .bento-tile-desc {
-    font-size: 0.72rem !important;
-    line-height: 1.35 !important;
+    font-size: 0.7rem !important;
+    line-height: 1.3 !important;
   }
 
   /* Hero 3D Pedestal Platform on Mobile */
@@ -672,13 +990,35 @@
   }
 
   /* Templates Page on Mobile */
+  .filter-chips-cluster {
+    display: flex !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    justify-content: flex-start !important;
+    padding: 0.25rem 0.5rem !important;
+    gap: 0.4rem !important;
+    scrollbar-width: none !important;
+    width: 100% !important;
+  }
+
+  .filter-chips-cluster::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .filter-pill-btn {
+    flex-shrink: 0 !important;
+    padding: 0.4rem 0.85rem !important;
+    font-size: 0.76rem !important;
+    border-radius: 9999px !important;
+  }
+
   .templates-showcase-grid {
     grid-template-columns: 1fr !important;
     gap: 1.15rem !important;
   }
 
   .template-showcase-card {
-    padding: 1.25rem !important;
+    padding: 1.15rem !important;
     border-radius: 18px !important;
   }
 
@@ -693,8 +1033,8 @@
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
-    padding: 1.5rem 1.25rem !important;
-    gap: 1.25rem !important;
+    padding: 1.35rem 1.15rem !important;
+    gap: 1.15rem !important;
   }
 
   .profile-links-row {
@@ -708,17 +1048,17 @@
 
   /* Footer on Mobile */
   .landing-footer {
-    padding: 3rem 0 1.5rem !important;
+    padding: 2.5rem 0 1.5rem !important;
     margin-top: 2.5rem !important;
   }
 
   .landing-footer-container {
-    padding: 0 1.25rem !important;
+    padding: 0 1.15rem !important;
   }
 
   .footer-top-grid {
     grid-template-columns: 1fr !important;
-    gap: 2rem !important;
+    gap: 1.75rem !important;
     text-align: center !important;
   }
 
@@ -734,25 +1074,57 @@
 
   .footer-bottom-row {
     flex-direction: column !important;
-    gap: 0.85rem !important;
+    gap: 0.75rem !important;
     text-align: center !important;
+  }
+
+  /* --------------------------------------------------------------------------
+     9. Modals & Notifications Safe Positioning
+     -------------------------------------------------------------------------- */
+  .global-toast-container {
+    position: fixed !important;
+    bottom: calc(84px + env(safe-area-inset-bottom, 0px)) !important;
+    left: 12px !important;
+    right: 12px !important;
+    align-items: center !important;
+    z-index: 2000 !important;
+  }
+
+  .toast-card {
+    width: 100% !important;
+    max-width: 380px !important;
+    border-radius: 14px !important;
+  }
+
+  .command-palette-modal,
+  .settings-modal-card {
+    width: calc(100% - 24px) !important;
+    max-width: 100% !important;
+    margin: 12px !important;
+    border-radius: 18px !important;
+    padding: 1.15rem !important;
   }
 }
 
 /* --------------------------------------------------------------------------
-   Extra Small Mobile Phones (<= 420px)
+   Extra Small Mobile Phones (<= 420px: iPhone SE, Galaxy S compacts)
    -------------------------------------------------------------------------- */
 @media screen and (max-width: 420px) {
   .hero-bold-title {
-    font-size: 2rem !important;
+    font-size: 1.95rem !important;
   }
 
   .hero-bento-grid {
     grid-template-columns: 1fr !important;
   }
 
-  .palettes-grid {
+  .palettes-swatch-grid {
     grid-template-columns: 1fr !important;
+  }
+
+  .export-action-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.45rem !important;
   }
 
   .app-sidebar {
@@ -760,13 +1132,13 @@
     left: 8px !important;
     right: 8px !important;
     height: 58px !important;
-    border-radius: 26px !important;
-    padding: 0.25rem 0.4rem !important;
+    border-radius: 28px !important;
+    padding: 0.25rem 0.35rem !important;
   }
 
   .sidebar-item {
     max-width: 76px !important;
-    padding: 0.25rem 0.35rem !important;
+    padding: 0.25rem 0.3rem !important;
   }
 
   .sidebar-item-content span {
@@ -774,6 +1146,6 @@
   }
 
   .canvas-render-well {
-    max-width: 220px !important;
+    max-width: 215px !important;
   }
 }
