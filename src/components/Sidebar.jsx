@@ -5,8 +5,7 @@ import {
   Clock,
   Settings,
   Crown,
-  ExternalLink,
-  Sparkles
+  ExternalLink
 } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import { playTap } from '../utils/soundEffects';
@@ -89,10 +88,6 @@ export default function Sidebar({
               alt="QRCraft Holographic Generator"
               className="sidebar-art-img"
             />
-            <div className="sidebar-art-badge">
-              <Sparkles size={11} className="badge-sparkle-icon" />
-              <span>Vector Engine</span>
-            </div>
             <div className="sidebar-art-overlay" />
           </div>
           <div className="sidebar-art-caption">

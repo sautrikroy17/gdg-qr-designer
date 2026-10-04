@@ -3337,25 +3337,25 @@ section[id] {
    ========================================================================= */
 .sidebar-showcase-art-card {
   border-radius: 14px;
-  background: rgba(13, 19, 32, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: none;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .sidebar-showcase-art-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(59, 130, 246, 0.4);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), 0 0 16px rgba(59, 130, 246, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(59, 130, 246, 0.25);
 }
 
 .sidebar-art-img-wrapper {
   position: relative;
   width: 100%;
-  height: 120px;
+  height: 110px;
   overflow: hidden;
   background: #050810;
+  border-radius: 12px 12px 0 0;
 }
 
 .sidebar-art-img {
@@ -3363,51 +3363,31 @@ section[id] {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform 0.4s ease;
+  opacity: 0.85;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 .sidebar-showcase-art-card:hover .sidebar-art-img {
-  transform: scale(1.05);
+  transform: scale(1.04);
+  opacity: 1;
 }
 
 .sidebar-art-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 35%, rgba(13, 19, 32, 0.95) 100%);
+  background: linear-gradient(to bottom, transparent 15%, rgba(8, 12, 22, 0.85) 75%, var(--bg-sidebar) 100%);
   pointer-events: none;
 }
 
-.sidebar-art-badge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.25rem 0.6rem;
-  border-radius: 9999px;
-  background: rgba(8, 12, 22, 0.88);
-  border: 1px solid rgba(59, 130, 246, 0.4);
-  backdrop-filter: blur(12px);
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: #60a5fa;
-  letter-spacing: 0.02em;
-  z-index: 2;
-}
-
-.badge-sparkle-icon {
-  color: #38bdf8;
-}
-
 .sidebar-art-caption {
-  padding: 0.75rem 0.85rem 0.85rem;
+  padding: 0.65rem 0.85rem 0.75rem;
+  background: transparent;
 }
 
 .sidebar-art-title {
   font-size: 0.82rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-main);
   margin-bottom: 0.2rem;
   display: flex;
   align-items: center;
@@ -3417,13 +3397,22 @@ section[id] {
 .sidebar-art-desc {
   font-size: 0.72rem;
   line-height: 1.45;
-  color: #cbd5e1;
+  color: var(--text-muted);
 }
 
 [data-theme='light'] .sidebar-showcase-art-card {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(0, 0, 0, 0.08);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: none;
+}
+
+[data-theme='light'] .sidebar-showcase-art-card:hover {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(37, 99, 235, 0.2);
+}
+
+[data-theme='light'] .sidebar-art-overlay {
+  background: linear-gradient(to bottom, transparent 15%, rgba(255, 255, 255, 0.85) 75%, #ffffff 100%);
 }
 
 [data-theme='light'] .sidebar-art-title {
