@@ -70,6 +70,27 @@ const ensureValidHex = (color, fallback = '#000000') => {
   return fallback;
 };
 
+const getColorName = (hex) => {
+  if (!hex) return '';
+  const clean = hex.toLowerCase().trim();
+  if (clean === '#ffffff' || clean === '#fff') return 'Pure White';
+  if (clean === '#000000' || clean === '#000') return 'Pure Black';
+  if (clean === '#2563eb') return 'Electric Blue';
+  if (clean === '#059669') return 'Emerald Mint';
+  if (clean === '#7c3aed') return 'Cyber Violet';
+  if (clean === '#dc2626') return 'Crimson Red';
+  if (clean === '#4338ca') return 'Royal Indigo';
+  if (clean === '#d97706') return 'Amber Gold';
+  if (clean === '#080c14' || clean === '#090d16') return 'Obsidian Dark';
+  if (clean === '#1e293b' || clean === '#0f172a') return 'Slate Dark';
+  if (clean === '#f8fafc') return 'Off-White Slate';
+  if (clean === '#475569') return 'Silver Slate';
+  if (clean === '#60a5fa') return 'Sky Blue';
+  if (clean === '#34d399') return 'Neon Emerald';
+  if (clean === '#1d4ed8') return 'Royal Navy';
+  return '';
+};
+
 const QUICK_FG_SWATCHES = [
   { label: 'Black', hex: '#000000' },
   { label: 'Electric Blue', hex: '#2563eb' },
@@ -731,7 +752,12 @@ export default function GeneratorView({
             <div className="customizer-block">
               <div className="inspector-grid-2">
                 <div>
-                  <label className="section-micro-label">FOREGROUND COLOR</label>
+                  <label className="section-micro-label">
+                    FOREGROUND COLOR
+                    {getColorName(config.dotsColor) && (
+                      <span className="color-name-hint">• {getColorName(config.dotsColor)}</span>
+                    )}
+                  </label>
                   <div className="color-field-row">
                     <input
                       type="color"
@@ -771,7 +797,12 @@ export default function GeneratorView({
                 </div>
 
                 <div>
-                  <label className="section-micro-label">BACKGROUND COLOR</label>
+                  <label className="section-micro-label">
+                    BACKGROUND COLOR
+                    {getColorName(config.backgroundColor) && (
+                      <span className="color-name-hint">• {getColorName(config.backgroundColor)}</span>
+                    )}
+                  </label>
                   <div className="color-field-row">
                     <input
                       type="color"
@@ -857,7 +888,12 @@ export default function GeneratorView({
                       </div>
                     </div>
                     <div>
-                      <label className="section-micro-label">SECONDARY COLOR</label>
+                      <label className="section-micro-label">
+                        SECONDARY COLOR
+                        {getColorName(config.gradientColor2) && (
+                          <span className="color-name-hint">• {getColorName(config.gradientColor2)}</span>
+                        )}
+                      </label>
                       <div className="color-field-row">
                         <input
                           type="color"

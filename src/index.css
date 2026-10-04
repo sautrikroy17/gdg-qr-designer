@@ -2375,6 +2375,20 @@ section[id] {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
+.color-name-hint {
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: normal;
+  color: #60a5fa;
+  font-size: 0.7rem;
+  margin-left: 0.35rem;
+  display: inline-block;
+}
+
+[data-theme='light'] .color-name-hint {
+  color: #2563eb;
+}
+
 /* Curated Designer Palettes Swatches */
 .palettes-swatch-grid {
   display: grid;
