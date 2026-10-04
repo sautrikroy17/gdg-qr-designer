@@ -221,10 +221,13 @@ export default function App() {
     wifiPassword: 'DeveloperCommunity2026',
     wifiEncryption: 'WPA',
     wifiHidden: false,
-    lat: '12.8230',
-    lng: '80.0444',
-    vName: 'Sautrik Roy',
-    vPhone: '+919876543210'
+    latitude: '12.8231',
+    longitude: '80.0442',
+    vFirst: 'Sautrik',
+    vLast: 'Roy',
+    vOrg: 'SRM Institute of Science and Technology',
+    vPhone: '+919876543210',
+    vEmail: 'sautrik@srmist.edu.in'
   });
 
   const handleFieldChange = (field, value) => {
@@ -286,6 +289,14 @@ export default function App() {
       if (formData.wifiEncryption !== 'none' && !formData.wifiPassword) {
         return 'Password is required for encrypted Wi-Fi networks.';
       }
+    } else if (currentType === 'location') {
+      if (!formData.latitude?.trim() && !formData.longitude?.trim() && !formData.locationQuery?.trim()) {
+        return 'Please provide coordinates or a place name.';
+      }
+    } else if (currentType === 'vcard') {
+      if (!formData.vFirst?.trim() && !formData.vPhone?.trim()) {
+        return 'First Name or Phone number is required.';
+      }
     }
     return '';
   }, [currentType, formData]);
@@ -309,9 +320,16 @@ export default function App() {
           formData.wifiHidden
         );
       case 'location':
-        return formatLocation(formData.lat, formData.lng);
+        return formatLocation(formData.latitude || formData.lat, formData.longitude || formData.lng, formData.locationQuery);
       case 'vcard':
-        return formatVCard(formData.vName, '', formData.vPhone);
+        return formatVCard(
+          formData.vFirst || formData.vName || '',
+          formData.vLast || '',
+          formData.vPhone || '',
+          formData.vEmail || '',
+          formData.vOrg || '',
+          formData.vUrl || formData.url || ''
+        );
       default:
         return 'https://github.com/sautrikroy17';
     }

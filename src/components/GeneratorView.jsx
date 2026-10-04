@@ -385,7 +385,7 @@ export default function GeneratorView({
                 <span>Use Current GPS</span>
               </button>
             </div>
-            <div className="inspector-grid-2">
+            <div className="inspector-grid-2" style={{ marginBottom: '0.85rem' }}>
               <div className="sleek-input-wrap">
                 <MapPin size={16} className="input-leading-icon" />
                 <input
@@ -404,6 +404,19 @@ export default function GeneratorView({
                   placeholder="Longitude (e.g. 80.0442)"
                   value={formData.longitude || ''}
                   onChange={(e) => onChangeField('longitude', e.target.value)}
+                />
+              </div>
+            </div>
+            <div>
+              <label className="payload-label">Or Landmark / Place Name</label>
+              <div className="sleek-input-wrap">
+                <Globe size={16} className="input-leading-icon" />
+                <input
+                  type="text"
+                  className="sleek-text-input"
+                  placeholder="e.g. SRM Institute of Science and Technology Chennai"
+                  value={formData.locationQuery || ''}
+                  onChange={(e) => onChangeField('locationQuery', e.target.value)}
                 />
               </div>
             </div>
@@ -435,7 +448,7 @@ export default function GeneratorView({
                 />
               </div>
             </div>
-            <div className="inspector-grid-3">
+            <div className="inspector-grid-3" style={{ marginBottom: '0.85rem' }}>
               <div>
                 <label className="payload-label">Organization</label>
                 <input
@@ -464,6 +477,19 @@ export default function GeneratorView({
                   placeholder="sautrik@srmist.edu.in"
                   value={formData.vEmail || ''}
                   onChange={(e) => onChangeField('vEmail', e.target.value)}
+                />
+              </div>
+            </div>
+            <div>
+              <label className="payload-label">Portfolio / Profile URL</label>
+              <div className="sleek-input-wrap">
+                <Globe size={16} className="input-leading-icon" />
+                <input
+                  type="url"
+                  className="sleek-text-input"
+                  placeholder="https://sautrikroy.me"
+                  value={formData.vUrl || ''}
+                  onChange={(e) => onChangeField('vUrl', e.target.value)}
                 />
               </div>
             </div>
