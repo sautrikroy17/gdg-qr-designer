@@ -28,6 +28,7 @@ export default function LivePreviewCard({
   const qrContainerRef = useRef(null);
   const qrCodeInstanceRef = useRef(null);
   const [previewMode, setPreviewMode] = useState('qr'); // 'qr' | 'styled'
+  const [mockupScene, setMockupScene] = useState('desk'); // 'desk' | 'cafe' | 'badge'
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
   const [shared, setShared] = useState(false);
@@ -298,15 +299,86 @@ export default function LivePreviewCard({
           </div>
         </div>
 
+        {/* Mockup Scene Presets Selector */}
+        {previewMode === 'styled' && (
+          <div className="mockup-scene-bar">
+            <button
+              type="button"
+              className={`mockup-scene-btn ${mockupScene === 'desk' ? 'active' : ''}`}
+              onClick={() => {
+                playTap();
+                setMockupScene('desk');
+              }}
+              title="Tech Desk Phone Mockup"
+            >
+              <span>💻 Tech Desk</span>
+            </button>
+            <button
+              type="button"
+              className={`mockup-scene-btn ${mockupScene === 'cafe' ? 'active' : ''}`}
+              onClick={() => {
+                playTap();
+                setMockupScene('cafe');
+              }}
+              title="Cafe Wooden Table Stand"
+            >
+              <span>☕ Cafe Stand</span>
+            </button>
+            <button
+              type="button"
+              className={`mockup-scene-btn ${mockupScene === 'badge' ? 'active' : ''}`}
+              onClick={() => {
+                playTap();
+                setMockupScene('badge');
+              }}
+              title="Event Pass Lanyard Badge"
+            >
+              <span>🎫 Event Pass</span>
+            </button>
+          </div>
+        )}
+
         {/* QR Display Stage */}
-        <div className={`canvas-pedestal-stage ${previewMode === 'styled' ? 'mockup-pedestal-mode' : ''}`}>
+        <div className={`canvas-pedestal-stage ${previewMode === 'styled' ? `mockup-pedestal-mode mockup-scene-${mockupScene}` : ''}`}>
           {previewMode === 'styled' && (
-            <div className="mockup-header-strip">
-              <div className="mockup-brand-chip">
-                <span className="mockup-brand-circle" />
-                <span>QRCRAFT STUDIO</span>
+            <div className="mockup-scene-bg-layer" aria-hidden="true">
+              {mockupScene === 'desk' && <img src="/mockup-desk.jpg" alt="" className="mockup-photo-bg" />}
+              {mockupScene === 'cafe' && <img src="/mockup-cafe.jpg" alt="" className="mockup-photo-bg" />}
+              {mockupScene === 'badge' && <img src="/projects-workspace.webp" alt="" className="mockup-photo-bg" />}
+              <div className="mockup-photo-scrim" />
+            </div>
+          )}
+
+          {previewMode === 'styled' && mockupScene === 'desk' && (
+            <div className="mockup-header-strip mockup-desk-phone-notch">
+              <div className="phone-dynamic-island">
+                <span className="island-camera" />
+                <span className="island-lens" />
               </div>
-              <p className="mockup-scan-heading">Point camera to scan</p>
+              <div className="phone-status-row">
+                <span className="phone-time">9:41</span>
+                <span className="phone-tag-badge">Safari • Live Detection</span>
+                <span className="phone-battery">100%</span>
+              </div>
+              <div className="phone-floating-pill">
+                <ExternalLink size={11} className="text-cyan" />
+                <span className="phone-pill-url">{payload.length > 32 ? payload.substring(0, 32) + '...' : payload}</span>
+              </div>
+            </div>
+          )}
+
+          {previewMode === 'styled' && mockupScene === 'cafe' && (
+            <div className="mockup-header-strip mockup-cafe-header">
+              <div className="cafe-brand-title">☕ BREW & CO. • TABLE 14</div>
+              <p className="cafe-sub-heading">Scan to order contactless & view specials</p>
+            </div>
+          )}
+
+          {previewMode === 'styled' && mockupScene === 'badge' && (
+            <div className="mockup-header-strip mockup-badge-header">
+              <div className="badge-lanyard-hole" />
+              <div className="badge-conf-name">GDG ON CAMPUS SRM 2026</div>
+              <div className="badge-pass-type">VIP ALL ACCESS • TECHNICAL DOMAIN</div>
             </div>
           )}
 
@@ -345,7 +417,9 @@ export default function LivePreviewCard({
 
           {previewMode === 'styled' && (
             <div className="mockup-footer-strip">
-              <span className="mockup-footer-badge">W3C Accessible • 100% Client Memory</span>
+              {mockupScene === 'desk' && <span className="mockup-footer-badge">Tap banner to launch website</span>}
+              {mockupScene === 'cafe' && <span className="mockup-footer-badge">Wi-Fi: BrewCo_Guest • Zero App Install</span>}
+              {mockupScene === 'badge' && <span className="mockup-footer-badge">Scan to verify delegate credentials</span>}
             </div>
           )}
         </div>

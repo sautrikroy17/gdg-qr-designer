@@ -21,6 +21,14 @@ export default function TemplatesView({ activePresetId, onSelectPresetAndEdit })
 
   return (
     <div className="view-page-container">
+      {/* Background Ambient Cosmic Glows & Atmospheric Backdrop */}
+      <div className="landing-ambient-canvas" style={{ height: '650px' }}>
+        <img src="/projects-workspace.webp" alt="" className="section-ambient-img" />
+        <div className="section-ambient-vignette" />
+        <div className="light-streak-blue" />
+        <div className="light-streak-purple" />
+      </div>
+
       {/* Page Header */}
       <div className="view-header-centered">
         <div className="purpose-badge-pill">

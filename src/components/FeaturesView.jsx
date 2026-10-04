@@ -44,8 +44,10 @@ export default function FeaturesView({ onOpenStudio, onOpenStudioWithTab, onSele
 
   return (
     <div className="view-page-container">
-      {/* Background Ambient Cosmic Glows */}
-      <div className="landing-ambient-canvas" style={{ height: '600px' }}>
+      {/* Background Ambient Cosmic Glows & Atmospheric Backdrop */}
+      <div className="landing-ambient-canvas" style={{ height: '650px' }}>
+        <img src="/skills-workspace.webp" alt="" className="section-ambient-img" />
+        <div className="section-ambient-vignette" />
         <div className="light-streak-blue" />
         <div className="light-streak-purple" />
       </div>

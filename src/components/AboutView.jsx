@@ -103,6 +103,44 @@ export default function AboutView({ onOpenStudio }) {
         </div>
       </div>
 
+      {/* Developer Studio & Engineering Setup Visual Card */}
+      <div
+        className="about-studio-showcase-card spotlight-card"
+        onMouseMove={handleSpotlightMouseMove}
+        style={{ position: 'relative', zIndex: 5, marginBottom: '3rem', overflow: 'hidden' }}
+      >
+        <div className="studio-card-img-backdrop">
+          <img
+            src="/about-workspace.webp"
+            alt="Developer Workstation Setup"
+            className="studio-workstation-photo"
+          />
+          <div className="studio-card-overlay-gradient" />
+        </div>
+
+        <div className="studio-card-content">
+          <div className="purpose-badge-pill" style={{ width: 'fit-content', marginBottom: '0.75rem' }}>
+            <Cpu size={13} style={{ color: 'var(--accent-blue-vibrant)' }} />
+            <span>Developer Studio & Workstation Architecture</span>
+          </div>
+
+          <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.5rem' }}>
+            Crafted with Engineering Discipline
+          </h3>
+          <p style={{ color: '#cbd5e1', fontSize: '0.9rem', maxWidth: '720px', lineHeight: 1.6, marginBottom: '1.25rem' }}>
+            Built for maximum client-side throughput and mathematical accuracy. QRCraft compiles error correction codes, vector paths, and contrast analytics entirely in browser memory with zero telemetry, zero analytics tracking, and zero cloud dependencies.
+          </p>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
+            <span className="stat-pill-chip">⚡ 0ms Server Roundtrips</span>
+            <span className="stat-pill-chip">🔒 100% Private Browser Memory</span>
+            <span className="stat-pill-chip">🎨 4K Vector SVG & Raster</span>
+            <span className="stat-pill-chip">📐 Reed-Solomon Galois GF(2^8)</span>
+            <span className="stat-pill-chip">👁️ W3C WCAG Contrast Guard</span>
+          </div>
+        </div>
+      </div>
+
       {/* Technical Architecture Cards */}
       <div className="architecture-grid" style={{ marginBottom: '3.5rem', position: 'relative', zIndex: 5 }}>
         <div className="arch-card spotlight-card" onMouseMove={handleSpotlightMouseMove}>

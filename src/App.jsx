@@ -589,6 +589,16 @@ export default function App() {
           />
 
           <div className="main-content-flow">
+            {/* Atmospheric Studio Ambient Backdrop Scene */}
+            <div className="studio-ambient-scene" aria-hidden="true">
+              <img
+                src="/experience-workspace.webp"
+                alt=""
+                className="studio-scene-img"
+              />
+              <div className="studio-scene-vignette" />
+            </div>
+
             {/* Dedicated Studio Top Bar */}
             <StudioHeader
               currentType={currentType}
