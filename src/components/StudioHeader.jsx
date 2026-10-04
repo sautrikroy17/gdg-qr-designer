@@ -110,7 +110,17 @@ export default function StudioHeader({
           onClick={onOpenSignIn}
           title="Sautrik Roy | GDG Candidate Session"
         >
-          <div className="candidate-avatar-mini">SR</div>
+          <div className="candidate-avatar-mini" style={{ overflow: 'hidden', padding: 0 }}>
+            <img
+              src="/sautrik-avatar.jpg"
+              alt="Sautrik Roy"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.parentElement.innerText = 'SR';
+              }}
+            />
+          </div>
           <span className="candidate-name-mini">Sautrik Roy</span>
         </button>
       </div>

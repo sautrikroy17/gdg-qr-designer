@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, ExternalLink, Code2, Award, Cpu, ShieldCheck, ArrowRight, HelpCircle, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { User, ExternalLink, Code2, Award, Cpu, ShieldCheck, ArrowRight, HelpCircle, ChevronDown, CheckCircle2, Globe } from 'lucide-react';
 import { playTap, playSuccessChime } from '../utils/soundEffects';
 
 export default function AboutView({ onOpenStudio }) {
@@ -55,19 +55,44 @@ export default function AboutView({ onOpenStudio }) {
       </div>
 
       {/* Candidate Profile Showcase Hero Card */}
-      <div className="about-profile-hero-card spotlight-card" onMouseMove={handleSpotlightMouseMove} style={{ position: 'relative', zIndex: 5 }}>
-        <div className="profile-badge-avatar">SR</div>
-        <div className="profile-info-body">
+      <div className="about-profile-hero-card spotlight-card" onMouseMove={handleSpotlightMouseMove} style={{ position: 'relative', zIndex: 5, overflow: 'hidden' }}>
+        <div className="profile-badge-avatar" style={{ overflow: 'hidden', padding: 0, border: '2px solid rgba(56, 189, 248, 0.7)', boxShadow: '0 0 24px rgba(56, 189, 248, 0.4)' }}>
+          <img
+            src="/sautrik-photo.jpg"
+            alt="Sautrik Roy"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            onError={(e) => {
+              e.currentTarget.src = "/sautrik-avatar.jpg";
+            }}
+          />
+        </div>
+        <div className="profile-info-body" style={{ flex: 1 }}>
           <div className="profile-name-row">
             <h2>Sautrik Roy</h2>
-            <span className="candidate-tag">GDG Technical Candidate</span>
+            <span className="candidate-tag" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+              <CheckCircle2 size={12} style={{ color: 'var(--accent-green)' }} />
+              <span>GDG Technical Candidate</span>
+            </span>
           </div>
           <p className="profile-bio">
             2nd Year B.Tech Computer Science & Engineering • SRM Institute of Science and Technology, Kattankulathur.
             Smart India Hackathon (SIH 2026) Top 100 Finalist, Microsoft Learn Student Ambassador (MLSA), and Open Source Contributor.
           </p>
 
-          <div className="profile-links-row">
+          <div className="profile-links-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
+            <a
+              href="https://sautrikroy.me"
+              target="_blank"
+              rel="noreferrer"
+              className="profile-link-btn"
+              onClick={() => playTap()}
+              style={{ background: 'rgba(56, 189, 248, 0.12)', borderColor: 'rgba(56, 189, 248, 0.4)' }}
+            >
+              <Globe size={14} style={{ color: 'var(--accent-blue-vibrant)' }} />
+              <span>Portfolio: sautrikroy.me</span>
+              <ExternalLink size={12} />
+            </a>
+
             <a
               href="https://github.com/sautrikroy17/gdg-qr-designer"
               target="_blank"
@@ -75,10 +100,10 @@ export default function AboutView({ onOpenStudio }) {
               className="profile-link-btn"
               onClick={() => playTap()}
             >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path fillRule="evenodd" clipRule="evenodd" d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
               </svg>
-              <span>github.com/sautrikroy17/gdg-qr-designer</span>
+              <span>GitHub Repo</span>
               <ExternalLink size={12} />
             </a>
           </div>

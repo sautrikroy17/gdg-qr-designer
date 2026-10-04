@@ -55,7 +55,17 @@ export default function Sidebar({ activeTab, onSelectTab, onBackToHome }) {
 
       {/* User Profile Badge (Bottom) */}
       <div className="user-profile-badge">
-        <div className="user-avatar">SR</div>
+        <div className="user-avatar" style={{ overflow: 'hidden', padding: 0 }}>
+          <img
+            src="/sautrik-avatar.jpg"
+            alt="Sautrik Roy"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+              e.currentTarget.parentElement.innerText = 'SR';
+            }}
+          />
+        </div>
         <div className="user-details">
           <div className="user-name">Sautrik Roy</div>
           <div className="user-plan">

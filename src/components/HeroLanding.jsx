@@ -119,6 +119,23 @@ export default function HeroLanding({
       <section className="hero-landing-section">
         {/* Left Column: Headlines, CTAs, 4-Feature Row */}
         <div className="hero-content-left">
+          {/* Creator Pill Badge matching sautrikroy.me */}
+          <div className="hero-creator-pill" onClick={onOpenStudio}>
+            <div className="hero-avatar-mini">
+              <img
+                src="/sautrik-avatar.jpg"
+                alt="Sautrik Roy"
+                onError={(e) => { e.currentTarget.src = "/sautrik-photo.jpg"; }}
+              />
+              <span className="online-indicator-dot" />
+            </div>
+            <div className="hero-creator-text">
+              <span className="creator-label">Engineered by Sautrik Roy</span>
+              <span className="creator-sublabel">GDG on Campus SRM Candidate</span>
+            </div>
+            <Sparkles size={13} className="creator-sparkle-icon" />
+          </div>
+
           {/* Main Headline */}
           <h1 className="hero-bold-title">
             Beautiful <br />
