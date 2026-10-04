@@ -79,19 +79,22 @@ export default function Sidebar({
         </nav>
       </div>
 
-      {/* 2. Middle Section: Visual Website Showcase Art Card */}
+      {/* 2. Middle Section: Visual Website Showcase Seamlessly Blended */}
       <div className="sidebar-middle-creative">
         <div className="sidebar-showcase-art-card">
           <div className="sidebar-art-img-wrapper">
             <img
               src="/sidebar-qr-art.jpg"
-              alt="QRCraft Holographic Generator"
+              alt="QRCraft Generator Engine"
               className="sidebar-art-img"
             />
             <div className="sidebar-art-overlay" />
           </div>
           <div className="sidebar-art-caption">
-            <div className="sidebar-art-title">Instant QR Generator</div>
+            <div className="sidebar-art-title">
+              <span className="sidebar-art-pulse-dot" />
+              <span>Instant QR Engine</span>
+            </div>
             <div className="sidebar-art-desc">100% private, offline-ready, and print-ready.</div>
           </div>
         </div>

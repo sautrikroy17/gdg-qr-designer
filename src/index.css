@@ -3336,26 +3336,29 @@ section[id] {
    SIDEBAR QRCRAFT SHOWCASE VISUAL CARD
    ========================================================================= */
 .sidebar-showcase-art-card {
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  border-radius: 12px;
+  background: transparent;
+  border: 1px solid transparent;
   overflow: hidden;
   box-shadow: none;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0.15rem 0.15rem 0.35rem;
 }
 
 .sidebar-showcase-art-card:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(59, 130, 246, 0.25);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .sidebar-art-img-wrapper {
   position: relative;
   width: 100%;
-  height: 110px;
+  height: 105px;
   overflow: hidden;
-  background: #050810;
-  border-radius: 12px 12px 0 0;
+  background: transparent;
+  border-radius: 10px;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 45%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 45%, rgba(0, 0, 0, 0) 100%);
 }
 
 .sidebar-art-img {
@@ -3375,44 +3378,54 @@ section[id] {
 .sidebar-art-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 15%, rgba(8, 12, 22, 0.85) 75%, var(--bg-sidebar) 100%);
+  background: linear-gradient(to bottom, transparent 20%, rgba(8, 12, 22, 0.4) 85%);
   pointer-events: none;
 }
 
 .sidebar-art-caption {
-  padding: 0.65rem 0.85rem 0.75rem;
+  padding: 0.35rem 0.4rem 0.2rem;
   background: transparent;
 }
 
 .sidebar-art-title {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--text-main);
   margin-bottom: 0.2rem;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
+  letter-spacing: -0.01em;
+}
+
+.sidebar-art-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .sidebar-art-desc {
   font-size: 0.72rem;
-  line-height: 1.45;
+  line-height: 1.4;
   color: var(--text-muted);
 }
 
 [data-theme='light'] .sidebar-showcase-art-card {
-  background: rgba(0, 0, 0, 0.02);
-  border-color: rgba(0, 0, 0, 0.06);
+  background: transparent;
+  border-color: transparent;
   box-shadow: none;
 }
 
 [data-theme='light'] .sidebar-showcase-art-card:hover {
-  background: rgba(0, 0, 0, 0.04);
-  border-color: rgba(37, 99, 235, 0.2);
+  background: rgba(0, 0, 0, 0.02);
 }
 
 [data-theme='light'] .sidebar-art-overlay {
-  background: linear-gradient(to bottom, transparent 15%, rgba(255, 255, 255, 0.85) 75%, #ffffff 100%);
+  background: linear-gradient(to bottom, transparent 20%, rgba(255, 255, 255, 0.5) 85%);
 }
 
 [data-theme='light'] .sidebar-art-title {
