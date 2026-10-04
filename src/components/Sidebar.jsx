@@ -91,13 +91,13 @@ export default function Sidebar({
             />
             <div className="sidebar-art-badge">
               <Sparkles size={11} className="badge-sparkle-icon" />
-              <span>4K Vector Studio</span>
+              <span>Vector Engine</span>
             </div>
             <div className="sidebar-art-overlay" />
           </div>
           <div className="sidebar-art-caption">
-            <div className="sidebar-art-title">QRCraft Studio</div>
-            <div className="sidebar-art-desc">Real-time vector engine with sub-millisecond client-side precision.</div>
+            <div className="sidebar-art-title">Instant QR Generator</div>
+            <div className="sidebar-art-desc">100% private, offline-ready, and print-ready.</div>
           </div>
         </div>
       </div>
