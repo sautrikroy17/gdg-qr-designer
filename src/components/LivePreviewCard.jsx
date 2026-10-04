@@ -356,9 +356,33 @@ export default function LivePreviewCard({
                 <span className="phone-tag-badge">Safari • Live Detection</span>
                 <span className="phone-battery">100%</span>
               </div>
-              <div className="phone-floating-pill">
-                <ExternalLink size={11} style={{ color: '#ffffff' }} />
+              <div
+                className="phone-floating-pill interactive-banner"
+                onClick={() => {
+                  playTap();
+                  if (payload.startsWith('http://') || payload.startsWith('https://')) {
+                    window.open(payload, '_blank', 'noopener,noreferrer');
+                    onNotify?.({
+                      type: 'success',
+                      title: 'Launching Destination URL',
+                      message: `Opened ${payload} in a new tab.`
+                    });
+                  } else {
+                    navigator.clipboard.writeText(payload);
+                    onNotify?.({
+                      type: 'info',
+                      title: 'Payload Copied',
+                      message: payload
+                    });
+                  }
+                }}
+                title="Tap banner to open link in a new tab"
+                role="button"
+                tabIndex={0}
+              >
+                <ExternalLink size={11} style={{ color: '#60a5fa' }} />
                 <span className="phone-pill-url">{payload.length > 32 ? payload.substring(0, 32) + '...' : payload}</span>
+                <span className="phone-pill-action">Open ↗</span>
               </div>
             </div>
           )}
@@ -414,14 +438,60 @@ export default function LivePreviewCard({
               </div>
             )}
 
-            <div ref={qrContainerRef} className="canvas-center-anchor" />
+            <div
+              ref={qrContainerRef}
+              className="canvas-center-anchor interactive-qr-tap"
+              onClick={handleTriggerScanTest}
+              title="Click QR code to test laser camera decode"
+              role="button"
+              tabIndex={0}
+            />
           </div>
 
           {previewMode === 'styled' && (
             <div className="mockup-footer-strip">
-              {mockupScene === 'desk' && <span className="mockup-footer-badge">Tap banner to launch website</span>}
-              {mockupScene === 'cafe' && <span className="mockup-footer-badge">Wi-Fi: BrewCo_Guest • Zero App Install</span>}
-              {mockupScene === 'badge' && <span className="mockup-footer-badge">Scan to verify delegate credentials</span>}
+              {mockupScene === 'desk' && (
+                <button
+                  type="button"
+                  className="mockup-footer-badge interactive-footer-pill"
+                  onClick={() => {
+                    playTap();
+                    if (payload.startsWith('http://') || payload.startsWith('https://')) {
+                      window.open(payload, '_blank', 'noopener,noreferrer');
+                      onNotify?.({
+                        type: 'success',
+                        title: 'Launching Destination URL',
+                        message: `Opened ${payload} in a new tab.`
+                      });
+                    } else {
+                      handleTriggerScanTest();
+                    }
+                  }}
+                  title="Click to launch destination website in a new tab"
+                >
+                  <span>Tap banner to launch website ↗</span>
+                </button>
+              )}
+              {mockupScene === 'cafe' && (
+                <button
+                  type="button"
+                  className="mockup-footer-badge interactive-footer-pill"
+                  onClick={handleTriggerScanTest}
+                  title="Click to simulate contactless camera scan"
+                >
+                  <span>Wi-Fi: BrewCo_Guest • Tap to Scan</span>
+                </button>
+              )}
+              {mockupScene === 'badge' && (
+                <button
+                  type="button"
+                  className="mockup-footer-badge interactive-footer-pill"
+                  onClick={handleTriggerScanTest}
+                  title="Click to simulate delegate pass verification"
+                >
+                  <span>VIP Pass • Tap to Verify</span>
+                </button>
+              )}
             </div>
           )}
         </div>
