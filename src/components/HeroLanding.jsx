@@ -113,27 +113,29 @@ export default function HeroLanding({
         <div className="light-streak-magenta" />
       </div>
 
+      {/* Atmospheric Developer Workspace Backdrop (Inspired by sautrikroy.me aesthetic) */}
+      <div className="hero-workspace-atmosphere" aria-hidden="true">
+        <img
+          src="/hero-workspace.webp"
+          alt=""
+          className="hero-workspace-bg-img"
+        />
+        <div className="hero-workspace-vignette" />
+      </div>
+
       {/* ====================================================================
           1. Hero Section (Pixel-Perfect Match to User Reference Screenshot)
           ==================================================================== */}
       <section className="hero-landing-section">
         {/* Left Column: Headlines, CTAs, 4-Feature Row */}
         <div className="hero-content-left">
-          {/* Creator Pill Badge matching sautrikroy.me */}
-          <div className="hero-creator-pill" onClick={onOpenStudio}>
-            <div className="hero-avatar-mini">
-              <img
-                src="/sautrik-avatar.jpg"
-                alt="Sautrik Roy"
-                onError={(e) => { e.currentTarget.src = "/sautrik-photo.jpg"; }}
-              />
-              <span className="online-indicator-dot" />
-            </div>
-            <div className="hero-creator-text">
-              <span className="creator-label">Engineered by Sautrik Roy</span>
-              <span className="creator-sublabel">GDG on Campus SRM Candidate</span>
-            </div>
-            <Sparkles size={13} className="creator-sparkle-icon" />
+          {/* High-Tech Product Announcement Badge (No personal selfies) */}
+          <div className="hero-announcement-pill" onClick={onOpenStudio} role="button" tabIndex={0}>
+            <span className="announcement-pulse-dot" />
+            <span className="announcement-tag">GDG SRM Recruitment 2026–27</span>
+            <span className="announcement-separator">•</span>
+            <span className="announcement-text">Interactive QR Designer Studio</span>
+            <Sparkles size={12} className="announcement-sparkle" />
           </div>
 
           {/* Main Headline */}

@@ -120,28 +120,6 @@ export default function TopNavbar({
             </button>
           )}
 
-          {/* Candidate Avatar Pill (Inspired by sautrikroy.me) */}
-          <button
-            type="button"
-            className="navbar-candidate-avatar-btn"
-            onClick={() => onSelectTab('about')}
-            title="Candidate: Sautrik Roy (SRM IST) • Click to view profile"
-            aria-label="About Sautrik Roy"
-          >
-            <div className="avatar-ring-glow">
-              <img
-                src="/sautrik-avatar.jpg"
-                alt="Sautrik Roy"
-                className="avatar-img-circle"
-                onError={(e) => {
-                  e.currentTarget.src = '/sautrik-photo.jpg';
-                }}
-              />
-              <span className="avatar-status-dot" />
-            </div>
-            <span className="candidate-name-badge">Sautrik Roy</span>
-          </button>
-
           {/* Launch Studio CTA Button */}
           <button
             type="button"

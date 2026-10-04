@@ -56,15 +56,8 @@ export default function AboutView({ onOpenStudio }) {
 
       {/* Candidate Profile Showcase Hero Card */}
       <div className="about-profile-hero-card spotlight-card" onMouseMove={handleSpotlightMouseMove} style={{ position: 'relative', zIndex: 5, overflow: 'hidden' }}>
-        <div className="profile-badge-avatar" style={{ overflow: 'hidden', padding: 0, border: '2px solid rgba(56, 189, 248, 0.7)', boxShadow: '0 0 24px rgba(56, 189, 248, 0.4)' }}>
-          <img
-            src="/sautrik-photo.jpg"
-            alt="Sautrik Roy"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            onError={(e) => {
-              e.currentTarget.src = "/sautrik-avatar.jpg";
-            }}
-          />
+        <div className="profile-badge-avatar">
+          <span className="avatar-monogram">SR</span>
         </div>
         <div className="profile-info-body" style={{ flex: 1 }}>
           <div className="profile-name-row">

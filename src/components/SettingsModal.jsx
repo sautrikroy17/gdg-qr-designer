@@ -1,5 +1,6 @@
 import React from 'react';
-import { X, Settings, Trash2, RotateCcw, Check } from 'lucide-react';
+import { X, Sliders, Trash2, RotateCcw, Check } from 'lucide-react';
+import { playTap, playSuccessChime } from '../utils/soundEffects';
 
 export default function SettingsModal({
   isOpen,
@@ -14,100 +15,100 @@ export default function SettingsModal({
   if (!isOpen) return null;
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 100,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'rgba(0, 0, 0, 0.7)',
-        backdropFilter: 'blur(8px)',
-        padding: '1rem'
-      }}
-      onClick={onClose}
-    >
+    <div className="settings-modal-backdrop" onClick={onClose}>
       <div
-        className="glass-card"
-        style={{
-          width: '100%',
-          maxWidth: '480px',
-          background: 'var(--bg-card)',
-          borderRadius: 'var(--radius-lg)',
-          boxShadow: '0 25px 50px rgba(0,0,0,0.6)',
-          border: '1px solid var(--border-color)',
-          padding: '1.75rem',
-          position: 'relative'
-        }}
+        className="settings-modal-card"
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="settings-modal-title"
       >
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-            <Settings size={20} style={{ color: 'var(--accent-blue)' }} />
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>Application Settings</h3>
+        <div className="settings-modal-header">
+          <div className="settings-title-group">
+            <div className="settings-icon-bubble">
+              <Sliders size={18} />
+            </div>
+            <div>
+              <h3 id="settings-modal-title" className="settings-modal-heading">Application Settings</h3>
+              <p className="settings-modal-subheading">Customize default export & studio behavior</p>
+            </div>
           </div>
           <button
             type="button"
-            className="icon-btn"
+            className="settings-close-btn"
             onClick={onClose}
-            title="Close"
+            title="Close Settings (Esc)"
+            aria-label="Close Settings"
           >
             <X size={18} />
           </button>
         </div>
 
-        {/* Options */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+        {/* Options Body */}
+        <div className="settings-modal-body">
           {/* Default Download Format */}
-          <div className="form-group" style={{ margin: 0 }}>
-            <label className="form-label">Default Export Format</label>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+          <div className="settings-section">
+            <label className="settings-field-label">Default Export Format</label>
+            <div className="settings-format-grid">
               <button
                 type="button"
-                className={`option-btn ${defaultFormat === 'png' ? 'active' : ''}`}
-                onClick={() => onChangeDefaultFormat('png')}
-                style={{ padding: '0.65rem' }}
+                className={`settings-format-btn ${defaultFormat === 'png' ? 'active' : ''}`}
+                onClick={() => {
+                  onChangeDefaultFormat('png');
+                  playTap();
+                }}
               >
-                PNG (High-Res Raster)
+                <span className="format-btn-badge">PNG</span>
+                <span className="format-btn-name">High-Res Raster</span>
+                {defaultFormat === 'png' && <Check size={14} className="format-active-check" />}
               </button>
               <button
                 type="button"
-                className={`option-btn ${defaultFormat === 'svg' ? 'active' : ''}`}
-                onClick={() => onChangeDefaultFormat('svg')}
-                style={{ padding: '0.65rem' }}
+                className={`settings-format-btn ${defaultFormat === 'svg' ? 'active' : ''}`}
+                onClick={() => {
+                  onChangeDefaultFormat('svg');
+                  playTap();
+                }}
               >
-                SVG (Scalable Vector)
+                <span className="format-btn-badge">SVG</span>
+                <span className="format-btn-name">Scalable Vector</span>
+                {defaultFormat === 'svg' && <Check size={14} className="format-active-check" />}
               </button>
             </div>
           </div>
 
           {/* Auto-Save Toggle */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 0', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
-            <div>
-              <div style={{ fontSize: '0.88rem', fontWeight: 700 }}>Auto-Save to Recent History</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Automatically store generated codes locally</div>
+          <div className="settings-toggle-row">
+            <div className="settings-toggle-info">
+              <div className="settings-toggle-title">Auto-Save to Recent History</div>
+              <div className="settings-toggle-desc">Automatically store generated codes locally in browser</div>
             </div>
-            <input
-              type="checkbox"
-              checked={autoSave}
-              onChange={(e) => onToggleAutoSave(e.target.checked)}
-              style={{ width: '18px', height: '18px', accentColor: 'var(--accent-blue)', cursor: 'pointer' }}
-            />
+            <label className="settings-switch-label">
+              <input
+                type="checkbox"
+                className="settings-switch-input"
+                checked={autoSave}
+                onChange={(e) => {
+                  onToggleAutoSave(e.target.checked);
+                  playTap();
+                }}
+              />
+              <span className="settings-switch-slider" />
+            </label>
           </div>
 
-          {/* Danger Zone */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+          {/* Actions & Defaults */}
+          <div className="settings-actions-group">
             <button
               type="button"
-              className="btn-secondary"
+              className="btn-settings-danger"
               onClick={() => {
                 if (window.confirm('Are you sure you want to clear all locally saved QR codes?')) {
                   onClearAllHistory();
+                  playTap();
                 }
               }}
-              style={{ justifyContent: 'center', gap: '0.5rem', color: 'var(--accent-red)' }}
             >
               <Trash2 size={16} />
               <span>Clear Recent History</span>
@@ -115,14 +116,14 @@ export default function SettingsModal({
 
             <button
               type="button"
-              className="btn-secondary"
+              className="btn-settings-reset"
               onClick={() => {
                 if (window.confirm('Reset all colors, dimensions, and inputs to defaults?')) {
                   onResetFactory();
+                  playTap();
                   onClose();
                 }
               }}
-              style={{ justifyContent: 'center', gap: '0.5rem' }}
             >
               <RotateCcw size={16} />
               <span>Reset Designer to Defaults</span>
@@ -131,12 +132,14 @@ export default function SettingsModal({
         </div>
 
         {/* Footer Done Button */}
-        <div style={{ marginTop: '1.75rem' }}>
+        <div className="settings-modal-footer">
           <button
             type="button"
-            className="btn-hero-primary"
-            style={{ width: '100%', justifyContent: 'center' }}
-            onClick={onClose}
+            className="btn-settings-save"
+            onClick={() => {
+              playSuccessChime();
+              onClose();
+            }}
           >
             <Check size={18} />
             <span>Save & Close</span>
