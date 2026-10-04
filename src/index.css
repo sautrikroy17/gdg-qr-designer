@@ -1348,6 +1348,11 @@ input, select, textarea {
   transform: translateY(-1px);
 }
 
+/* Anchor scrolling offset for fixed floating navbar */
+section[id] {
+  scroll-margin-top: 5.5rem;
+}
+
 /* ==========================================================================
    Purpose Section (7 Cards Row)
    ========================================================================== */
@@ -1357,6 +1362,8 @@ input, select, textarea {
   max-width: 1360px;
   margin: 0 auto;
   padding: 4.5rem 3.5rem 6rem;
+  position: relative;
+  z-index: 5;
 }
 
 @media (max-width: 768px) {
@@ -5099,7 +5106,10 @@ input, select, textarea {
    ========================================================================= */
 .hero-workspace-atmosphere {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 860px;
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
@@ -5111,27 +5121,27 @@ input, select, textarea {
   object-fit: cover;
   object-position: center;
   opacity: 0.85;
-  filter: blur(14px) brightness(0.7) contrast(110%);
-  transform: scale(1.06);
+  filter: blur(5px) brightness(0.72) contrast(108%);
+  transform: scale(1.04);
 }
 
 .hero-workspace-vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 75% 45%, transparent 10%, rgba(8, 12, 20, 0.78) 55%, #080c14 90%),
-              linear-gradient(to right, #080c14 32%, rgba(8, 12, 20, 0.6) 65%, transparent 100%),
-              linear-gradient(to bottom, transparent 65%, #080c14 100%);
+  background: radial-gradient(circle at 75% 45%, transparent 10%, rgba(8, 12, 20, 0.75) 55%, #080c14 90%),
+              linear-gradient(to right, #080c14 38%, rgba(8, 12, 20, 0.5) 62%, transparent 100%),
+              linear-gradient(to bottom, transparent 65%, var(--bg-main) 100%);
 }
 
 [data-theme='light'] .hero-workspace-bg-img {
-  opacity: 0.35;
-  filter: blur(14px) brightness(1.05) contrast(100%);
+  opacity: 0.38;
+  filter: blur(5px) brightness(1.02) contrast(100%);
   mix-blend-mode: normal;
 }
 
 [data-theme='light'] .hero-workspace-vignette {
   background: radial-gradient(circle at 75% 45%, transparent 10%, rgba(248, 250, 252, 0.75) 55%, #ffffff 90%),
-              linear-gradient(to right, #ffffff 32%, rgba(248, 250, 252, 0.6) 65%, transparent 100%),
+              linear-gradient(to right, #ffffff 38%, rgba(248, 250, 252, 0.5) 62%, transparent 100%),
               linear-gradient(to bottom, transparent 65%, #ffffff 100%);
 }
 
@@ -5640,8 +5650,8 @@ input, select, textarea {
   object-fit: cover;
   object-position: center;
   opacity: 0.65;
-  filter: blur(18px) brightness(0.6) contrast(110%);
-  transform: scale(1.06);
+  filter: blur(6px) brightness(0.65) contrast(108%);
+  transform: scale(1.04);
 }
 
 .studio-scene-vignette {
@@ -5652,8 +5662,8 @@ input, select, textarea {
 }
 
 [data-theme='light'] .studio-scene-img {
-  opacity: 0.3;
-  filter: blur(18px) brightness(1.05);
+  opacity: 0.32;
+  filter: blur(6px) brightness(1.02);
   mix-blend-mode: normal;
 }
 
@@ -5673,8 +5683,8 @@ input, select, textarea {
   object-fit: cover;
   object-position: center;
   opacity: 0.72;
-  filter: blur(16px) brightness(0.65) contrast(108%);
-  transform: scale(1.06);
+  filter: blur(6px) brightness(0.68) contrast(108%);
+  transform: scale(1.04);
   pointer-events: none;
 }
 
@@ -5687,8 +5697,8 @@ input, select, textarea {
 }
 
 [data-theme='light'] .section-ambient-img {
-  opacity: 0.32;
-  filter: blur(16px) brightness(1.05);
+  opacity: 0.35;
+  filter: blur(6px) brightness(1.02);
   mix-blend-mode: normal;
 }
 

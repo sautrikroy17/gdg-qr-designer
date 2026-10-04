@@ -104,6 +104,13 @@ export default function App() {
     localStorage.setItem('qrcraft_theme', theme);
   }, [theme]);
 
+  // Ensure fresh page entry starts gracefully at top of page
+  useEffect(() => {
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   // Scrollspy to dynamically update active navbar link on Landing Page
   useEffect(() => {
     if (isStudioMode) return;

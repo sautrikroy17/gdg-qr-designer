@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { User, ExternalLink, Code2, Award, Cpu, ShieldCheck, ArrowRight, HelpCircle, ChevronDown, CheckCircle2, Globe } from 'lucide-react';
+import React from 'react';
+import { ExternalLink, Code2, Award, Cpu, ShieldCheck, ArrowRight, CheckCircle2, Globe } from 'lucide-react';
 import { playTap, playSuccessChime } from '../utils/soundEffects';
 
 export default function AboutView({ onOpenStudio }) {
-  const [openVivaIndex, setOpenVivaIndex] = useState(0);
 
   const handleSpotlightMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -13,24 +12,6 @@ export default function AboutView({ onOpenStudio }) {
     e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
   };
 
-  const vivaQuestions = [
-    {
-      q: 'Why HTML5 Canvas instead of an external QR generation API server?',
-      a: 'Using an external API (like Google Charts or QR Server) introduces network latency (100–400ms), requires an active internet connection, sends user Wi-Fi passwords and private URLs to third-party logs, and creates an external point of failure. HTML5 Canvas runs 100% client-side in browser memory with 0ms backend latency, zero cloud hosting costs, and complete privacy.'
-    },
-    {
-      q: 'How does the W3C Relative Luminance & Contrast Guard work mathematically?',
-      a: 'Color perception is non-linear. First, 8-bit sRGB channels (0-255) are normalized and gamma-expanded: if c <= 0.04045, c_lin = c / 12.92; else c_lin = ((c + 0.055) / 1.055)^2.4. Luminance is calculated using human photopic eye sensitivity weights: L = 0.2126R + 0.7152G + 0.0722B. The contrast ratio is (L1 + 0.05) / (L2 + 0.05). If below 4.5:1, QRCraft warns the user to avoid unreadable prints.'
-    },
-    {
-      q: 'Why does uploading a center logo automatically bump Reed-Solomon to Level H (30%)?',
-      a: 'Reed-Solomon error correction uses polynomial long division over Galois Fields GF(2^8). Level L corrects ~7%, M ~15%, Q ~25%, and H ~30% damaged codewords. A center logo physically obscures 15–22% of the central modules. Level H mathematically reconstructs all missing data from the remaining parity bytes so scanners decode the QR code without errors.'
-    },
-    {
-      q: 'How are Wi-Fi passwords with semicolons and colons safely formatted?',
-      a: 'The ZXing WIFI URI schema requires strict backslash escaping. If an SSID or password contains colons (:), semicolons (;), commas (,), or backslashes (\\), QRCraft applies automated regex escaping (e.g., "pass;word" becomes "pass\\;word"). Without this, barcode parsers terminate the field prematurely, causing mobile device connection failures.'
-    }
-  ];
 
   return (
     <div className="view-page-container">
@@ -171,49 +152,6 @@ export default function AboutView({ onOpenStudio }) {
           <p>
             Full support for Level L (7%), M (15%), Q (25%), and H (30%) polynomial error correction. Attaching a center logo automatically activates Level H, mathematically restoring up to 30% of data obscured by the brand graphic.
           </p>
-        </div>
-      </div>
-
-      {/* Interactive Viva Defense Accordion */}
-      <div className="faq-section-wrapper" style={{ position: 'relative', zIndex: 5, marginBottom: '3.5rem' }}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div className="purpose-badge-pill">
-            <HelpCircle size={13} style={{ color: '#ffffff' }} />
-            <span>Recruitment Defense & Viva Ready</span>
-          </div>
-          <h3 className="faq-heading" style={{ fontSize: '1.75rem' }}>
-            Technical Viva & Architectural Interview Defense
-          </h3>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', maxWidth: '600px', margin: '0 auto' }}>
-            Click any question to inspect the underlying computer science concepts and architectural choices behind this project.
-          </p>
-        </div>
-
-        <div className="faq-accordion-list">
-          {vivaQuestions.map((item, idx) => {
-            const isOpen = openVivaIndex === idx;
-            return (
-              <div
-                key={idx}
-                className={`faq-item-card ${isOpen ? 'expanded' : ''}`}
-                onClick={() => {
-                  playTap();
-                  setOpenVivaIndex(isOpen ? -1 : idx);
-                }}
-                style={{ cursor: 'pointer' }}
-              >
-                <div className="faq-q-row">
-                  <span style={{ fontWeight: 700, fontSize: '0.96rem' }}>{item.q}</span>
-                  <span className="faq-toggle-sign">{isOpen ? '−' : '+'}</span>
-                </div>
-                {isOpen && (
-                  <p className="faq-a-text" style={{ marginTop: '0.85rem', lineHeight: '1.65' }}>
-                    {item.a}
-                  </p>
-                )}
-              </div>
-            );
-          })}
         </div>
       </div>
 

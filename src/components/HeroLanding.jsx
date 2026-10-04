@@ -548,7 +548,7 @@ export default function HeroLanding({
       {/* ====================================================================
           2. "Create QR Codes for Any Purpose" Section (7 Interactive Purpose Cards)
           ==================================================================== */}
-      <section className="purpose-section-container" id="features">
+      <section className="purpose-section-container">
         <div className="purpose-section-header">
           <h2 className="purpose-headline">
             Create QR Codes for <span className="headline-gradient-word">Any Purpose</span>
